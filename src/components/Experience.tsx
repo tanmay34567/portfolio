@@ -29,7 +29,7 @@ const experiences: TimelineItem[] = [
     company: "MIT School of Computing, MIT ADT University",
     period: "2022 – 2026",
     points: [
-      "CGPA: 7.99/10 (up to 6th semester)",
+      "CGPA: 7.99/10 (up to 7th semester)",
       "Focus on Full Stack Development",
       "Data Structures & Algorithms",
       "Machine Learning & Cloud Computing",
