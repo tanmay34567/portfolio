@@ -1,136 +1,217 @@
-import { Mail, Phone, MapPin, Github, Linkedin, FileCode, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import ScrollReveal from "./ScrollReveal";
 
 const Contact = () => {
-  const handleEmailClick = (e: React.MouseEvent) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    service: "",
+    message: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    window.location.href = "mailto:tanmayhtw@gmail.com?subject=Portfolio Inquiry&body=Hi Tanmay,";
+    window.location.href = `mailto:tanmayhtw@gmail.com?subject=Portfolio Inquiry from ${formData.name}&body=${encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\n\nMessage:\n${formData.message}`
+    )}`;
   };
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none"></div>
-      
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="contact" className="py-24 bg-[#0a0a0f] relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#5e67e6]/[0.03] blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Get in <span className="text-gradient">Touch</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? I'd love to hear from you!
-          </p>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
+          <ScrollReveal direction="up">
+            <div>
+              <p className="text-sm font-medium text-[#5e67e6] tracking-[0.2em] uppercase mb-3">
+                Let's Work Together
+              </p>
+              <h2 className="heading-section text-4xl md:text-5xl lg:text-6xl text-white">
+                GET IN TOUCH
+              </h2>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal direction="up" delay={0.15}>
+            <p className="text-[#8f8f8f] max-w-md text-base leading-relaxed">
+              Have a project in mind or want to collaborate? I'd love to hear from you!
+            </p>
+          </ScrollReveal>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          {/* Left Side - Contact Info */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Left — Portrait + Contact Info */}
           <div className="space-y-8">
-            <div>
-              <h3 className="text-xl font-bold mb-6">Connect With Me</h3>
-              <div className="space-y-4">
-                <a
-                  href="mailto:tanmayhtw@gmail.com"
-                  className="flex items-center gap-4 p-4 bg-card border border-border rounded-lg hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all group"
+            <ScrollReveal direction="right" delay={0.1}>
+              <div className="relative inline-block perspective-1000">
+                <motion.div
+                  className="w-48 h-56 md:w-56 md:h-64 rounded-3xl overflow-hidden shadow-xl shadow-[#5e67e6]/10 bg-gradient-to-br from-[#5e67e6]/20 to-[#5e67e6]/5 transform-3d"
+                  initial={{ rotateY: -12, rotateX: 5 }}
+                  whileInView={{ rotateY: 5, rotateX: -2 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  whileHover={{ rotateY: 0, rotateX: 0, scale: 1.03 }}
                 >
-                  <div className="p-3 bg-primary/10 rounded-lg text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium">tanmayhtw@gmail.com</p>
-                  </div>
-                </a>
-
-                <a
-                  href="tel:+918080065293"
-                  className="flex items-center gap-4 p-4 bg-card border border-border rounded-lg hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all group"
+                  <img
+                    src="/portrait.png"
+                    alt="Tanmay Wagh"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const img = e.target as HTMLImageElement;
+                      img.style.display = "none";
+                    }}
+                  />
+                </motion.div>
+                <motion.div
+                  className="absolute -bottom-3 -right-3 bg-[#141414] rounded-2xl px-4 py-2.5 shadow-lg shadow-black/30 border border-white/[0.06]"
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <div className="p-3 bg-primary/10 rounded-lg text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
-                    <p className="font-medium">+91 8080065293</p>
-                  </div>
-                </a>
-
-                <div className="flex items-center gap-4 p-4 bg-card border border-border rounded-lg hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all group cursor-default">
-                  <div className="p-3 bg-primary/10 rounded-lg text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Location</p>
-                    <p className="font-medium">Maharashtra, India</p>
-                  </div>
-                </div>
+                  <span className="text-lg font-semibold">👋 Hi!</span>
+                </motion.div>
               </div>
-            </div>
+            </ScrollReveal>
 
-            {/* Social Links */}
-            <div>
-              <h3 className="text-lg font-bold mb-4">Find Me On</h3>
-              <div className="flex gap-3">
-                <a
-                  href="https://github.com/tanmay34567"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-card border border-border rounded-lg hover:border-primary/50 hover:bg-primary/10 hover:text-primary transition-all group"
-                  title="GitHub"
-                >
-                  <Github className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/tanmay-wagh-2a2a0b269/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-card border border-border rounded-lg hover:border-primary/50 hover:bg-primary/10 hover:text-primary transition-all group"
-                  title="LinkedIn"
-                >
-                  <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                </a>
-                <a
-                  href="https://leetcode.com/u/tanmaywagh20/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-card border border-border rounded-lg hover:border-primary/50 hover:bg-primary/10 hover:text-primary transition-all group"
-                  title="LeetCode"
-                >
-                  <FileCode className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side - Quick Contact */}
-          <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm hover:shadow-md transition-all">
-            <h3 className="text-xl font-bold mb-6">Quick Contact</h3>
-            <div className="space-y-4">
-              <p className="text-muted-foreground">
-                The easiest way to reach me is through email or direct call. I'm always happy to discuss new projects and opportunities!
-              </p>
-              
-              <Button
-                onClick={handleEmailClick}
-                className="w-full gap-2"
-              >
-                <Mail className="w-4 h-4" />
-                Send Email
-              </Button>
-
-              <div className="mt-6 p-4 bg-primary/5 border border-primary/20 rounded-lg">
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-medium text-sm">Quick response guaranteed</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      I usually get back to you within 24 hours
-                    </p>
-                  </div>
-                </div>
-              </div>
+            {/* Contact cards */}
+            <div className="space-y-3">
+              {[
+                {
+                  href: "mailto:tanmayhtw@gmail.com",
+                  icon: <Mail className="w-5 h-5" />,
+                  label: "Email",
+                  value: "tanmayhtw@gmail.com",
+                  isLink: true,
+                },
+                {
+                  href: "tel:+918080065293",
+                  icon: <Phone className="w-5 h-5" />,
+                  label: "Phone",
+                  value: "+91 8080065293",
+                  isLink: true,
+                },
+                {
+                  icon: <MapPin className="w-5 h-5" />,
+                  label: "Location",
+                  value: "Maharashtra, India",
+                  isLink: false,
+                },
+              ].map((item, i) => (
+                <ScrollReveal key={i} direction="up" delay={0.2 + i * 0.1}>
+                  {item.isLink ? (
+                    <motion.a
+                      href={item.href}
+                      className="flex items-center gap-4 p-4 bg-[#141414] rounded-2xl border border-white/[0.06] hover:border-[#5e67e6]/20 transition-all duration-300 group"
+                      whileHover={{ y: -3, boxShadow: "0 10px 30px rgba(94, 103, 230, 0.06)" }}
+                    >
+                      <div className="p-3 bg-[#5e67e6]/10 rounded-xl text-[#5e67e6] group-hover:bg-[#5e67e6] group-hover:text-white transition-all duration-300">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <p className="text-xs text-[#5c5c5c]">{item.label}</p>
+                        <p className="font-medium text-white text-sm">{item.value}</p>
+                      </div>
+                    </motion.a>
+                  ) : (
+                    <motion.div
+                      className="flex items-center gap-4 p-4 bg-[#141414] rounded-2xl border border-white/[0.06] group"
+                      whileHover={{ y: -3, boxShadow: "0 10px 30px rgba(94, 103, 230, 0.06)" }}
+                    >
+                      <div className="p-3 bg-[#5e67e6]/10 rounded-xl text-[#5e67e6]">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <p className="text-xs text-[#5c5c5c]">{item.label}</p>
+                        <p className="font-medium text-white text-sm">{item.value}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </ScrollReveal>
+              ))}
             </div>
           </div>
+
+          {/* Right — Contact Form */}
+          <ScrollReveal direction="left" delay={0.2} duration={0.7}>
+            <div className="bg-[#141414] rounded-3xl border border-white/[0.06] p-8 md:p-10 shadow-sm">
+              <h3 className="heading-section text-2xl text-white mb-8">SEND A MESSAGE</h3>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-[#5c5c5c] font-medium block mb-2 uppercase tracking-wider">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="Your name"
+                      className="w-full px-5 py-3.5 bg-[#0f0f0f] rounded-xl border border-white/[0.06] text-white text-sm placeholder:text-[#5c5c5c] focus:outline-none focus:border-[#5e67e6]/50 focus:ring-2 focus:ring-[#5e67e6]/10 transition-all"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-[#5c5c5c] font-medium block mb-2 uppercase tracking-wider">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="your@email.com"
+                      className="w-full px-5 py-3.5 bg-[#0f0f0f] rounded-xl border border-white/[0.06] text-white text-sm placeholder:text-[#5c5c5c] focus:outline-none focus:border-[#5e67e6]/50 focus:ring-2 focus:ring-[#5e67e6]/10 transition-all"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs text-[#5c5c5c] font-medium block mb-2 uppercase tracking-wider">
+                    Service
+                  </label>
+                  <select
+                    value={formData.service}
+                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                    className="w-full px-5 py-3.5 bg-[#0f0f0f] rounded-xl border border-white/[0.06] text-white text-sm focus:outline-none focus:border-[#5e67e6]/50 focus:ring-2 focus:ring-[#5e67e6]/10 transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="">Select a service</option>
+                    <option value="frontend">Frontend Development</option>
+                    <option value="backend">Backend Development</option>
+                    <option value="fullstack">Full Stack Development</option>
+                    <option value="extension">Chrome Extension</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs text-[#5c5c5c] font-medium block mb-2 uppercase tracking-wider">
+                    Message
+                  </label>
+                  <textarea
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    placeholder="Tell me about your project..."
+                    rows={4}
+                    className="w-full px-5 py-3.5 bg-[#0f0f0f] rounded-xl border border-white/[0.06] text-white text-sm placeholder:text-[#5c5c5c] focus:outline-none focus:border-[#5e67e6]/50 focus:ring-2 focus:ring-[#5e67e6]/10 transition-all resize-none"
+                    required
+                  />
+                </div>
+
+                <motion.button
+                  type="submit"
+                  className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#0f0f0f] font-semibold rounded-full hover:bg-gray-100 transition-all duration-200 shadow-lg shadow-black/10 group"
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  Send Message
+                </motion.button>
+              </form>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

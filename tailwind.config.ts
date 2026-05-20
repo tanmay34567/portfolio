@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        mono: ['Fira Code', 'monospace'],
+        display: ['Antonio', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -61,23 +61,13 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        code: {
-          bg: "hsl(var(--code-bg))",
-          border: "hsl(var(--code-border))",
-        },
-        syntax: {
-          keyword: "hsl(var(--syntax-keyword))",
-          string: "hsl(var(--syntax-string))",
-          function: "hsl(var(--syntax-function))",
-          variable: "hsl(var(--syntax-variable))",
-          comment: "hsl(var(--syntax-comment))",
-          number: "hsl(var(--syntax-number))",
-        },
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "calc(var(--radius) - 4px)",
+        sm: "calc(var(--radius) - 8px)",
+        xl: "2rem",
+        "2xl": "2.5rem",
       },
       keyframes: {
         "accordion-down": {
@@ -90,8 +80,8 @@ export default {
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        "accordion-down": "accordion-down 0.3s ease-out",
+        "accordion-up": "accordion-up 0.3s ease-out",
       },
     },
   },

@@ -1,96 +1,101 @@
-import { Code2, Github, Linkedin, Heart } from "lucide-react";
+import { Github, Linkedin, FileCode, ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
+import ScrollReveal from "./ScrollReveal";
 
 const Footer = () => {
   return (
-    <footer className="py-12 border-t border-border bg-card/50">
-      <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Code2 className="w-5 h-5 text-primary" />
-              <span className="font-mono font-bold">
-                <span className="text-muted-foreground">&lt;</span>
-                <span className="text-primary">Tanmay</span>
-                <span className="text-foreground">Wagh</span>
-                <span className="text-muted-foreground">/&gt;</span>
-              </span>
-            </div>
-            <p className="text-sm text-muted-foreground max-w-xs">
-              A passionate full stack developer building beautiful and 
-              functional web applications with React, Node.js, and MongoDB.
-            </p>
-            <div className="flex gap-3">
-              <a
-                href="https://github.com/tanmay34567"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/tanmay-wagh-2a2a0b269/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
+    <footer className="relative bg-[#0a0a0f]">
+      {/* CTA Banner */}
+      <ScrollReveal direction="up" duration={0.8}>
+        <div className="bg-[#5e67e6] rounded-t-[2.5rem] md:rounded-t-[3.5rem] overflow-hidden relative">
+          {/* Decorative glows */}
+          <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-48 h-48 bg-[#c8ff00]/10 rounded-full blur-[60px] pointer-events-none" />
+
+          <div className="container mx-auto px-6 py-16 md:py-20 relative z-10">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+              <ScrollReveal direction="up" delay={0.1}>
+                <div>
+                  <h3 className="heading-display text-4xl md:text-5xl lg:text-6xl text-white mb-3">
+                    LET'S WORK
+                    <br />
+                    TOGETHER
+                  </h3>
+                  <p className="text-white/70 text-base max-w-md">
+                    Have a project in mind? Let's create something amazing together.
+                  </p>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal direction="up" delay={0.25}>
+                <motion.a
+                  href="mailto:tanmayhtw@gmail.com"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-white text-[#0f0f0f] font-semibold rounded-full hover:bg-gray-100 transition-all duration-200 shadow-lg shadow-black/10 group self-start"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Say Hello
+                  <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </motion.a>
+              </ScrollReveal>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <a href="#home" className="hover:text-primary transition-colors">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="#experience" className="hover:text-primary transition-colors">
-                  Experience
-                </a>
-              </li>
-              <li>
-                <a href="#skills" className="hover:text-primary transition-colors">
-                  Skills
-                </a>
-              </li>
-              <li>
-                <a href="#projects" className="hover:text-primary transition-colors">
-                  Projects
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="hover:text-primary transition-colors">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
+          {/* Bottom bar */}
+          <div className="border-t border-white/15">
+            <div className="container mx-auto px-6 py-6">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                {/* Brand */}
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-xs font-bold">
+                    TW
+                  </div>
+                  <span className="font-semibold text-white text-sm">Tanmay Wagh</span>
+                </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="font-semibold mb-4">Contact</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Maharashtra, India</li>
-              <li>tanmayhtw@gmail.com</li>
-              <li>+91 8080065293</li>
-            </ul>
+                {/* Links */}
+                <div className="flex items-center gap-6">
+                  {["Home", "Services", "Projects", "Contact"].map((link) => (
+                    <a
+                      key={link}
+                      href={`#${link.toLowerCase()}`}
+                      className="text-white/60 hover:text-white text-sm transition-colors"
+                    >
+                      {link}
+                    </a>
+                  ))}
+                </div>
+
+                {/* Social */}
+                <div className="flex items-center gap-2">
+                  {[
+                    { href: "https://github.com/tanmay34567", icon: <Github className="w-4 h-4" /> },
+                    { href: "https://www.linkedin.com/in/tanmay-wagh-2a2a0b269/", icon: <Linkedin className="w-4 h-4" /> },
+                    { href: "https://leetcode.com/u/tanmaywagh20/", icon: <FileCode className="w-4 h-4" /> },
+                  ].map((social, i) => (
+                    <motion.a
+                      key={i}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-all"
+                      whileHover={{ scale: 1.15, y: -2 }}
+                    >
+                      {social.icon}
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Copyright */}
+              <div className="mt-6 pt-4 border-t border-white/10 text-center">
+                <p className="text-xs text-white/50">
+                  © {new Date().getFullYear()} Tanmay Wagh. All rights reserved.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Copyright */}
-        <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground">
-          <p className="flex items-center justify-center gap-1">
-            © {new Date().getFullYear()} Tanmay Wagh. All rights reserved.
-          </p>
-          
-        </div>
-      </div>
+      </ScrollReveal>
     </footer>
   );
 };
