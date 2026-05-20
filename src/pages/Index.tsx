@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
+import SplashScreen from "@/components/SplashScreen";
 import Navbar from "@/components/Navbar";
 import ScrollFlipCard from "@/components/ScrollFlipCard";
 import Marquee from "@/components/Marquee";
@@ -33,6 +36,9 @@ const statusMarquee = [
 ];
 
 const Index = () => {
+  const [hasEntered, setHasEntered] = useState(false);
+  const [isVideoFinished, setIsVideoFinished] = useState(false);
+
   return (
     <>
       <Helmet>
@@ -54,10 +60,22 @@ const Index = () => {
       </Helmet>
 
       <div className="min-h-screen bg-[#0a0a0f]">
-        <Navbar />
+        {!hasEntered && <SplashScreen onEnter={() => setHasEntered(true)} />}
+        <motion.div 
+          animate={{ opacity: isVideoFinished ? 1 : 0, y: isVideoFinished ? 0 : -20 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="relative z-50 pointer-events-none"
+        >
+          <div className="pointer-events-auto">
+            <Navbar />
+          </div>
+        </motion.div>
         <main>
           {/* Portavia scroll: Hero → Services → About (dark, persistent card) */}
-          <ScrollFlipCard />
+          <ScrollFlipCard 
+            startVideo={hasEntered} 
+            onVideoEnd={() => setIsVideoFinished(true)} 
+          />
 
           {/* Tech ticker */}
           <Marquee items={techMarquee} speed={35} />

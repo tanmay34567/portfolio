@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Download,
   ArrowDown,
@@ -178,13 +179,14 @@ const AccordionItem = ({
    Total scroll height: 600vh (sticky viewport)
    ════════════════════════════════════════════════════════ */
 
-const ScrollFlipCard = () => {
+const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boolean; onVideoEnd?: () => void }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [openService, setOpenService] = useState(0);
   const [activePanel, setActivePanel] = useState<"hero" | "services" | "about">("hero");
   const [videoFinished, setVideoFinished] = useState(false);
   const [isMuted, setIsMuted] = useState(false); // Start unmuted
+  const isMobile = useIsMobile();
 
   // Set up scroll locking on mount
   useEffect(() => {
@@ -210,32 +212,7 @@ const ScrollFlipCard = () => {
       (window as any).lenis.stop();
     }
 
-    // Try playing the video unmuted first
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          // Autoplay unmuted was blocked by browser. Fall back to muted autoplay!
-          console.log("Autoplay unmuted blocked, falling back to muted autoplay:", error);
-          if (videoRef.current) {
-            videoRef.current.muted = true;
-            setIsMuted(true);
-            videoRef.current.play().catch((err) => {
-              console.error("Muted autoplay also blocked:", err);
-            });
-          }
-        });
-      }
-    }
-
-    // Auto-unlock backup after 18 seconds (in case video fails to play/load)
-    const timeout = setTimeout(() => {
-      unlockScroll();
-    }, 18000);
-
     return () => {
-      clearTimeout(timeout);
       // Clean up scroll lock on unmount
       (window as any).isScrollLocked = false;
       document.body.style.overflow = "";
@@ -246,34 +223,45 @@ const ScrollFlipCard = () => {
     };
   }, []);
 
-  // Automatically unmute when the user interacts with the page
+  // Play video only when startVideo becomes true
   useEffect(() => {
-    const handleGesture = () => {
-      if (videoRef.current && videoRef.current.muted) {
+    let timeout: NodeJS.Timeout;
+    if (startVideo) {
+      if (videoRef.current) {
         videoRef.current.muted = false;
-        setIsMuted(false);
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            // Autoplay unmuted was blocked by browser. Fall back to muted autoplay!
+            console.log("Autoplay unmuted blocked, falling back to muted autoplay:", error);
+            if (videoRef.current) {
+              videoRef.current.muted = true;
+              setIsMuted(true);
+              videoRef.current.play().catch((err) => {
+                console.error("Muted autoplay also blocked:", err);
+              });
+            }
+          });
+        }
       }
-      cleanup();
+
+      // Auto-unlock backup after 18 seconds (in case video fails to play/load)
+      // This ensures the user is never permanently stuck.
+      timeout = setTimeout(() => {
+        unlockScroll();
+      }, 18000);
+    }
+
+    return () => {
+      if (timeout) clearTimeout(timeout);
     };
+  }, [startVideo]);
 
-    const cleanup = () => {
-      window.removeEventListener("click", handleGesture);
-      window.removeEventListener("mousedown", handleGesture);
-      window.removeEventListener("keydown", handleGesture);
-      window.removeEventListener("touchstart", handleGesture);
-    };
-
-    window.addEventListener("click", handleGesture);
-    window.addEventListener("mousedown", handleGesture);
-    window.addEventListener("keydown", handleGesture);
-    window.addEventListener("touchstart", handleGesture);
-
-    return cleanup;
-  }, []);
 
   const unlockScroll = () => {
     (window as any).isScrollLocked = false;
     setVideoFinished(true);
+    onVideoEnd?.();
     document.body.style.overflow = "";
     document.documentElement.style.overflow = "";
     if ((window as any).lenis) {
@@ -323,21 +311,23 @@ const ScrollFlipCard = () => {
   const cardX = useTransform(
     scrollYProgress,
     [0, 0.12, 0.28, 0.55, 0.68, 1.0],
-    ["0%", "0%", "55%", "55%", "35%", "35%"]
+    isMobile ? ["0%", "0%", "0%", "0%", "0%", "0%"] : ["0%", "0%", "55%", "55%", "35%", "35%"]
   );
 
   // Card vertical position: centered → down in about panel
   const cardY = useTransform(
     scrollYProgress,
     [0, 0.55, 0.70, 1.0],
-    ["0%", "0%", "15%", "15%"]
+    isMobile ? ["-25%", "-25%", "-35%", "-35%"] : ["0%", "0%", "15%", "15%"]
   );
 
   // Card scale with cinematic breathe
   const cardScale = useTransform(
     scrollYProgress,
     [0, 0.10, 0.18, 0.28, 0.50, 0.58, 0.68],
-    [1, 1, 0.92, 0.82, 0.82, 0.92, 0.80]
+    isMobile 
+      ? [0.85, 0.85, 0.80, 0.70, 0.70, 0.80, 0.65] 
+      : [1, 1, 0.92, 0.82, 0.82, 0.92, 0.80]
   );
 
   // Card tilt Z-axis
@@ -464,7 +454,6 @@ const ScrollFlipCard = () => {
                   src="https://resource2.heygen.ai/video/transcode/71eae82a2cd9459c94302f243bf9f16d/vY7kragCxxQkV0bXYbs63UYlGwYNJGQ9j/720x1280.mp4"
                   poster="/portrait.png"
                   className="w-full h-full object-cover"
-                  autoPlay
                   muted={isMuted}
                   playsInline
                   onEnded={handleVideoEnded}
@@ -551,14 +540,22 @@ const ScrollFlipCard = () => {
             pointerEvents: activePanel === "hero" ? "auto" : "none",
           }}
         >
-          <div className="container mx-auto px-6 lg:px-12">
+          <motion.div 
+            className="container mx-auto px-6 lg:px-12 pt-[45vh] lg:pt-0"
+            animate={{ 
+              opacity: videoFinished ? 1 : 0,
+              filter: videoFinished ? "blur(0px)" : "blur(10px)",
+              pointerEvents: videoFinished ? "auto" : "none"
+            }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
             <div className="grid lg:grid-cols-3 gap-8 items-center">
               {/* Left — Big Name */}
               <div>
                 <motion.p
                   className="text-xs font-medium text-[#5c5c5c] tracking-[0.25em] uppercase mb-5"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 20 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
                   Portfolio — 2025
@@ -566,7 +563,7 @@ const ScrollFlipCard = () => {
                 <motion.h1
                   className="heading-display text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-white leading-[0.9]"
                   initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 40 }}
                   transition={{ duration: 0.7, delay: 0.3 }}
                 >
                   TANMAY
@@ -574,7 +571,7 @@ const ScrollFlipCard = () => {
                 <motion.h2
                   className="heading-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-[#5e67e6] leading-[0.9] mt-2"
                   initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 40 }}
                   transition={{ duration: 0.7, delay: 0.45 }}
                 >
                   FULLSTACK
@@ -589,7 +586,7 @@ const ScrollFlipCard = () => {
                 <motion.h2
                   className="heading-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-[0.9] mb-6"
                   initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 40 }}
                   transition={{ duration: 0.7, delay: 0.5 }}
                 >
                   DEVELOPER
@@ -597,7 +594,7 @@ const ScrollFlipCard = () => {
                 <motion.p
                   className="text-[#8f8f8f] text-sm md:text-base leading-relaxed max-w-sm mb-8"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 20 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
                   I'm a full-stack developer building clean &
@@ -606,7 +603,7 @@ const ScrollFlipCard = () => {
                 <motion.div
                   className="flex flex-wrap gap-3"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 20 }}
                   transition={{ duration: 0.6, delay: 0.7 }}
                 >
                   <a
@@ -660,7 +657,7 @@ const ScrollFlipCard = () => {
                 </a>
               )}
             </motion.div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* ▸ PANEL 2: Services / What I Do */}
@@ -672,7 +669,7 @@ const ScrollFlipCard = () => {
             pointerEvents: activePanel === "services" ? "auto" : "none",
           }}
         >
-          <div className="container mx-auto px-6 lg:px-12">
+          <div className="container mx-auto px-6 lg:px-12 pt-[45vh] lg:pt-0">
             <div className="max-w-lg">
               <p className="text-xs font-medium text-[#5e67e6] tracking-[0.25em] uppercase mb-3">
                 What I Do
@@ -713,7 +710,7 @@ const ScrollFlipCard = () => {
             pointerEvents: activePanel === "about" ? "auto" : "none",
           }}
         >
-          <div className="container mx-auto px-6 lg:px-12">
+          <div className="container mx-auto px-6 lg:px-12 pt-[40vh] lg:pt-0">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left — About text */}
               <div className="max-w-lg" id="about">
