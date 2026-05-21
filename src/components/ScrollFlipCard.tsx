@@ -165,6 +165,80 @@ const AccordionItem = ({
   </div>
 );
 
+/* ── Text Animations ──────────────────────────────────── */
+
+const StaggeredChars = ({ text, show, delay = 0, className = "", from = "center" }: { text: string, show: boolean, delay?: number, className?: string, from?: "left" | "right" | "center" }) => {
+  const getInitialState = (i: number) => {
+    const centerX = from === "left" ? 200 : from === "right" ? -200 : 0;
+    const centerY = 50;
+    return { 
+      x: centerX, 
+      y: centerY, 
+      rotateX: 45, 
+      rotateY: from === "left" ? -45 : from === "right" ? 45 : 0, 
+      scale: 0 
+    };
+  };
+
+  return (
+    <span className={`inline-flex flex-wrap ${className}`} style={{ perspective: "1000px" }}>
+      {text.split("").map((char, i) => (
+        <motion.span
+          key={i}
+          className="inline-block"
+          variants={{
+            hidden: { opacity: 0, filter: "blur(12px)", ...getInitialState(i) },
+            visible: { opacity: 1, x: 0, y: 0, rotateX: 0, rotateY: 0, scale: 1, filter: "blur(0px)" }
+          }}
+          initial="hidden"
+          animate={show ? "visible" : "hidden"}
+          transition={{
+            type: "spring",
+            damping: 12,
+            stiffness: 100,
+            delay: delay + i * 0.04
+          }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
+
+const StaggeredWords = ({ text, show, delay = 0, className = "", from = "center" }: { text: string, show: boolean, delay?: number, className?: string, from?: "left" | "right" | "center" }) => {
+  const getWordInitialState = (i: number) => {
+    const centerX = from === "left" ? 150 : from === "right" ? -150 : 0;
+    return { x: centerX, y: 30, rotate: from === "left" ? -10 : 10, scale: 0.5 };
+  };
+
+  return (
+    <p className={className}>
+      {text.split(" ").map((word, i) => (
+        <span key={i} className="inline-block overflow-visible mr-[0.25em] pb-1">
+          <motion.span
+            className="inline-block origin-center"
+            variants={{
+              hidden: { opacity: 0, filter: "blur(8px)", ...getWordInitialState(i) },
+              visible: { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, filter: "blur(0px)" }
+            }}
+            initial="hidden"
+            animate={show ? "visible" : "hidden"}
+            transition={{
+              type: "spring",
+              damping: 14,
+              stiffness: 100,
+              delay: delay + i * 0.02
+            }}
+          >
+            {word}
+          </motion.span>
+        </span>
+      ))}
+    </p>
+  );
+};
+
 /* ════════════════════════════════════════════════════════
    PORTAVIA SCROLL FLIP CARD
    
@@ -185,6 +259,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
   const [openService, setOpenService] = useState(0);
   const [activePanel, setActivePanel] = useState<"hero" | "services" | "about">("hero");
   const [videoFinished, setVideoFinished] = useState(false);
+  const [showHeroText, setShowHeroText] = useState(false);
   const [isMuted, setIsMuted] = useState(false); // Start unmuted
   const isMobile = useIsMobile();
 
@@ -261,6 +336,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
   const unlockScroll = () => {
     (window as any).isScrollLocked = false;
     setVideoFinished(true);
+    setShowHeroText(true);
     onVideoEnd?.();
     document.body.style.overflow = "";
     document.documentElement.style.overflow = "";
@@ -271,6 +347,11 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
   const handleVideoEnded = () => {
     unlockScroll();
+  };
+
+  const handleTimeUpdate = () => {
+    // Removed logic to show text at 3 seconds.
+    // Text now only appears after video finishes playing or is skipped.
   };
 
   const toggleMute = (e: React.MouseEvent) => {
@@ -325,8 +406,8 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
   const cardScale = useTransform(
     scrollYProgress,
     [0, 0.10, 0.18, 0.28, 0.50, 0.58, 0.68],
-    isMobile 
-      ? [0.85, 0.85, 0.80, 0.70, 0.70, 0.80, 0.65] 
+    isMobile
+      ? [0.85, 0.85, 0.80, 0.70, 0.70, 0.80, 0.65]
       : [1, 1, 0.92, 0.82, 0.82, 0.92, 0.80]
   );
 
@@ -457,6 +538,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   muted={isMuted}
                   playsInline
                   onEnded={handleVideoEnded}
+                  onTimeUpdate={handleTimeUpdate}
                 />
 
                 {/* Elegant Volume Overlay Button */}
@@ -472,19 +554,8 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   )}
                 </button>
               </div>
-              {/* Floating "Hi" badge */}
-              <motion.div
-                className="absolute bottom-5 left-5 w-14 h-14 rounded-full bg-[#c8ff00] flex items-center justify-center shadow-lg shadow-[#c8ff00]/20 z-40"
-                animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <span className="text-black font-bold text-lg">Hi</span>
-              </motion.div>
-              {/* Top-right indicator */}
-              <div className="absolute top-5 right-5 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm z-40">
-                <div className="w-2 h-2 rounded-full bg-[#0bde66] animate-pulse" />
-                {/* <span className="text-[10px] text-white/80 font-medium">Available</span> */}
-              </div>
+
+
             </div>
 
             {/* ── BACK FACE — Code Editor Card ── */}
@@ -540,87 +611,93 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
             pointerEvents: activePanel === "hero" ? "auto" : "none",
           }}
         >
-          <motion.div 
+          <motion.div
             className="container mx-auto px-6 lg:px-12 pt-[45vh] lg:pt-0"
-            animate={{ 
-              opacity: videoFinished ? 1 : 0,
-              filter: videoFinished ? "blur(0px)" : "blur(10px)",
-              pointerEvents: videoFinished ? "auto" : "none"
+            animate={{
+              pointerEvents: showHeroText ? "auto" : "none"
             }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <div className="grid lg:grid-cols-3 gap-8 items-center">
               {/* Left — Big Name */}
-              <div>
-                <motion.p
-                  className="text-xs font-medium text-[#5c5c5c] tracking-[0.25em] uppercase mb-5"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 20 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
+              <div style={{ perspective: "1000px" }}>
+                <motion.div
+                  className="mb-5 overflow-hidden"
+                  variants={{
+                    hidden: { opacity: 0, width: 0 },
+                    visible: { opacity: 1, width: "100%" }
+                  }}
+                  initial="hidden"
+                  animate={showHeroText ? "visible" : "hidden"}
+                  transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 >
-                  Portfolio — 2025
-                </motion.p>
-                <motion.h1
-                  className="heading-display text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-white leading-[0.9]"
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 40 }}
-                  transition={{ duration: 0.7, delay: 0.3 }}
-                >
-                  TANMAY
-                </motion.h1>
-                <motion.h2
-                  className="heading-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-[#5e67e6] leading-[0.9] mt-2"
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 40 }}
-                  transition={{ duration: 0.7, delay: 0.45 }}
-                >
-                  FULLSTACK
-                </motion.h2>
+                  <p className="text-xs font-medium text-[#5e67e6] tracking-[0.25em] uppercase whitespace-nowrap flex items-center">
+                    <span className="inline-block w-8 h-[1px] bg-[#5e67e6] mr-3"></span>
+                    Portfolio — 2026
+                  </p>
+                </motion.div>
+
+                <h1 className="heading-display text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-white leading-[0.9]">
+                  <StaggeredChars text="TANMAY" show={showHeroText} delay={0.2} from="left" />
+                </h1>
+
+                <h2 className="heading-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-[#5e67e6] leading-[0.9] mt-2">
+                  <StaggeredChars text="FULLSTACK" show={showHeroText} delay={0.4} from="left" />
+                </h2>
               </div>
 
               {/* Center — spacer for card */}
               <div />
 
               {/* Right — Role + CTA */}
-              <div>
-                <motion.h2
-                  className="heading-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-[0.9] mb-6"
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 40 }}
-                  transition={{ duration: 0.7, delay: 0.5 }}
-                >
-                  DEVELOPER
-                </motion.h2>
-                <motion.p
+              <div style={{ perspective: "1000px" }}>
+                <h2 className="heading-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-[0.9] mb-6">
+                  <StaggeredChars text="DEVELOPER" show={showHeroText} delay={0.6} from="right" />
+                </h2>
+                
+                <StaggeredWords
+                  text="I'm a full-stack developer building clean & scalable web applications with modern technologies."
+                  show={showHeroText}
+                  delay={1.0}
+                  from="right"
                   className="text-[#8f8f8f] text-sm md:text-base leading-relaxed max-w-sm mb-8"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 20 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                >
-                  I'm a full-stack developer building clean &
-                  scalable web applications with modern technologies.
-                </motion.p>
+                />
+
                 <motion.div
-                  className="flex flex-wrap gap-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: videoFinished ? 1 : 0, y: videoFinished ? 0 : 20 }}
-                  transition={{ duration: 0.6, delay: 0.7 }}
+                  className="flex flex-wrap gap-4"
+                  variants={{
+                    hidden: { opacity: 0, x: -100, y: 30, scale: 0.5, filter: "blur(10px)" },
+                    visible: { opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" }
+                  }}
+                  initial="hidden"
+                  animate={showHeroText ? "visible" : "hidden"}
+                  transition={{ type: "spring", damping: 14, stiffness: 100, delay: 1.4 }}
                 >
-                  <a
+                  <motion.a
                     href="#contact"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-black text-sm font-semibold rounded-full hover:bg-gray-100 hover:shadow-lg hover:shadow-white/10 transition-all duration-300 hover:-translate-y-0.5"
+                    className="relative group inline-flex items-center gap-2 px-7 py-3.5 bg-white text-black text-sm font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    Let's Connect
-                  </a>
-                  <a
+                    <span className="relative z-10">Let's Connect</span>
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-[#c8ff00]/20 to-[#5e67e6]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                  </motion.a>
+
+                  <motion.a
                     href="https://drive.google.com/file/d/13nycX1DY00a2PZ2AM_QyvPeRfRo7rgAM/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 text-white text-sm font-semibold rounded-full border border-white/15 hover:border-white/30 hover:bg-white/[0.04] transition-all duration-300 hover:-translate-y-0.5"
+                    className="relative group inline-flex items-center gap-2 px-7 py-3.5 text-white text-sm font-semibold rounded-full border border-white/15 transition-all duration-300 hover:border-white/40 hover:bg-white/[0.04] overflow-hidden"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <Download className="w-4 h-4" />
-                    Resume
-                  </a>
+                    <Download className="w-4 h-4 group-hover:-translate-y-1 group-hover:scale-110 transition-transform duration-300" />
+                    <span className="relative z-10">Resume</span>
+                    <motion.div
+                      className="absolute inset-0 bg-white opacity-0 group-hover:opacity-5 transition-opacity duration-300"
+                    />
+                  </motion.a>
                 </motion.div>
               </div>
             </div>

@@ -1,9 +1,28 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code2 } from "lucide-react";
+
+const COMMAND = "./start_portfolio.sh";
 
 export default function SplashScreen({ onEnter }: { onEnter: () => void }) {
   const [isVisible, setIsVisible] = useState(true);
+  const [typedCommand, setTypedCommand] = useState("");
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
+
+  // Typewriter effect
+  useEffect(() => {
+    let i = 0;
+    const typingInterval = setInterval(() => {
+      if (i < COMMAND.length) {
+        setTypedCommand(COMMAND.slice(0, i + 1));
+        i++;
+      } else {
+        clearInterval(typingInterval);
+        setIsTypingComplete(true);
+      }
+    }, 100); // 100ms per character
+
+    return () => clearInterval(typingInterval);
+  }, []);
 
   // Lock scroll while splash is active
   useEffect(() => {
@@ -15,12 +34,22 @@ export default function SplashScreen({ onEnter }: { onEnter: () => void }) {
     }
   }, [isVisible]);
 
-  const handleEnter = () => {
+  const handleExecute = () => {
+    if (!isTypingComplete) return; // Only allow enter after typing finishes
     setIsVisible(false);
     onEnter();
-    // Note: Scroll unlocking is handled by ScrollFlipCard when the video ends or is skipped,
-    // so we don't need to unlock it here. The splash screen just gets out of the way.
   };
+
+  // Listen for Enter key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        handleExecute();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isTypingComplete]);
 
   return (
     <AnimatePresence>
@@ -29,61 +58,33 @@ export default function SplashScreen({ onEnter }: { onEnter: () => void }) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0a0f] cursor-pointer"
-          onClick={handleEnter}
+          className="fixed inset-0 z-[100] flex flex-col justify-center bg-[#050505] cursor-pointer font-mono p-6 sm:p-12 md:p-24"
+          onClick={handleExecute}
         >
-          {/* Background effects */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div 
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] rounded-full bg-[#5e67e6]/10 blur-[100px]"
-              animate={{ 
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.6, 0.3] 
-              }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </div>
-
-          {/* Content */}
-          <motion.div 
-            className="relative z-10 flex flex-col items-center gap-8"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            {/* Logo/Icon */}
-            <motion.div 
-              className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center shadow-[0_0_40px_rgba(94,103,230,0.15)]"
-              animate={{ rotateZ: [0, 5, -5, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <Code2 className="w-8 h-8 text-[#5e67e6]" />
-            </motion.div>
-
-            {/* Text */}
-            <div className="text-center space-y-2">
-              <h1 className="heading-display text-4xl md:text-5xl text-white tracking-widest">
-                TANMAY WAGH
-              </h1>
-              <p className="text-[#8f8f8f] font-mono text-xs uppercase tracking-[0.3em]">
-                Full Stack Developer
-              </p>
+          <div className="max-w-3xl w-full mx-auto">
+            <div className="text-[#0bde66] text-sm md:text-lg lg:text-xl xl:text-2xl flex flex-wrap items-center">
+              <span className="text-[#82aaff] mr-2">tanmay@portfolio</span>
+              <span className="text-white mr-2">~</span>
+              <span className="mr-2">$</span>
+              <span>{typedCommand}</span>
+              <motion.span
+                animate={{ opacity: [1, 0] }}
+                transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+                className="w-2.5 md:w-3 h-5 md:h-6 bg-[#0bde66] ml-1 inline-block translate-y-[2px]"
+              />
             </div>
-
-            {/* Enter Button */}
-            <motion.div 
-              className="mt-8 flex flex-col items-center gap-3 group"
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <button className="px-8 py-3 rounded-full bg-white text-black font-semibold tracking-wider uppercase text-xs hover:bg-[#c8ff00] transition-colors duration-300">
-                Tap to Enter
-              </button>
-              <span className="text-[10px] text-[#5c5c5c] font-mono uppercase tracking-widest">
-                Enable Audio Experience
-              </span>
-            </motion.div>
-          </motion.div>
+            
+            {isTypingComplete && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="mt-8 text-[#5c5c5c] text-xs md:text-sm"
+              >
+                [Press <span className="text-white font-bold">ENTER</span> or click anywhere to execute]
+              </motion.div>
+            )}
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
@@ -10,12 +10,40 @@ const Contact = () => {
     service: "",
     message: "",
   });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    window.location.href = `mailto:tanmayhtw@gmail.com?subject=Portfolio Inquiry from ${formData.name}&body=${encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\n\nMessage:\n${formData.message}`
-    )}`;
+    setStatus("loading");
+    setStatusMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus("success");
+        setStatusMessage("Message sent successfully!");
+        setFormData({ name: "", email: "", service: "", message: "" });
+        // Reset status after 4 seconds
+        setTimeout(() => {
+          setStatus("idle");
+          setStatusMessage("");
+        }, 4000);
+      } else {
+        setStatus("error");
+        setStatusMessage(data.error || "Something went wrong.");
+      }
+    } catch {
+      setStatus("error");
+      setStatusMessage("Network error. Please try again later.");
+    }
   };
 
   return (
@@ -202,13 +230,47 @@ const Contact = () => {
 
                 <motion.button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#0f0f0f] font-semibold rounded-full hover:bg-gray-100 transition-all duration-200 shadow-lg shadow-black/10 group"
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={status === "loading"}
+                  className={`w-full flex items-center justify-center gap-2 px-8 py-4 font-semibold rounded-full transition-all duration-200 shadow-lg shadow-black/10 group ${
+                    status === "success"
+                      ? "bg-emerald-500 text-white"
+                      : status === "loading"
+                      ? "bg-white/70 text-[#0f0f0f] cursor-wait"
+                      : "bg-white text-[#0f0f0f] hover:bg-gray-100"
+                  }`}
+                  whileHover={status === "idle" ? { scale: 1.02, y: -1 } : {}}
+                  whileTap={status === "idle" ? { scale: 0.98 } : {}}
                 >
-                  <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  Send Message
+                  {status === "loading" ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : status === "success" ? (
+                    <>
+                      <CheckCircle2 className="w-4 h-4" />
+                      Sent!
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      Send Message
+                    </>
+                  )}
                 </motion.button>
+
+                {/* Status message */}
+                {statusMessage && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`text-sm text-center mt-3 ${
+                      status === "success" ? "text-emerald-400" : "text-red-400"
+                    }`}
+                  >
+                    {statusMessage}
+                  </motion.p>
+                )}
               </form>
             </div>
           </ScrollReveal>

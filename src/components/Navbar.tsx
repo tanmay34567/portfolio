@@ -1,7 +1,7 @@
+
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
 const navLinks = [
   { name: "Home", href: "#home" },
   { name: "Services", href: "#services" },
@@ -9,11 +9,9 @@ const navLinks = [
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ];
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 100);
@@ -21,7 +19,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
   return (
     <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
       <motion.nav
@@ -45,22 +42,18 @@ const Navbar = () => {
               />
             </div>
             <span
-              className={`font-semibold text-sm text-white whitespace-nowrap transition-all duration-300 overflow-hidden ${
-                scrolled ? "w-0 opacity-0" : "w-auto opacity-100"
-              }`}
+              className={`font-semibold text-sm text-white whitespace-nowrap transition-all duration-300 overflow-hidden ${scrolled ? "w-0 opacity-0" : "w-auto opacity-100"
+                }`}
             >
               Tanmay Wagh
             </span>
           </a>
-
           {/* Separator */}
           <div className="w-px h-5 bg-white/[0.08] mx-1 shrink-0" />
-
           {/* Nav Links — collapse on scroll */}
           <div
-            className={`flex items-center gap-0.5 transition-all duration-400 overflow-hidden ${
-              scrolled ? "max-w-0 opacity-0" : "max-w-[500px] opacity-100"
-            }`}
+            className={`flex items-center gap-0.5 transition-all duration-400 overflow-hidden ${scrolled ? "max-w-0 opacity-0" : "max-w-[500px] opacity-100"
+              }`}
           >
             {navLinks.map((link) => (
               <a
@@ -72,14 +65,11 @@ const Navbar = () => {
               </a>
             ))}
           </div>
-
           {/* Separator — only when expanded */}
           <div
-            className={`w-px h-5 bg-white/[0.08] mx-1 shrink-0 transition-opacity duration-300 ${
-              scrolled ? "opacity-0 w-0" : "opacity-100"
-            }`}
+            className={`w-px h-5 bg-white/[0.08] mx-1 shrink-0 transition-opacity duration-300 ${scrolled ? "opacity-0 w-0" : "opacity-100"
+              }`}
           />
-
           {/* Status + CTA */}
           <div className="flex items-center gap-2 pl-1 pr-1 shrink-0">
             <div className="flex items-center gap-1.5 px-2">
@@ -96,7 +86,6 @@ const Navbar = () => {
             </a>
           </div>
         </div>
-
         {/* Mobile nav — dark glass */}
         <div className="md:hidden">
           <div className="glass-strong shadow-2xl shadow-black/20 rounded-full px-4 py-2.5 flex items-center gap-3">
@@ -123,7 +112,6 @@ const Navbar = () => {
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
-
           {/* Mobile dropdown */}
           <AnimatePresence>
             {isOpen && (
@@ -166,5 +154,4 @@ const Navbar = () => {
     </div>
   );
 };
-
 export default Navbar;
