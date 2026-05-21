@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import Contact from '../models/Contact';
 import mongoose from 'mongoose';
 
@@ -37,19 +37,14 @@ router.post('/', async (req: Request, res: Response) => {
 
     // Attempt email in the background (non-blocking)
     try {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD,
-        },
-        connectionTimeout: 10000, // 10s timeout
-      });
+      const resend = new Resend(process.env.RESEND_API_KEY);
 
-      console.log('Sending email from:', process.env.EMAIL_USER, 'to:', process.env.EMAIL_RECIPIENT);
+      console.log('Sending email via Resend to:', process.env.EMAIL_RECIPIENT);
 
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+      // Note: By default, Resend only allows sending from onboarding@resend.dev
+      // to the exact email address you used to sign up for Resend.
+      await resend.emails.send({
+        from: 'onboarding@resend.dev',
         to: process.env.EMAIL_RECIPIENT || 'tanmayhtw@gmail.com',
         subject: `New Portfolio Contact from ${name}`,
         html: `
@@ -93,10 +88,7 @@ router.post('/', async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.error('Error in contact route:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Server error. Could not send message.',
-    });
+    // Already sent success response, so no need to res.status(500) here
   }
 });
 
