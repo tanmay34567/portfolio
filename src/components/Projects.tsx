@@ -20,7 +20,7 @@ const projects: Project[] = [
     description:
       "A full-stack meal management platform connecting students with verified mess vendors. Features dual-role authentication with OTP login for students & JWT for vendors, automated vendor onboarding with node-cron scheduling.",
     tech: ["MongoDB", "Express.js", "React.js", "Node.js", "Tailwind CSS", "JWT", "Cloudinary"],
-    liveLink: "https://every-day-meal.vercel.app",
+    liveLink: "https://everydaymeal.app",
     githubLink: "https://github.com/tanmay34567/EveryDayMeal",
     image: "/projects/everydaymeal.png",
   },
