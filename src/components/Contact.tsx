@@ -47,25 +47,25 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-[#0a0a0f] relative overflow-hidden">
+    <section id="contact" className="py-24 bg-theme-bg relative overflow-hidden">
       {/* Background glow */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#5e67e6]/[0.03] blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-theme-accent/[0.03] blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
           <ScrollReveal direction="up">
             <div>
-              <p className="text-sm font-medium text-[#5e67e6] tracking-[0.2em] uppercase mb-3">
+              <p className="text-sm font-medium text-theme-accent tracking-[0.2em] uppercase mb-3">
                 Let's Work Together
               </p>
-              <h2 className="heading-section text-4xl md:text-5xl lg:text-6xl text-white">
+              <h2 className="heading-section text-4xl md:text-theme-mutedxl lg:text-6xl text-theme-text">
                 GET IN TOUCH
               </h2>
             </div>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.15}>
-            <p className="text-[#8f8f8f] max-w-md text-base leading-relaxed">
+            <p className="text-theme-muted max-w-md text-theme-mutedase leading-relaxed">
               Have a project in mind or want to collaborate? I'd love to hear from you!
             </p>
           </ScrollReveal>
@@ -77,7 +77,7 @@ const Contact = () => {
             <ScrollReveal direction="right" delay={0.1}>
               <div className="relative inline-block perspective-1000">
                 <motion.div
-                  className="w-48 h-56 md:w-56 md:h-64 rounded-3xl overflow-hidden shadow-xl shadow-[#5e67e6]/10 bg-gradient-to-br from-[#5e67e6]/20 to-[#5e67e6]/5 transform-3d"
+                  className="w-48 h-56 md:w-56 md:h-64 rounded-3xl overflow-hidden shadow-xl shadow-theme-accent/10 bg-gradient-to-br from-[#5e67e6]/20 to-[#5e67e6]/5 transform-3d"
                   initial={{ rotateY: -12, rotateX: 5 }}
                   whileInView={{ rotateY: 5, rotateX: -2 }}
                   viewport={{ once: true }}
@@ -95,7 +95,7 @@ const Contact = () => {
                   />
                 </motion.div>
                 <motion.div
-                  className="absolute -bottom-3 -right-3 bg-[#141414] rounded-2xl px-4 py-2.5 shadow-lg shadow-black/30 border border-white/[0.06]"
+                  className="absolute -bottom-3 -right-3 bg-theme-bg rounded-2xl px-4 py-2.5 shadow-lg shadow-black/30 border border-white/[0.06]"
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
                 >
@@ -132,28 +132,28 @@ const Contact = () => {
                   {item.isLink ? (
                     <motion.a
                       href={item.href}
-                      className="flex items-center gap-4 p-4 bg-[#141414] rounded-2xl border border-white/[0.06] hover:border-[#5e67e6]/20 transition-all duration-300 group"
-                      whileHover={{ y: -3, boxShadow: "0 10px 30px rgba(94, 103, 230, 0.06)" }}
+                      className="flex items-center gap-4 p-4 bg-theme-bg rounded-2xl border border-white/[0.06] hover:border-theme-accent/20 transition-all duration-300 group"
+                      whileHover={{ y: -3, boxShadow: "0 10px 30px rgba(var(--theme-accent-rgb), 0.06)" }}
                     >
-                      <div className="p-3 bg-[#5e67e6]/10 rounded-xl text-[#5e67e6] group-hover:bg-[#5e67e6] group-hover:text-white transition-all duration-300">
+                      <div className="p-3 bg-theme-accent/10 rounded-xl text-theme-accent group-hover:bg-theme-accent group-hover:text-theme-text transition-all duration-300">
                         {item.icon}
                       </div>
                       <div>
-                        <p className="text-xs text-[#5c5c5c]">{item.label}</p>
-                        <p className="font-medium text-white text-sm">{item.value}</p>
+                        <p className="text-xs text-theme-muted">{item.label}</p>
+                        <p className="font-medium text-theme-text text-sm">{item.value}</p>
                       </div>
                     </motion.a>
                   ) : (
                     <motion.div
-                      className="flex items-center gap-4 p-4 bg-[#141414] rounded-2xl border border-white/[0.06] group"
-                      whileHover={{ y: -3, boxShadow: "0 10px 30px rgba(94, 103, 230, 0.06)" }}
+                      className="flex items-center gap-4 p-4 bg-theme-bg rounded-2xl border border-white/[0.06] group"
+                      whileHover={{ y: -3, boxShadow: "0 10px 30px rgba(var(--theme-accent-rgb), 0.06)" }}
                     >
-                      <div className="p-3 bg-[#5e67e6]/10 rounded-xl text-[#5e67e6]">
+                      <div className="p-3 bg-theme-accent/10 rounded-xl text-theme-accent">
                         {item.icon}
                       </div>
                       <div>
-                        <p className="text-xs text-[#5c5c5c]">{item.label}</p>
-                        <p className="font-medium text-white text-sm">{item.value}</p>
+                        <p className="text-xs text-theme-muted">{item.label}</p>
+                        <p className="font-medium text-theme-text text-sm">{item.value}</p>
                       </div>
                     </motion.div>
                   )}
@@ -164,12 +164,12 @@ const Contact = () => {
 
           {/* Right — Contact Form */}
           <ScrollReveal direction="left" delay={0.2} duration={0.7}>
-            <div className="bg-[#141414] rounded-3xl border border-white/[0.06] p-8 md:p-10 shadow-sm">
-              <h3 className="heading-section text-2xl text-white mb-8">SEND A MESSAGE</h3>
+            <div className="bg-theme-bg rounded-3xl border border-white/[0.06] p-8 md:p-10 shadow-sm">
+              <h3 className="heading-section text-2xl text-theme-text mb-8">SEND A MESSAGE</h3>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs text-[#5c5c5c] font-medium block mb-2 uppercase tracking-wider">
+                    <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
                       Name
                     </label>
                     <input
@@ -177,12 +177,12 @@ const Contact = () => {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Your name"
-                      className="w-full px-5 py-3.5 bg-[#0f0f0f] rounded-xl border border-white/[0.06] text-white text-sm placeholder:text-[#5c5c5c] focus:outline-none focus:border-[#5e67e6]/50 focus:ring-2 focus:ring-[#5e67e6]/10 transition-all"
+                      className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-white/[0.06] text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all"
                       required
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-[#5c5c5c] font-medium block mb-2 uppercase tracking-wider">
+                    <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
                       Email
                     </label>
                     <input
@@ -190,20 +190,20 @@ const Contact = () => {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="your@email.com"
-                      className="w-full px-5 py-3.5 bg-[#0f0f0f] rounded-xl border border-white/[0.06] text-white text-sm placeholder:text-[#5c5c5c] focus:outline-none focus:border-[#5e67e6]/50 focus:ring-2 focus:ring-[#5e67e6]/10 transition-all"
+                      className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-white/[0.06] text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all"
                       required
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-xs text-[#5c5c5c] font-medium block mb-2 uppercase tracking-wider">
+                  <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
                     Service
                   </label>
                   <select
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full px-5 py-3.5 bg-[#0f0f0f] rounded-xl border border-white/[0.06] text-white text-sm focus:outline-none focus:border-[#5e67e6]/50 focus:ring-2 focus:ring-[#5e67e6]/10 transition-all appearance-none cursor-pointer"
+                    className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-white/[0.06] text-theme-text text-sm focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all appearance-none cursor-pointer"
                   >
                     <option value="">Select a service</option>
                     <option value="frontend">Frontend Development</option>
@@ -215,7 +215,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label className="text-xs text-[#5c5c5c] font-medium block mb-2 uppercase tracking-wider">
+                  <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
                     Message
                   </label>
                   <textarea
@@ -223,7 +223,7 @@ const Contact = () => {
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Tell me about your project..."
                     rows={4}
-                    className="w-full px-5 py-3.5 bg-[#0f0f0f] rounded-xl border border-white/[0.06] text-white text-sm placeholder:text-[#5c5c5c] focus:outline-none focus:border-[#5e67e6]/50 focus:ring-2 focus:ring-[#5e67e6]/10 transition-all resize-none"
+                    className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-white/[0.06] text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all resize-none"
                     required
                   />
                 </div>
@@ -233,7 +233,7 @@ const Contact = () => {
                   disabled={status === "loading"}
                   className={`w-full flex items-center justify-center gap-2 px-8 py-4 font-semibold rounded-full transition-all duration-200 shadow-lg shadow-black/10 group ${
                     status === "success"
-                      ? "bg-emerald-500 text-white"
+                      ? "bg-theme-bgmerald-500 text-theme-text"
                       : status === "loading"
                       ? "bg-white/70 text-[#0f0f0f] cursor-wait"
                       : "bg-white text-[#0f0f0f] hover:bg-gray-100"
@@ -264,7 +264,7 @@ const Contact = () => {
                   <motion.p
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`text-sm text-center mt-3 ${
+                    className={`text-sm text-theme-mutedenter mt-3 ${
                       status === "success" ? "text-emerald-400" : "text-red-400"
                     }`}
                   >

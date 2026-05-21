@@ -28,16 +28,16 @@ const certifications: Certification[] = [
 
 const Certifications = () => {
   return (
-    <section className="py-24 bg-[#0a0a0f] relative">
+    <section className="py-24 bg-theme-bg relative">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
           <ScrollReveal direction="up">
             <div>
-              <p className="text-sm font-medium text-[#5e67e6] tracking-[0.2em] uppercase mb-3">
+              <p className="text-sm font-medium text-theme-accent tracking-[0.2em] uppercase mb-3">
                 Achievements
               </p>
-              <h2 className="heading-section text-4xl md:text-5xl lg:text-6xl text-white">
+              <h2 className="heading-section text-4xl md:text-theme-mutedxl lg:text-6xl text-theme-text">
                 CERTIFICATIONS
               </h2>
             </div>
@@ -58,23 +58,23 @@ const Certifications = () => {
         >
           {/* Stat card — Work Experience */}
           <motion.div
-            className="bg-[#5e67e6] rounded-3xl p-8 flex flex-col justify-between min-h-[220px] text-white relative overflow-hidden"
+            className="bg-theme-accent rounded-3xl p-8 flex flex-col justify-between min-h-[220px] text-theme-text relative overflow-hidden"
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.95 },
               visible: { opacity: 1, y: 0, scale: 1 },
             }}
             transition={{ duration: 0.5 }}
-            whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(94, 103, 230, 0.25)" }}
+            whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(var(--theme-accent-rgb), 0.25)" }}
           >
             {/* Decorative glow */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-[60px] pointer-events-none" />
             <div className="flex items-center gap-2 relative z-10">
-              <Star className="w-5 h-5 text-white/80" />
-              <span className="text-sm text-white/80 font-medium">Current Role</span>
+              <Star className="w-5 h-5 text-theme-text/80" />
+              <span className="text-sm text-theme-text/80 font-medium">Current Role</span>
             </div>
             <div className="relative z-10">
               <p className="heading-display text-4xl mb-2">DEVELOPER</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-theme-text/70">
                 Intern at Banao Technologies — Building Chrome Extensions & Backend integrations
               </p>
             </div>
@@ -84,24 +84,24 @@ const Certifications = () => {
           {certifications.map((cert, index) => (
             <motion.div
               key={index}
-              className="bg-[#141414] rounded-3xl border border-white/[0.06] p-7 hover:border-[#5e67e6]/20 transition-all duration-300 group"
+              className="bg-theme-bg rounded-3xl border border-white/[0.06] p-7 hover:border-theme-accent/20 transition-all duration-300 group"
               variants={{
                 hidden: { opacity: 0, y: 40, scale: 0.95 },
                 visible: { opacity: 1, y: 0, scale: 1 },
               }}
               transition={{ duration: 0.5 }}
-              whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(94, 103, 230, 0.06)" }}
+              whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(var(--theme-accent-rgb), 0.06)" }}
             >
               <div className="flex items-start gap-4 mb-5">
-                <div className="p-3 bg-[#5e67e6]/10 rounded-2xl text-[#5e67e6] group-hover:bg-[#5e67e6] group-hover:text-white transition-all duration-300">
+                <div className="p-3 bg-theme-accent/10 rounded-2xl text-theme-accent group-hover:bg-theme-accent group-hover:text-theme-text transition-all duration-300">
                   {cert.icon}
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-1.5 mb-1">
-                    <Award className="w-3.5 h-3.5 text-[#5e67e6]" />
-                    <span className="text-xs text-[#5e67e6] font-medium">Certified</span>
+                    <Award className="w-3.5 h-3.5 text-theme-accent" />
+                    <span className="text-xs text-theme-accent font-medium">Certified</span>
                   </div>
-                  <h3 className="font-semibold text-white leading-snug">
+                  <h3 className="font-semibold text-theme-text leading-snug">
                     {cert.title}
                   </h3>
                 </div>
@@ -110,7 +110,7 @@ const Certifications = () => {
                 {cert.skills.map((skill, i) => (
                   <span
                     key={i}
-                    className="px-2.5 py-1 bg-white/[0.04] text-[#8f8f8f] text-xs rounded-full border border-white/[0.04]"
+                    className="px-2.5 py-1 bg-theme-border text-theme-muted text-xs rounded-full border border-white/[0.04]"
                   >
                     {skill}
                   </span>
@@ -141,23 +141,23 @@ const Certifications = () => {
 
           {/* Focus areas card */}
           <motion.div
-            className="bg-[#141414] rounded-3xl border border-white/[0.06] p-8 flex flex-col justify-between min-h-[220px]"
+            className="bg-theme-bg rounded-3xl border border-white/[0.06] p-8 flex flex-col justify-between min-h-[220px]"
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.95 },
               visible: { opacity: 1, y: 0, scale: 1 },
             }}
             transition={{ duration: 0.5 }}
-            whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(94, 103, 230, 0.06)" }}
+            whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(var(--theme-accent-rgb), 0.06)" }}
           >
-            <p className="text-xs text-[#5e67e6] font-medium tracking-[0.2em] uppercase">
+            <p className="text-xs text-theme-accent font-medium tracking-[0.2em] uppercase">
               Focus Areas
             </p>
             <div className="space-y-3">
               {["Full Stack Development", "Data Structures & Algorithms", "Machine Learning", "Cloud Computing"].map(
                 (area, i) => (
                   <div key={i} className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#5e67e6]" />
-                    <span className="text-sm text-[#b5b5b5]">{area}</span>
+                    <div className="w-1.5 h-1.5 rounded-full bg-theme-accent" />
+                    <span className="text-sm text-theme-muted">{area}</span>
                   </div>
                 )
               )}

@@ -20,7 +20,7 @@ const Marquee = ({
 
   return (
     <div
-      className={`overflow-hidden py-6 border-y border-white/[0.04] bg-[#0a0a0f] ${className}`}
+      className={`overflow-hidden py-6 border-y border-white/[0.04] bg-theme-bg ${className}`}
     >
       <motion.div
         className={`flex items-center gap-8 whitespace-nowrap ${
@@ -32,10 +32,10 @@ const Marquee = ({
       >
         {content.map((item, index) => (
           <div key={index} className="flex items-center gap-8 shrink-0">
-            <span className="heading-display text-2xl md:text-3xl lg:text-4xl text-white/[0.07] hover:text-white/20 transition-colors duration-500 cursor-default select-none">
+            <span className="heading-display text-2xl md:text-3xl lg:text-4xl text-theme-text/[0.07] hover:text-theme-text/20 transition-colors duration-500 cursor-default select-none">
               {item}
             </span>
-            <span className="text-[#5e67e6]/30 text-sm">{separator}</span>
+            <span className="text-theme-accent/30 text-sm">{separator}</span>
           </div>
         ))}
       </motion.div>

@@ -74,18 +74,57 @@
   }
 }
 
-/* ── Portavia Custom Color Tokens ── */
+/* ── Unified Theme Color Tokens ── */
 :root {
+  /* Light Mode */
+  --theme-bg: #ffffff;
+  --theme-text: #0f0f0f;
+  --theme-accent: #5e67e6; /* Blue Accent */
+  --theme-accent-rgb: 94, 103, 230;
+  --theme-muted: #666666;
+  --theme-border: rgba(0, 0, 0, 0.1);
+  --theme-glass: rgba(255, 255, 255, 0.85);
+  --theme-glass-border: rgba(0, 0, 0, 0.08);
+
+  /* Legacy Fallbacks */
+  --portavia-bg: #ffffff;
+  --portavia-bg-card: #f5f5f5;
+  --portavia-bg-elevated: #e5e5e5;
+  --portavia-text: #000000;
+  --portavia-text-muted: #666666;
+  --portavia-text-subtle: #888888;
+  --portavia-accent: #5e67e6;
+  --portavia-accent-light: #7b83ed;
+  --portavia-green: #0bde66;
+  --portavia-lime: #5e67e6;
+  --portavia-border: rgba(0, 0, 0, 0.1);
+  --portavia-border-light: rgba(0, 0, 0, 0.15);
+  --portavia-glass: rgba(255, 255, 255, 0.85);
+  --portavia-glass-border: rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  /* Dark Mode */
+  --theme-bg: #0a0a0f;
+  --theme-text: #ffffff;
+  --theme-accent: #D0FF71; /* Lime/Yellow Accent */
+  --theme-accent-rgb: 208, 255, 113;
+  --theme-muted: #8f8f8f;
+  --theme-border: rgba(255, 255, 255, 0.08);
+  --theme-glass: rgba(15, 15, 15, 0.85);
+  --theme-glass-border: rgba(255, 255, 255, 0.08);
+
+  /* Legacy Fallbacks */
   --portavia-bg: #0f0f0f;
   --portavia-bg-card: #171717;
   --portavia-bg-elevated: #1f1f1f;
   --portavia-text: #ffffff;
   --portavia-text-muted: #8f8f8f;
   --portavia-text-subtle: #5c5c5c;
-  --portavia-accent: #5e67e6;
-  --portavia-accent-light: #7b83ed;
+  --portavia-accent: #D0FF71;
+  --portavia-accent-light: #e4ff9e;
   --portavia-green: #0bde66;
-  --portavia-lime: #c8ff00;
+  --portavia-lime: #D0FF71;
   --portavia-border: #2a2a2a;
   --portavia-border-light: #3a3a3a;
   --portavia-glass: rgba(15, 15, 15, 0.85);

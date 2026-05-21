@@ -61,6 +61,13 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        'theme-bg': 'var(--theme-bg)',
+        'theme-text': 'var(--theme-text)',
+        'theme-accent': 'var(--theme-accent)',
+        'theme-muted': 'var(--theme-muted)',
+        'theme-border': 'var(--theme-border)',
+        'theme-glass': 'var(--theme-glass)',
+        'theme-glass-border': 'var(--theme-glass-border)',
       },
       borderRadius: {
         lg: "var(--radius)",

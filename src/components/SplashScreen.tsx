@@ -58,15 +58,15 @@ export default function SplashScreen({ onEnter }: { onEnter: () => void }) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] flex flex-col justify-center bg-[#050505] cursor-pointer font-mono p-6 sm:p-12 md:p-24"
+          className="fixed inset-0 z-[100] flex flex-col justify-center bg-theme-bg cursor-pointer font-mono p-6 sm:p-12 md:p-24"
           onClick={handleExecute}
         >
           <div className="max-w-3xl w-full mx-auto">
             <div className="text-[#0bde66] text-sm md:text-lg lg:text-xl xl:text-2xl flex flex-wrap items-center">
               <span className="text-[#82aaff] mr-2">tanmay@portfolio</span>
-              <span className="text-white mr-2">~</span>
+              <span className="text-theme-text mr-2">~</span>
               <span className="mr-2">$</span>
-              <span>{typedCommand}</span>
+              <span className="text-theme-text">{typedCommand}</span>
               <motion.span
                 animate={{ opacity: [1, 0] }}
                 transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
@@ -79,9 +79,9 @@ export default function SplashScreen({ onEnter }: { onEnter: () => void }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
-                className="mt-8 text-[#5c5c5c] text-xs md:text-sm"
+                className="mt-8 text-theme-muted text-xs md:text-sm"
               >
-                [Press <span className="text-white font-bold">ENTER</span> or click anywhere to execute]
+                [Press <span className="text-theme-text font-bold">ENTER</span> or click anywhere to execute]
               </motion.div>
             )}
           </div>

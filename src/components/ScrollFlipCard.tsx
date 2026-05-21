@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValueEvent, useSpring } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Download,
@@ -110,26 +110,26 @@ const AccordionItem = ({
   toggle: () => void;
 }) => (
   <div
-    className={`border-b transition-colors ${isOpen ? "border-[#5e67e6]/30" : "border-white/[0.06]"
+    className={`border-b transition-colors ${isOpen ? "border-theme-accent/30" : "border-white/[0.06]"
       }`}
   >
     <button
       onClick={toggle}
       className="w-full flex items-center gap-4 py-5 text-left group"
     >
-      <span className="font-display text-xl text-[#5e67e6]/50 group-hover:text-[#5e67e6] transition-colors">
+      <span className="font-display text-xl text-theme-accent/50 group-hover:text-theme-accent transition-colors">
         {service.number}
       </span>
       <div className="flex items-center gap-3 flex-1">
         <div
           className={`p-2 rounded-lg transition-all duration-300 ${isOpen
-            ? "bg-[#5e67e6] text-white shadow-lg shadow-[#5e67e6]/20"
-            : "bg-white/[0.06] text-[#5e67e6]"
+            ? "bg-theme-accent text-theme-text shadow-lg shadow-theme-accent/20"
+            : "bg-theme-border text-theme-accent"
             }`}
         >
           {service.icon}
         </div>
-        <h3 className="font-semibold text-white text-base">
+        <h3 className="font-semibold text-theme-text text-theme-mutedase">
           {service.title}
         </h3>
       </div>
@@ -137,7 +137,7 @@ const AccordionItem = ({
         animate={{ rotate: isOpen ? 180 : 0 }}
         transition={{ duration: 0.3 }}
       >
-        <ChevronDown className="w-5 h-5 text-[#5c5c5c]" />
+        <ChevronDown className="w-5 h-5 text-theme-muted" />
       </motion.div>
     </button>
     <motion.div
@@ -147,14 +147,14 @@ const AccordionItem = ({
       className="overflow-hidden"
     >
       <div className="pb-5 pl-14">
-        <p className="text-[#8f8f8f] text-sm leading-relaxed mb-3">
+        <p className="text-theme-muted text-sm leading-relaxed mb-3">
           {service.description}
         </p>
         <div className="flex flex-wrap gap-2">
           {service.skills.map((s, i) => (
             <span
               key={i}
-              className="px-3 py-1 bg-[#5e67e6]/10 text-[#7b83ed] text-xs font-medium rounded-full border border-[#5e67e6]/20"
+              className="px-3 py-1 bg-theme-accent/10 text-theme-accent text-xs font-medium rounded-full border border-theme-accent/20"
             >
               {s}
             </span>
@@ -256,7 +256,7 @@ const StaggeredWords = ({ text, show, delay = 0, className = "", from = "center"
 const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boolean; onVideoEnd?: () => void }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [openService, setOpenService] = useState(0);
+  const [openService, setOpenService] = useState(-1);
   const [activePanel, setActivePanel] = useState<"hero" | "services" | "about">("hero");
   const [videoFinished, setVideoFinished] = useState(false);
   const [showHeroText, setShowHeroText] = useState(false);
@@ -367,12 +367,18 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
     target: containerRef,
     offset: ["start start", "end end"],
   });
+  
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   // Track active panel based on scroll progress
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest < 0.20) {
+  useMotionValueEvent(smoothProgress, "change", (latest) => {
+    if (latest < 0.30) {
       setActivePanel("hero");
-    } else if (latest < 0.58) {
+    } else if (latest < 0.70) {
       setActivePanel("services");
     } else {
       setActivePanel("about");
@@ -383,73 +389,73 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
   // Card flip: 0 → 180 → 360
   const rotateY = useTransform(
-    scrollYProgress,
-    [0, 0.12, 0.25, 0.50, 0.65, 1.0],
+    smoothProgress,
+    [0, 0.15, 0.45, 0.55, 0.85, 1.0],
     [0, 0, 180, 180, 360, 360]
   );
 
   // Card horizontal position: center → right → right-down
   const cardX = useTransform(
-    scrollYProgress,
-    [0, 0.12, 0.28, 0.55, 0.68, 1.0],
+    smoothProgress,
+    [0, 0.15, 0.45, 0.55, 0.85, 1.0],
     isMobile ? ["0%", "0%", "0%", "0%", "0%", "0%"] : ["0%", "0%", "55%", "55%", "35%", "35%"]
   );
 
   // Card vertical position: centered → down in about panel
   const cardY = useTransform(
-    scrollYProgress,
-    [0, 0.55, 0.70, 1.0],
-    isMobile ? ["-25%", "-25%", "-35%", "-35%"] : ["0%", "0%", "15%", "15%"]
+    smoothProgress,
+    [0, 0.45, 0.55, 0.85, 1.0],
+    isMobile ? ["-25%", "-25%", "-25%", "-35%", "-35%"] : ["0%", "0%", "0%", "15%", "15%"]
   );
 
   // Card scale with cinematic breathe
   const cardScale = useTransform(
-    scrollYProgress,
-    [0, 0.10, 0.18, 0.28, 0.50, 0.58, 0.68],
+    smoothProgress,
+    [0, 0.15, 0.30, 0.45, 0.55, 0.70, 0.85, 1.0],
     isMobile
-      ? [0.85, 0.85, 0.80, 0.70, 0.70, 0.80, 0.65]
-      : [1, 1, 0.92, 0.82, 0.82, 0.92, 0.80]
+      ? [0.85, 0.85, 0.75, 0.75, 0.75, 0.65, 0.65, 0.65]
+      : [1, 1, 0.85, 0.85, 0.85, 0.80, 0.90, 0.90]
   );
 
   // Card tilt Z-axis
   const cardRotateZ = useTransform(
-    scrollYProgress,
-    [0, 0.12, 0.28, 0.50, 0.65, 1.0],
+    smoothProgress,
+    [0, 0.15, 0.45, 0.55, 0.85, 1.0],
     [0, 0, 6, 6, -4, -4]
   );
 
   // Card tilt X-axis for 3D depth during about phase
   const cardRotateX = useTransform(
-    scrollYProgress,
-    [0, 0.55, 0.68, 1.0],
+    smoothProgress,
+    [0, 0.45, 0.85, 1.0],
     [0, 0, 8, 8]
   );
 
   /* ── Background glow movement ── */
-  const glowX = useTransform(scrollYProgress, [0, 0.5, 1], ["30vw", "60vw", "40vw"]);
-  const glowY = useTransform(scrollYProgress, [0, 0.5, 1], ["20vh", "40vh", "60vh"]);
-  const glowScale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [1, 1.3, 0.8, 1.1]);
+  const glowX = useTransform(smoothProgress, [0, 0.5, 1], ["30vw", "60vw", "40vw"]);
+  const glowY = useTransform(smoothProgress, [0, 0.5, 1], ["20vh", "40vh", "60vh"]);
+  const glowScale = useTransform(smoothProgress, [0, 0.3, 0.7, 1], [1, 1.3, 0.8, 1.1]);
 
   /* ── Content panel opacities ── */
 
   // Hero text
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.10, 0.17, 1.0], [1, 1, 0, 0], { clamp: true });
-  const heroY = useTransform(scrollYProgress, [0, 0.10, 0.17, 1.0], ["0px", "0px", "-80px", "-80px"], { clamp: true });
+  const heroOpacity = useTransform(smoothProgress, [0, 0.10, 0.15, 1.0], [1, 1, 0, 0], { clamp: true });
+  const heroY = useTransform(smoothProgress, [0, 0.10, 0.15, 1.0], ["0px", "0px", "-80px", "-80px"], { clamp: true });
 
   // Services text
-  const servicesOpacity = useTransform(scrollYProgress, [0, 0.17, 0.18, 0.26, 0.48, 0.55, 0.56, 1.0], [0, 0, 0, 1, 1, 0, 0, 0], { clamp: true });
-  const servicesY = useTransform(scrollYProgress, [0, 0.18, 0.26, 1.0], ["60px", "60px", "0px", "0px"], { clamp: true });
+  const servicesOpacity = useTransform(smoothProgress, [0, 0.35, 0.45, 0.55, 0.65, 1.0], [0, 0, 1, 1, 0, 0], { clamp: true });
+  const servicesY = useTransform(smoothProgress, [0, 0.35, 0.45, 1.0], ["60px", "60px", "0px", "0px"], { clamp: true });
 
   // About text
-  const aboutOpacity = useTransform(scrollYProgress, [0, 0.55, 0.56, 0.66, 0.90, 1.0], [0, 0, 0, 1, 1, 0], { clamp: true });
-  const aboutY = useTransform(scrollYProgress, [0, 0.56, 0.66, 1.0], ["60px", "60px", "0px", "0px"], { clamp: true });
+  const aboutOpacity = useTransform(smoothProgress, [0, 0.75, 0.85, 1.0], [0, 0, 1, 1], { clamp: true });
+  const aboutY = useTransform(smoothProgress, [0, 0.75, 0.85, 1.0], ["60px", "60px", "0px", "0px"], { clamp: true });
 
   return (
     <section
       ref={containerRef}
       id="home"
-      className="relative bg-[#0a0a0f]"
-      style={{ height: "600vh" }}
+      className="relative bg-theme-bg"
+      style={{ height: "350vh" }}
     >
       {/* Sticky viewport */}
       <div className="sticky top-0 h-screen overflow-hidden">
@@ -462,22 +468,22 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
             x: glowX,
             y: glowY,
             scale: glowScale,
-            background: "radial-gradient(circle, rgba(94, 103, 230, 0.08) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(var(--theme-accent-rgb), 0.08) 0%, transparent 70%)",
             filter: "blur(80px)",
             willChange: "transform",
           }}
         />
-        <div className="absolute top-[15%] left-[10%] w-[300px] h-[300px] rounded-full bg-[#5e67e6]/[0.03] blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-[20%] right-[15%] w-[250px] h-[250px] rounded-full bg-[#c8ff00]/[0.02] blur-[80px] pointer-events-none" />
+        <div className="absolute top-[15%] left-[10%] w-[300px] h-[300px] rounded-full bg-theme-accent/[0.03] blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-[20%] right-[15%] w-[250px] h-[250px] rounded-full bg-theme-accent/[0.02] blur-[80px] pointer-events-none" />
 
         {/* ── Decorative dots ── */}
         <motion.div
-          className="absolute top-20 left-10 w-2.5 h-2.5 rounded-full bg-[#c8ff00]"
+          className="absolute top-20 left-10 w-2.5 h-2.5 rounded-full bg-theme-accent"
           animate={{ opacity: [0.4, 0.9, 0.4], scale: [1, 1.2, 1] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-32 right-24 w-2 h-2 rounded-full bg-[#5e67e6]/60"
+          className="absolute bottom-32 right-24 w-2 h-2 rounded-full bg-theme-accent/60"
           animate={{ opacity: [0.3, 0.7, 0.3] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
         />
@@ -526,7 +532,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
               style={{
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
-                boxShadow: "0 25px 60px rgba(0,0,0,0.5), 0 0 40px rgba(94, 103, 230, 0.08)",
+                boxShadow: "0 25px 60px rgba(0,0,0,0.5), 0 0 40px rgba(var(--theme-accent-rgb), 0.08)",
               }}
             >
               <div className="w-full h-full bg-gradient-to-b from-[#1a1a2e] to-[#0f0f1a] relative flex items-center justify-center">
@@ -541,16 +547,27 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   onTimeUpdate={handleTimeUpdate}
                 />
 
+                {/* Elegant Skip Overlay Button */}
+                {!videoFinished && (
+                  <button
+                    onClick={unlockScroll}
+                    className="absolute bottom-5 left-5 z-40 px-4 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-theme-text text-xs font-medium tracking-wider uppercase transition-all duration-300 shadow-lg"
+                    title="Skip Intro"
+                  >
+                    Skip
+                  </button>
+                )}
+
                 {/* Elegant Volume Overlay Button */}
                 <button
                   onClick={toggleMute}
-                  className="absolute bottom-5 right-5 z-40 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-white transition-all duration-300 shadow-lg"
+                  className="absolute bottom-5 right-5 z-40 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-theme-text transition-all duration-300 shadow-lg"
                   title={isMuted ? "Unmute Intro" : "Mute Intro"}
                 >
                   {isMuted ? (
-                    <VolumeX className="w-4.5 h-4.5 text-white/80" />
+                    <VolumeX className="w-4.5 h-4.5 text-theme-text/80" />
                   ) : (
-                    <Volume2 className="w-4.5 h-4.5 text-white animate-pulse" />
+                    <Volume2 className="w-4.5 h-4.5 text-theme-text animate-pulse" />
                   )}
                 </button>
               </div>
@@ -558,44 +575,24 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
             </div>
 
-            {/* ── BACK FACE — Code Editor Card ── */}
+            {/* ── BACK FACE — Video Card ── */}
             <div
-              className="absolute inset-0 rounded-[24px] overflow-hidden"
+              className="absolute inset-0 rounded-[24px] overflow-hidden bg-theme-bg"
               style={{
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
                 transform: "rotateY(180deg)",
-                boxShadow: "0 25px 60px rgba(0,0,0,0.5), 0 0 40px rgba(94, 103, 230, 0.12)",
+                boxShadow: "0 25px 60px rgba(0,0,0,0.5), 0 0 40px rgba(var(--theme-accent-rgb), 0.12)",
               }}
             >
-              <div className="w-full h-full bg-gradient-to-br from-[#1a1a2e] via-[#141428] to-[#0f0f1a] flex flex-col p-5">
-                {/* Terminal header */}
-                <div className="flex items-center gap-2 mb-5">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-                  <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
-                  <div className="w-3 h-3 rounded-full bg-[#28c840]" />
-                  <span className="text-[10px] text-[#5c5c5c] ml-2 font-mono">tanmay@dev ~</span>
-                </div>
-                {/* Code content */}
-                <div className="flex-1 space-y-2.5 font-mono text-[11px] leading-relaxed">
-                  <p><span className="text-[#c792ea]">const</span> <span className="text-[#82aaff]">developer</span> <span className="text-white">=</span> <span className="text-[#c8ff00]">{'{'}</span></p>
-                  <p className="pl-5"><span className="text-[#0bde66]">name</span>: <span className="text-[#f78c6c]">"Tanmay Wagh"</span>,</p>
-                  <p className="pl-5"><span className="text-[#0bde66]">role</span>: <span className="text-[#f78c6c]">"Full Stack Dev"</span>,</p>
-                  <p className="pl-5"><span className="text-[#0bde66]">stack</span>: [<span className="text-[#f78c6c]">"MERN"</span>],</p>
-                  <p className="pl-5"><span className="text-[#0bde66]">passion</span>: <span className="text-[#f78c6c]">"Building"</span>,</p>
-                  <p className="pl-5"><span className="text-[#0bde66]">status</span>: <span className="text-[#f78c6c]">"Available"</span>,</p>
-                  <p><span className="text-[#c8ff00]">{'}'}</span>;</p>
-                  <p className="mt-4"><span className="text-[#c792ea]">export default</span> <span className="text-[#82aaff]">developer</span>;</p>
-                </div>
-                {/* Status bar */}
-                <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
-                  <span className="text-[9px] text-[#5c5c5c] font-mono">TypeScript · React</span>
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#0bde66]" />
-                    <span className="text-[9px] text-[#5c5c5c]">Ready</span>
-                  </div>
-                </div>
-              </div>
+              <video
+                src="/Male_developer_work_setup_video_202605211632.mp4"
+                className="w-full h-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
             </div>
           </motion.div>
         </motion.div>
@@ -630,17 +627,17 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   animate={showHeroText ? "visible" : "hidden"}
                   transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 >
-                  <p className="text-xs font-medium text-[#5e67e6] tracking-[0.25em] uppercase whitespace-nowrap flex items-center">
-                    <span className="inline-block w-8 h-[1px] bg-[#5e67e6] mr-3"></span>
+                  <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase whitespace-nowrap flex items-center">
+                    <span className="inline-block w-8 h-[1px] bg-theme-accent mr-3"></span>
                     Portfolio — 2026
                   </p>
                 </motion.div>
 
-                <h1 className="heading-display text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-white leading-[0.9]">
+                <h1 className="heading-display text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-theme-text leading-[0.9]">
                   <StaggeredChars text="TANMAY" show={showHeroText} delay={0.2} from="left" />
                 </h1>
 
-                <h2 className="heading-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-[#5e67e6] leading-[0.9] mt-2">
+                <h2 className="heading-display text-4xl md:text-theme-mutedxl lg:text-6xl xl:text-7xl text-theme-accent leading-[0.9] mt-2">
                   <StaggeredChars text="FULLSTACK" show={showHeroText} delay={0.4} from="left" />
                 </h2>
               </div>
@@ -650,7 +647,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
               {/* Right — Role + CTA */}
               <div style={{ perspective: "1000px" }}>
-                <h2 className="heading-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-[0.9] mb-6">
+                <h2 className="heading-display text-4xl md:text-theme-mutedxl lg:text-6xl xl:text-7xl text-theme-text leading-[0.9] mb-6">
                   <StaggeredChars text="DEVELOPER" show={showHeroText} delay={0.6} from="right" />
                 </h2>
                 
@@ -659,7 +656,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   show={showHeroText}
                   delay={1.0}
                   from="right"
-                  className="text-[#8f8f8f] text-sm md:text-base leading-relaxed max-w-sm mb-8"
+                  className="text-theme-muted text-sm md:text-theme-mutedase leading-relaxed max-w-sm mb-8"
                 />
 
                 <motion.div
@@ -688,7 +685,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                     href="https://drive.google.com/file/d/13nycX1DY00a2PZ2AM_QyvPeRfRo7rgAM/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative group inline-flex items-center gap-2 px-7 py-3.5 text-white text-sm font-semibold rounded-full border border-white/15 transition-all duration-300 hover:border-white/40 hover:bg-white/[0.04] overflow-hidden"
+                    className="relative group inline-flex items-center gap-2 px-7 py-3.5 text-theme-text text-sm font-semibold rounded-full border border-white/15 transition-all duration-300 hover:border-white/40 hover:bg-theme-border overflow-hidden"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -711,10 +708,10 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
             >
               {!videoFinished ? (
                 <div className="flex flex-col items-center gap-2">
-                  <span className="text-[10px] tracking-[0.2em] uppercase text-[#5e67e6] animate-pulse">Introduction Playing...</span>
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-theme-accent animate-pulse">Introduction Playing...</span>
                   <button
                     onClick={unlockScroll}
-                    className="mt-1 text-[9px] tracking-[0.15em] uppercase text-white/40 hover:text-white border border-white/10 hover:border-white/30 px-3 py-1.5 rounded-full transition-all duration-300 bg-white/[0.02] cursor-pointer"
+                    className="mt-1 text-[9px] tracking-[0.15em] uppercase text-theme-text/40 hover:text-theme-text border border-white/10 hover:border-white/30 px-3 py-1.5 rounded-full transition-all duration-300 bg-theme-border cursor-pointer"
                   >
                     Skip Intro
                   </button>
@@ -722,7 +719,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
               ) : (
                 <a
                   href="#services"
-                  className="flex items-center gap-2 text-[#5c5c5c] hover:text-white transition-colors group"
+                  className="flex items-center gap-2 text-theme-muted hover:text-theme-text transition-colors group"
                 >
                   <span className="text-[10px] tracking-[0.2em] uppercase">Scroll down</span>
                   <motion.div
@@ -748,15 +745,15 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
         >
           <div className="container mx-auto px-6 lg:px-12 pt-[45vh] lg:pt-0">
             <div className="max-w-lg">
-              <p className="text-xs font-medium text-[#5e67e6] tracking-[0.25em] uppercase mb-3">
+              <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
                 What I Do
               </p>
-              <h2 className="heading-section text-4xl md:text-5xl text-white mb-2">
+              <h2 className="heading-section text-4xl md:text-theme-mutedxl text-theme-text mb-2">
                 WHAT I CAN
                 <br />
                 DO FOR YOU
               </h2>
-              <p className="text-[#8f8f8f] text-sm leading-relaxed mb-8 max-w-md">
+              <p className="text-theme-muted text-sm leading-relaxed mb-8 max-w-md">
                 Specialized in building modern web applications with clean code and
                 scalable architecture.
               </p>
@@ -791,20 +788,20 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left — About text */}
               <div className="max-w-lg" id="about">
-                <p className="text-xs font-medium text-[#5e67e6] tracking-[0.25em] uppercase mb-3">
+                <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
                   Get To Know Me
                 </p>
-                <h2 className="heading-section text-4xl md:text-5xl text-white mb-6">
+                <h2 className="heading-section text-4xl md:text-theme-mutedxl text-theme-text mb-6">
                   ABOUT ME
                 </h2>
-                <p className="text-[#8f8f8f] text-sm leading-relaxed mb-4">
-                  Hi, I'm <span className="text-white font-semibold">Tanmay Wagh</span> — a
+                <p className="text-theme-muted text-sm leading-relaxed mb-4">
+                  Hi, I'm <span className="text-theme-text font-semibold">Tanmay Wagh</span> — a
                   B.Tech CSE student at MIT School of Computing, MIT ADT University.
                   I'm passionate about building beautiful, functional web applications
                   using modern technologies.
                 </p>
-                <p className="text-[#5c5c5c] text-sm leading-relaxed mb-6">
-                  Currently interning as a Developer at Banao Technologies, where I
+                <p className="text-theme-muted text-sm leading-relaxed mb-6">
+                  Currently interning as a <span className="text-theme-text font-semibold">Developer at Banao Technologies</span>, where I
                   develop Chrome Extensions and integrate backend functionalities with
                   Node.js.
                 </p>
@@ -812,8 +809,8 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 {/* Stats row */}
                 <div className="flex items-center gap-6 mb-6">
                   {stats.map((stat, i) => (
-                    <div key={i} className="text-center">
-                      <p className="heading-display text-2xl md:text-3xl text-[#c8ff00]">
+                    <div key={i} className="text-theme-mutedenter">
+                      <p className="heading-display text-2xl md:text-3xl text-theme-accent">
                         <CountUp
                           target={stat.value}
                           suffix={stat.suffix}
@@ -822,7 +819,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                           start={activePanel === "about"}
                         />
                       </p>
-                      <p className="text-[10px] text-[#5c5c5c] uppercase tracking-wide mt-1">
+                      <p className="text-[10px] text-theme-muted uppercase tracking-wide mt-1">
                         {stat.label}
                       </p>
                     </div>
@@ -830,8 +827,8 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 </div>
 
                 {/* Location */}
-                <div className="flex items-center gap-2 text-[#5c5c5c] mb-6">
-                  <MapPin className="w-3.5 h-3.5 text-[#5e67e6]" />
+                <div className="flex items-center gap-2 text-theme-muted mb-6">
+                  <MapPin className="w-3.5 h-3.5 text-theme-accent" />
                   <span className="text-xs">Maharashtra, India</span>
                 </div>
 
@@ -847,7 +844,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full border border-white/[0.08] flex items-center justify-center text-[#8f8f8f] hover:text-[#5e67e6] hover:border-[#5e67e6]/30 hover:bg-[#5e67e6]/5 transition-all duration-300"
+                      className="w-10 h-10 rounded-full border border-white/[0.08] flex items-center justify-center text-theme-muted hover:text-theme-accent hover:border-theme-accent/30 hover:bg-theme-accent/5 transition-all duration-300"
                     >
                       {social.icon}
                     </a>
@@ -859,7 +856,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   {skillsList.slice(0, 12).map((skill, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1.5 bg-white/[0.04] border border-white/[0.06] text-[#b5b5b5] text-xs font-medium rounded-full hover:border-[#5e67e6]/30 hover:bg-[#5e67e6]/5 hover:text-white transition-all duration-300"
+                      className="px-3 py-1.5 bg-theme-border border border-white/[0.06] text-theme-muted text-xs font-medium rounded-full hover:border-theme-accent/30 hover:bg-theme-accent/5 hover:text-theme-text transition-all duration-300"
                     >
                       {skill}
                     </span>
