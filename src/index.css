@@ -42,35 +42,35 @@
 
   /* ── Dark Mode (Portavia default) ── */
   .dark {
-    --background: 0 0% 6%;
-    --foreground: 0 0% 95%;
-    --card: 0 0% 9%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 238 74% 63%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 64%;
-    --accent: 80 100% 72%;
-    --accent-foreground: 0 0% 6%;
+    --background: 0 0% 2%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 4.3%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 4.3%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 74 100% 65%;
+    --primary-foreground: 0 0% 2%;
+    --secondary: 0 0% 4.3%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 4.3%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 74 100% 65%;
+    --accent-foreground: 0 0% 2%;
     --destructive: 0 63% 51%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 16%;
-    --input: 0 0% 16%;
-    --ring: 238 74% 63%;
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 74 100% 65%;
     --radius: 1.5rem;
 
-    --sidebar-background: 0 0% 9%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 238 74% 63%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 15%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 0 0% 16%;
-    --sidebar-ring: 238 74% 63%;
+    --sidebar-background: 0 0% 4.3%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 74 100% 65%;
+    --sidebar-primary-foreground: 0 0% 2%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 0 0% 10%;
+    --sidebar-ring: 74 100% 65%;
   }
 }
 
@@ -105,29 +105,29 @@
 
 .dark {
   /* Dark Mode */
-  --theme-bg: #0a0a0f;
-  --theme-text: #ffffff;
-  --theme-accent: #D0FF71; /* Lime/Yellow Accent */
-  --theme-accent-rgb: 208, 255, 113;
-  --theme-muted: #8f8f8f;
+  --theme-bg: #050505;
+  --theme-text: #F5F5F5;
+  --theme-accent: #D6FF4D; /* Neon Lime */
+  --theme-accent-rgb: 214, 255, 77;
+  --theme-muted: #9A9A9A;
   --theme-border: rgba(255, 255, 255, 0.08);
-  --theme-glass: rgba(15, 15, 15, 0.85);
+  --theme-glass: rgba(10, 10, 10, 0.6);
   --theme-glass-border: rgba(255, 255, 255, 0.08);
 
   /* Legacy Fallbacks */
-  --portavia-bg: #0f0f0f;
-  --portavia-bg-card: #171717;
-  --portavia-bg-elevated: #1f1f1f;
-  --portavia-text: #ffffff;
-  --portavia-text-muted: #8f8f8f;
-  --portavia-text-subtle: #5c5c5c;
-  --portavia-accent: #D0FF71;
-  --portavia-accent-light: #e4ff9e;
+  --portavia-bg: #050505;
+  --portavia-bg-card: #0B0B0B;
+  --portavia-bg-elevated: #151515;
+  --portavia-text: #F5F5F5;
+  --portavia-text-muted: #9A9A9A;
+  --portavia-text-subtle: #666666;
+  --portavia-accent: #D6FF4D;
+  --portavia-accent-light: #E7FF91; /* Button Hover / Lime White Mix */
   --portavia-green: #0bde66;
-  --portavia-lime: #D0FF71;
-  --portavia-border: #2a2a2a;
-  --portavia-border-light: #3a3a3a;
-  --portavia-glass: rgba(15, 15, 15, 0.85);
+  --portavia-lime: #D6FF4D;
+  --portavia-border: rgba(255, 255, 255, 0.08);
+  --portavia-border-light: rgba(255, 255, 255, 0.12);
+  --portavia-glass: rgba(10, 10, 10, 0.6);
   --portavia-glass-border: rgba(255, 255, 255, 0.08);
 }
 
@@ -146,8 +146,8 @@
   }
 
   ::selection {
-    background: rgba(94, 103, 230, 0.3);
-    color: #fff;
+    background: rgba(214, 255, 77, 0.3);
+    color: #000;
   }
 }
 
@@ -179,12 +179,12 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #5e67e6, #7b83ed, #a78bfa);
+    background-image: linear-gradient(135deg, #F5F5F5, #D6FF4D, #C8FF5C);
   }
 
   .text-gradient-lime {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #c8ff00, #a3e635);
+    background-image: linear-gradient(135deg, #D6FF4D, #E7FF91);
   }
 
   /* ── Glass Effects ── */
@@ -233,10 +233,10 @@
 
   /* ── Glow Effects ── */
   .glow-accent {
-    box-shadow: 0 0 40px rgba(94, 103, 230, 0.15), 0 0 80px rgba(94, 103, 230, 0.05);
+    box-shadow: 0 0 40px rgba(214, 255, 77, 0.15), 0 0 80px rgba(214, 255, 77, 0.05);
   }
   .glow-lime {
-    box-shadow: 0 0 30px rgba(200, 255, 0, 0.15);
+    box-shadow: 0 0 30px rgba(214, 255, 77, 0.15);
   }
 }
 

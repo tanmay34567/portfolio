@@ -1,5 +1,5 @@
-import { ArrowRight, ArrowUpRight, Globe } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, ArrowUpRight, Globe, Github } from "lucide-react";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import ScrollReveal from "./ScrollReveal";
 import { Link, useNavigate } from "react-router-dom";
@@ -27,7 +27,6 @@ const projects: Project[] = [
     liveLink: "https://everydaymeal.app",
     githubLink: "https://github.com/tanmay34567/EveryDayMeal",
     image: "/projects/everydaymeal.png",
-    iframeUrl: "https://everydaymeal.app",
   },
   {
     id: "slotswapper",
@@ -83,215 +82,167 @@ const projects: Project[] = [
     githubLink: "https://github.com/tanmay34567/Linkedin_extension",
     image: "/projects/linkedin.png",
   },
+  {
+    id: "devflow",
+    title: "DevFlow",
+    subtitle: "Developer Forum",
+    description:
+      "A Q&A platform for programmers to search, answer, and ask coding questions. Built with Next.js, React, Clerk, and MongoDB.",
+    tech: ["Next.js", "React.js", "MongoDB", "Tailwind CSS", "Clerk"],
+    githubLink: "https://github.com/tanmay34567/DevFlow",
+    image: "/projects/devflow.png",
+  },
+  {
+    id: "shopsphere",
+    title: "ShopSphere",
+    subtitle: "E-Commerce App",
+    description:
+      "A fully-featured modern e-commerce storefront with cart, checkout, payments, and admin dashboard integrations.",
+    tech: ["React.js", "Node.js", "Redux Toolkit", "Stripe", "Express.js", "MongoDB"],
+    githubLink: "https://github.com/tanmay34567/ShopSphere",
+    image: "/projects/shopsphere.png",
+  },
 ];
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const columnVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: 30,
+    scale: 0.98,
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.7,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+};
 
 /* ───────────────────────────────────────────────
    Browser-Frame Preview Card
    ─────────────────────────────────────────────── */
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const scrollIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [iframeLoaded, setIframeLoaded] = useState(false);
-  const [iframeFailed, setIframeFailed] = useState(false);
-
-  const navigate = useNavigate();
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "start start"],
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [0.92, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0.4, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [60, 0]);
-
-  /* Auto-scroll the iframe on hover */
-  const startAutoScroll = useCallback(() => {
-    if (scrollIntervalRef.current) return;
-    scrollIntervalRef.current = setInterval(() => {
-      try {
-        iframeRef.current?.contentWindow?.scrollBy({ top: 1, behavior: "smooth" });
-      } catch {
-        /* cross-origin — ignore silently */
-      }
-    }, 30);
-  }, []);
-
-  const stopAutoScroll = useCallback(() => {
-    if (scrollIntervalRef.current) {
-      clearInterval(scrollIntervalRef.current);
-      scrollIntervalRef.current = null;
-    }
-  }, []);
-
-  useEffect(() => () => stopAutoScroll(), [stopAutoScroll]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const el = e.currentTarget as HTMLElement;
-    const rect = el.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    startAutoScroll();
-  };
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    stopAutoScroll();
-  };
-
-  const handleClick = () => {
-    navigate(`/project/${project.id}`);
-  };
-
-  const hasIframe = !!project.iframeUrl && !iframeFailed;
+const ProjectGridCard = ({
+  project,
+  isProfile = false,
+  title,
+  subtitle,
+  image,
+  href,
+  aspectClass = "aspect-[3/4]",
+  isVideo = false,
+  videoSrc
+}: {
+  project?: Project;
+  isProfile?: boolean;
+  title?: string;
+  subtitle?: string;
+  image?: string;
+  href?: string;
+  aspectClass?: string;
+  isVideo?: boolean;
+  videoSrc?: string;
+}) => {
+  const [imageError, setImageError] = useState(false);
+  const displayTitle = isProfile ? title : project?.title;
+  const displaySubtitle = isProfile ? subtitle : project?.subtitle;
+  const displayImage = isProfile ? image : project?.image;
+  const displayId = project?.id;
 
   return (
     <motion.div
-      ref={containerRef}
-      className="sticky w-full max-w-[1100px] mx-auto"
-      style={{
-        top: `${80 + index * 45}px`,
-        scale,
-        opacity,
-        y,
-        zIndex: index + 1,
-        willChange: "transform, opacity",
-      }}
+      variants={cardVariants}
+      className={`group relative overflow-hidden bg-zinc-950/40 backdrop-blur-sm transition-all duration-500 ${
+        isVideo
+          ? "rounded-full border border-theme-accent/25 hover:border-theme-accent/50 aspect-square w-full max-w-[320px] mx-auto shadow-[0_0_20px_rgba(var(--theme-accent-rgb),0.03)] hover:shadow-[0_0_30px_rgba(var(--theme-accent-rgb),0.12)]"
+          : "rounded-[4px] border border-white/[0.04]"
+      }`}
     >
-      <div
-        className="group relative mb-6 cursor-none"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-        onClick={handleClick}
+      <Link
+        to={isProfile ? (href || "#") : `/project/${displayId}`}
+        className={`block relative w-full ${isVideo ? "aspect-square rounded-full" : aspectClass} overflow-hidden`}
+        onClick={(e) => {
+          if (isProfile && href && href.startsWith("#")) {
+            e.preventDefault();
+            const element = document.getElementById(href.replace("#", ""));
+            if (element) {
+              element.scrollIntoView({ behavior: "smooth" });
+            }
+          }
+        }}
       >
-        {/* ── Glassmorphism Browser Frame ────────────────────── */}
-        <div
-          className="relative rounded-[1.5rem] overflow-hidden transition-all duration-700"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            boxShadow: isHovered
-              ? "0 40px 80px rgba(0,0,0,0.55), 0 0 60px rgba(209,255,77,0.06)"
-              : "0 25px 50px rgba(0,0,0,0.4)",
-          }}
-        >
-          {/* ── Top Bar (Mac style) ──────────────────────────── */}
-          <div className="flex items-center gap-3 px-5 py-3.5 bg-[#1a1a1e]/90 backdrop-blur-xl border-b border-white/[0.06]">
-            {/* Traffic lights */}
-            <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-[#ff5f57] transition-transform duration-300 group-hover:scale-110" />
-              <div className="w-3 h-3 rounded-full bg-[#febc2e] transition-transform duration-300 group-hover:scale-110 delay-75" />
-              <div className="w-3 h-3 rounded-full bg-[#28c840] transition-transform duration-300 group-hover:scale-110 delay-150" />
-            </div>
-
-            {/* URL bar */}
-            <div className="flex-1 flex items-center justify-center">
-              <div className="flex items-center gap-2 px-4 py-1.5 bg-white/[0.06] rounded-lg border border-white/[0.06] max-w-md w-full">
-                <Globe className="w-3.5 h-3.5 text-white/30 flex-shrink-0" />
-                <span className="text-white/40 text-xs font-mono truncate">
-                  {project.iframeUrl || project.liveLink || `github.com/${project.id}`}
-                </span>
-                {hasIframe && (
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#28c840] flex-shrink-0 animate-pulse" />
-                )}
-              </div>
-            </div>
-
-            {/* Spacer for symmetry */}
-            <div className="w-[52px]" />
-          </div>
-
-          {/* ── Content Area (iframe or fallback image) ──────── */}
-          <div className="relative w-full overflow-hidden bg-[#0f0f0f]" style={{ height: "70vh", minHeight: "500px", maxHeight: "700px" }}>
-            {hasIframe ? (
-              <>
-                {/* Loading skeleton */}
-                {!iframeLoaded && (
-                  <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-[#0f0f0f]">
-                    <div className="w-10 h-10 border-2 border-white/10 border-t-[#D1FF4D] rounded-full animate-spin" />
-                    <span className="text-white/30 text-sm font-medium">Loading live preview…</span>
-                  </div>
-                )}
-
-                <iframe
-                  ref={iframeRef}
-                  src={project.iframeUrl}
-                  title={`${project.title} Live Preview`}
-                  loading="lazy"
-                  onLoad={() => setIframeLoaded(true)}
-                  onError={() => setIframeFailed(true)}
-                  className="border-none"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    opacity: iframeLoaded ? 1 : 0,
-                    pointerEvents: "none",
-                    transition: "opacity 0.5s ease",
-                  }}
-                  sandbox="allow-scripts allow-same-origin"
-                />
-
-                {/* Invisible overlay to capture mouse events over iframe */}
-                <div className="absolute inset-0 z-20" />
-              </>
-            ) : (
-              /* Fallback: static image */
-              <div className="absolute inset-0">
-                {project.image ? (
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-[#131316]">
-                    <span className="text-white/20 text-sm">No preview available</span>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Noise texture overlay */}
-            <div
-              className="absolute inset-0 z-[15] pointer-events-none opacity-[0.03]"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-              }}
+        {/* Render Video or Zoom Image */}
+        <div className="absolute inset-0 overflow-hidden">
+          {isVideo && videoSrc ? (
+            <video
+              src={videoSrc}
+              className="w-full h-full object-cover object-center scale-100 group-hover:scale-105 transition-all duration-700 ease-out"
+              autoPlay
+              loop
+              muted
+              playsInline
+              style={{ mixBlendMode: "screen" }}
             />
-          </div>
+          ) : !imageError && displayImage ? (
+            <img
+              src={displayImage}
+              alt={displayTitle || "Project preview"}
+              className="w-full h-full object-cover object-top scale-100 group-hover:scale-105 transition-all duration-700 ease-out"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            /* Fallback dynamic gradient if image is missing */
+            <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-zinc-900 via-neutral-900 to-zinc-950 text-center select-none">
+              <span className="text-4xl md:text-5xl font-bold uppercase text-white/10 tracking-widest font-sans mb-2">
+                {displayTitle ? displayTitle.substring(0, 2) : "PR"}
+              </span>
+              <h4 className="text-white/60 font-semibold uppercase tracking-wider text-sm">
+                {displayTitle}
+              </h4>
+              <p className="text-white/30 text-xs mt-1">
+                {displaySubtitle}
+              </p>
+            </div>
+          )}
         </div>
 
-        {/* Follow-cursor arrow — outside the overflow:hidden frame so it's never clipped */}
-        <motion.div
-          className="absolute top-0 left-0 z-50 w-16 h-16 rounded-full bg-[#D1FF4D] flex items-center justify-center pointer-events-none"
-          animate={{
-            x: mousePosition.x - 32,
-            y: mousePosition.y - 32,
-            scale: isHovered ? 1 : 0,
-            opacity: isHovered ? 1 : 0,
-          }}
-          transition={{
-            type: "tween",
-            ease: "backOut",
-            duration: 0.25,
-          }}
-          style={{
-            boxShadow: "0 0 30px rgba(209,255,77,0.4)",
-          }}
-        >
-          <ArrowUpRight className="w-6 h-6 text-[#0c0c0d]" />
-        </motion.div>
-      </div>
+        {/* Ambient top dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/45 pointer-events-none" />
+
+        {/* Floating badge for project cards (not profile pic) */}
+        {!isProfile && (
+          <div className="absolute bottom-4 left-4 right-4 z-20 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+            <div 
+              className="w-full flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border border-white/15 bg-neutral-950/30 backdrop-blur-md text-white text-xs font-semibold tracking-wide shadow-[rgba(92,92,92,0.3)_0px_0px_20px_4px] transition-all duration-300 group-hover:bg-[#636363]/40 group-hover:border-white/30"
+            >
+              <span>View</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </div>
+          </div>
+        )}
+      </Link>
     </motion.div>
   );
 };
@@ -301,13 +252,13 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
    ─────────────────────────────────────────────── */
 const Projects = () => {
   return (
-    <section id="projects" className="py-28 bg-theme-bg relative">
+    <section id="projects" className="py-28 bg-transparent relative">
       {/* Ambient glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-theme-accent/[0.03] blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="flex flex-col text-center items-center gap-4 mb-28 relative z-10">
+        <div className="flex flex-col text-center items-center gap-4 mb-24 relative z-10">
           <ScrollReveal direction="up">
             <p className="text-sm font-medium text-[#D1FF4D] tracking-[0.25em] uppercase mb-3">
               Selected Work
@@ -323,27 +274,197 @@ const Projects = () => {
           </ScrollReveal>
         </div>
 
-        {/* Stacking Cards */}
-        <div className="w-full relative" style={{ paddingBottom: `${projects.length * 45 + 100}px` }}>
-          {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
-          ))}
-        </div>
+        {/* Desktop 3-Column Masonry Grid (lg breakpoint) */}
+        <motion.div 
+          className="hidden lg:grid grid-cols-3 gap-6 items-start relative z-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+        >
+          {/* Column 1 */}
+          <motion.div variants={columnVariants} className="flex flex-col gap-6">
+            <ProjectGridCard 
+              project={projects[0]} 
+              aspectClass="aspect-[1365/648]"
+            />
+            <ProjectGridCard 
+              project={projects[3]} 
+              aspectClass="aspect-[3/4]"
+            />
+            <ProjectGridCard 
+              project={projects[4]} 
+              aspectClass="aspect-[321/200]"
+            />
+          </motion.div>
 
-        {/* Browse all */}
-        <ScrollReveal direction="up" delay={0.1} className="flex justify-center mt-16 relative z-10">
-          <motion.a
-            href="https://github.com/tanmay34567"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#0f0f0f] font-semibold rounded-full hover:bg-gray-100 transition-all duration-200 shadow-lg shadow-black/10 group"
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Browse All Projects
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </motion.a>
-        </ScrollReveal>
+          {/* Column 2 (Offset downwards) */}
+          <motion.div variants={columnVariants} className="flex flex-col gap-6 lg:pt-16">
+            <ProjectGridCard 
+              isProfile={true}
+              title="Tanmay Wagh"
+              subtitle="About Me"
+              image="/portrait.png"
+              href="#about"
+              aspectClass="aspect-[3/4]"
+              isVideo={true}
+              videoSrc="/make_the_face_body_proportion.mp4"
+            />
+            <ProjectGridCard 
+              project={projects[2]} 
+              aspectClass="aspect-[3/4]"
+            />
+            <ProjectGridCard 
+              project={projects[5]} 
+              aspectClass="aspect-[3/4]"
+            />
+          </motion.div>
+
+          {/* Column 3 */}
+          <motion.div variants={columnVariants} className="flex flex-col gap-6">
+            <ProjectGridCard 
+              project={projects[1]} 
+              aspectClass="aspect-[1365/646]"
+            />
+            <ProjectGridCard 
+              project={projects[6]} 
+              aspectClass="aspect-[3/4]"
+            />
+            <ProjectGridCard 
+              project={projects[7]} 
+              aspectClass="aspect-[3/4]"
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* Tablet 2-Column Grid (md breakpoint) */}
+        <motion.div 
+          className="hidden md:grid lg:hidden grid-cols-2 gap-6 items-start relative z-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+        >
+          {/* Column 1 */}
+          <motion.div variants={columnVariants} className="flex flex-col gap-6">
+            <ProjectGridCard 
+              project={projects[0]} 
+              aspectClass="aspect-[1365/648]"
+            />
+            <ProjectGridCard 
+              isProfile={true}
+              title="Tanmay Wagh"
+              subtitle="About Me"
+              image="/portrait.png"
+              href="#about"
+              aspectClass="aspect-[3/4]"
+              isVideo={true}
+              videoSrc="/make_the_face_body_proportion.mp4"
+            />
+            <ProjectGridCard 
+              project={projects[3]} 
+              aspectClass="aspect-[3/4]"
+            />
+            <ProjectGridCard 
+              project={projects[4]} 
+              aspectClass="aspect-[321/200]"
+            />
+            <ProjectGridCard 
+              project={projects[7]} 
+              aspectClass="aspect-[3/4]"
+            />
+          </motion.div>
+
+          {/* Column 2 */}
+          <motion.div variants={columnVariants} className="flex flex-col gap-6">
+            <ProjectGridCard 
+              project={projects[1]} 
+              aspectClass="aspect-[1365/646]"
+            />
+            <ProjectGridCard 
+              project={projects[2]} 
+              aspectClass="aspect-[3/4]"
+            />
+            <ProjectGridCard 
+              project={projects[5]} 
+              aspectClass="aspect-[3/4]"
+            />
+            <ProjectGridCard 
+              project={projects[6]} 
+              aspectClass="aspect-[3/4]"
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* Mobile 1-Column List */}
+        <motion.div 
+          className="grid md:hidden grid-cols-1 gap-6 relative z-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={columnVariants}
+        >
+          <ProjectGridCard 
+            project={projects[0]} 
+            aspectClass="aspect-[1365/648]"
+          />
+          <ProjectGridCard 
+            isProfile={true}
+            title="Tanmay Wagh"
+            subtitle="About Me"
+            image="/portrait.png"
+            href="#about"
+            aspectClass="aspect-[3/4]"
+            isVideo={true}
+            videoSrc="/make_the_face_body_proportion.mp4"
+          />
+          <ProjectGridCard 
+            project={projects[1]} 
+            aspectClass="aspect-[1365/646]"
+          />
+          <ProjectGridCard 
+            project={projects[2]} 
+            aspectClass="aspect-[3/4]"
+          />
+          <ProjectGridCard 
+            project={projects[3]} 
+            aspectClass="aspect-[3/4]"
+          />
+          <ProjectGridCard 
+            project={projects[4]} 
+            aspectClass="aspect-[321/200]"
+          />
+          <ProjectGridCard 
+            project={projects[5]} 
+            aspectClass="aspect-[3/4]"
+          />
+          <ProjectGridCard 
+            project={projects[6]} 
+            aspectClass="aspect-[3/4]"
+          />
+          <ProjectGridCard 
+            project={projects[7]} 
+            aspectClass="aspect-[3/4]"
+          />
+        </motion.div>
+
+        {/* View All Projects Button */}
+        <div className="flex justify-center mt-16 relative z-10">
+          <ScrollReveal direction="up" delay={0.2}>
+            <motion.a
+              href="https://github.com/tanmay34567"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 px-8 py-4 font-semibold text-sm rounded-full transition-all duration-300 border border-theme-border bg-theme-bg/60 backdrop-blur-md text-theme-text shadow-lg hover:border-theme-accent/50 hover:shadow-[0_0_25px_rgba(var(--theme-accent-rgb),0.12)] group"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Github className="w-4 h-4 text-theme-muted group-hover:text-theme-accent transition-colors" />
+              <span>More Projects on GitHub</span>
+              <ArrowUpRight className="w-4 h-4 text-theme-muted group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-theme-accent transition-all" />
+            </motion.a>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   );

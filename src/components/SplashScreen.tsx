@@ -58,7 +58,7 @@ export default function SplashScreen({ onEnter }: { onEnter: () => void }) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] flex flex-col justify-center bg-theme-bg cursor-pointer font-mono p-6 sm:p-12 md:p-24"
+          className="fixed inset-0 z-[100] flex flex-col justify-center bg-transparent cursor-pointer font-mono p-6 sm:p-12 md:p-24"
           onClick={handleExecute}
         >
           <div className="max-w-3xl w-full mx-auto">

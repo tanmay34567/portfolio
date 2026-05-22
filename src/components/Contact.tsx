@@ -47,7 +47,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-theme-bg relative overflow-hidden">
+    <section id="contact" className="py-24 bg-transparent relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-theme-accent/[0.03] blur-[120px] pointer-events-none" />
 
@@ -95,7 +95,7 @@ const Contact = () => {
                   />
                 </motion.div>
                 <motion.div
-                  className="absolute -bottom-3 -right-3 bg-theme-bg rounded-2xl px-4 py-2.5 shadow-lg shadow-black/30 border border-white/[0.06]"
+                  className="absolute -bottom-3 -right-3 bg-theme-bg rounded-2xl px-4 py-2.5 shadow-lg shadow-black/30 border border-theme-border"
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
                 >
@@ -132,7 +132,7 @@ const Contact = () => {
                   {item.isLink ? (
                     <motion.a
                       href={item.href}
-                      className="flex items-center gap-4 p-4 bg-theme-bg rounded-2xl border border-white/[0.06] hover:border-theme-accent/20 transition-all duration-300 group"
+                      className="flex items-center gap-4 p-4 bg-theme-bg rounded-2xl border border-theme-border hover:border-theme-accent/20 transition-all duration-300 group"
                       whileHover={{ y: -3, boxShadow: "0 10px 30px rgba(var(--theme-accent-rgb), 0.06)" }}
                     >
                       <div className="p-3 bg-theme-accent/10 rounded-xl text-theme-accent group-hover:bg-theme-accent group-hover:text-theme-text transition-all duration-300">
@@ -145,7 +145,7 @@ const Contact = () => {
                     </motion.a>
                   ) : (
                     <motion.div
-                      className="flex items-center gap-4 p-4 bg-theme-bg rounded-2xl border border-white/[0.06] group"
+                      className="flex items-center gap-4 p-4 bg-theme-bg rounded-2xl border border-theme-border group"
                       whileHover={{ y: -3, boxShadow: "0 10px 30px rgba(var(--theme-accent-rgb), 0.06)" }}
                     >
                       <div className="p-3 bg-theme-accent/10 rounded-xl text-theme-accent">
@@ -164,7 +164,7 @@ const Contact = () => {
 
           {/* Right — Contact Form */}
           <ScrollReveal direction="left" delay={0.2} duration={0.7}>
-            <div className="bg-theme-bg rounded-3xl border border-white/[0.06] p-8 md:p-10 shadow-sm">
+            <div className="bg-theme-bg rounded-3xl border border-theme-border p-8 md:p-10 shadow-sm">
               <h3 className="heading-section text-2xl text-theme-text mb-8">SEND A MESSAGE</h3>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -177,7 +177,7 @@ const Contact = () => {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Your name"
-                      className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-white/[0.06] text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all"
+                      className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-theme-border text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all"
                       required
                     />
                   </div>
@@ -190,7 +190,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="your@email.com"
-                      className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-white/[0.06] text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all"
+                      className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-theme-border text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all"
                       required
                     />
                   </div>
@@ -203,7 +203,7 @@ const Contact = () => {
                   <select
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-white/[0.06] text-theme-text text-sm focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all appearance-none cursor-pointer"
+                    className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-theme-border text-theme-text text-sm focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all appearance-none cursor-pointer"
                   >
                     <option value="">Select a service</option>
                     <option value="frontend">Frontend Development</option>
@@ -223,7 +223,7 @@ const Contact = () => {
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Tell me about your project..."
                     rows={4}
-                    className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-white/[0.06] text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all resize-none"
+                    className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-theme-border text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all resize-none"
                     required
                   />
                 </div>
@@ -264,7 +264,7 @@ const Contact = () => {
                   <motion.p
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`text-sm text-theme-mutedenter mt-3 ${
+                    className={`text-sm text-center mt-3 ${
                       status === "success" ? "text-emerald-400" : "text-red-400"
                     }`}
                   >

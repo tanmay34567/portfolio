@@ -10,6 +10,7 @@ import Testimonials from "@/components/Testimonials";
 import Certifications from "@/components/Certifications";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 const techMarquee = [
   "React.js",
@@ -59,7 +60,8 @@ const Index = () => {
         <link rel="canonical" href="https://tanmaywagh.dev" />
       </Helmet>
 
-      <div className="min-h-screen bg-[#0a0a0f]">
+      <div className="min-h-screen bg-transparent relative">
+        <AnimatedBackground />
         {!hasEntered && <SplashScreen onEnter={() => setHasEntered(true)} />}
         <motion.div 
           animate={{ opacity: isVideoFinished ? 1 : 0, y: isVideoFinished ? 0 : -20 }}
@@ -70,32 +72,37 @@ const Index = () => {
             <Navbar />
           </div>
         </motion.div>
-        <main>
-          {/* Portavia scroll: Hero → Services → About (dark, persistent card) */}
-          <ScrollFlipCard 
-            startVideo={hasEntered} 
-            onVideoEnd={() => setIsVideoFinished(true)} 
-          />
+        <div 
+          className="transition-opacity duration-700"
+          style={{ opacity: hasEntered ? 1 : 0, pointerEvents: hasEntered ? "auto" : "none" }}
+        >
+          <main>
+            {/* Portavia scroll: Hero → Services → About (dark, persistent card) */}
+            <ScrollFlipCard 
+              startVideo={hasEntered} 
+              onVideoEnd={() => setIsVideoFinished(true)} 
+            />
 
-          {/* Tech ticker */}
-          <Marquee items={techMarquee} speed={35} />
+            {/* Tech ticker */}
+            <Marquee items={techMarquee} speed={35} />
 
-          {/* Projects section */}
-          <Projects />
+            {/* Projects section */}
+            <Projects />
 
-          {/* Status ticker (reverse direction) */}
-          <Marquee items={statusMarquee} speed={40} reverse separator="◆" />
+            {/* Status ticker (reverse direction) */}
+            <Marquee items={statusMarquee} speed={40} reverse separator="◆" />
 
-          {/* Testimonials */}
-          <Testimonials />
+            {/* Testimonials */}
+            <Testimonials />
 
-          {/* Certifications */}
-          <Certifications />
+            {/* Certifications */}
+            <Certifications />
 
-          {/* Contact */}
-          <Contact />
-        </main>
-        <Footer />
+            {/* Contact */}
+            <Contact />
+          </main>
+          <Footer />
+        </div>
       </div>
     </>
   );

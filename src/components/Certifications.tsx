@@ -28,7 +28,7 @@ const certifications: Certification[] = [
 
 const Certifications = () => {
   return (
-    <section className="py-24 bg-theme-bg relative">
+    <section className="py-24 bg-transparent relative">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
@@ -58,7 +58,7 @@ const Certifications = () => {
         >
           {/* Stat card — Work Experience */}
           <motion.div
-            className="bg-theme-accent rounded-3xl p-8 flex flex-col justify-between min-h-[220px] text-theme-text relative overflow-hidden"
+            className="bg-theme-accent rounded-3xl p-8 flex flex-col justify-between min-h-[220px] text-black relative overflow-hidden"
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.95 },
               visible: { opacity: 1, y: 0, scale: 1 },
@@ -67,14 +67,14 @@ const Certifications = () => {
             whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(var(--theme-accent-rgb), 0.25)" }}
           >
             {/* Decorative glow */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-[60px] pointer-events-none" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full blur-[60px] pointer-events-none" />
             <div className="flex items-center gap-2 relative z-10">
-              <Star className="w-5 h-5 text-theme-text/80" />
-              <span className="text-sm text-theme-text/80 font-medium">Current Role</span>
+              <Star className="w-5 h-5 text-black/80" />
+              <span className="text-sm text-black/80 font-medium">Current Role</span>
             </div>
             <div className="relative z-10">
-              <p className="heading-display text-4xl mb-2">DEVELOPER</p>
-              <p className="text-sm text-theme-text/70">
+              <p className="heading-display text-4xl mb-2 text-black">DEVELOPER</p>
+              <p className="text-sm text-black/70">
                 Intern at Banao Technologies — Building Chrome Extensions & Backend integrations
               </p>
             </div>

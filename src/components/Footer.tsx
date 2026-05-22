@@ -4,24 +4,24 @@ import ScrollReveal from "./ScrollReveal";
 
 const Footer = () => {
   return (
-    <footer className="relative bg-theme-bg">
+    <footer className="relative bg-transparent">
       {/* CTA Banner */}
       <ScrollReveal direction="up" duration={0.8}>
         <div className="bg-theme-accent rounded-t-[2.5rem] md:rounded-t-[3.5rem] overflow-hidden relative">
           {/* Decorative glows */}
-          <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] pointer-events-none" />
-          <div className="absolute bottom-0 right-0 w-48 h-48 bg-theme-accent/10 rounded-full blur-[60px] pointer-events-none" />
+          <div className="absolute top-0 left-0 w-64 h-64 bg-black/5 rounded-full blur-[80px] pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-48 h-48 bg-black/5 rounded-full blur-[60px] pointer-events-none" />
 
           <div className="container mx-auto px-6 py-16 md:py-20 relative z-10">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
               <ScrollReveal direction="up" delay={0.1}>
                 <div>
-                  <h3 className="heading-display text-4xl md:text-theme-mutedxl lg:text-6xl text-theme-text mb-3">
+                  <h3 className="heading-display text-4xl md:text-theme-mutedxl lg:text-6xl text-black mb-3">
                     LET'S WORK
                     <br />
                     TOGETHER
                   </h3>
-                  <p className="text-theme-text/70 text-theme-mutedase max-w-md">
+                  <p className="text-black/80 text-theme-mutedase max-w-md">
                     Have a project in mind? Let's create something amazing together.
                   </p>
                 </div>
@@ -41,15 +41,15 @@ const Footer = () => {
           </div>
 
           {/* Bottom bar */}
-          <div className="border-t border-white/15">
+          <div className="border-t border-black/15">
             <div className="container mx-auto px-6 py-6">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 {/* Brand */}
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-theme-text text-xs font-bold">
+                  <div className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center text-black text-xs font-bold">
                     TW
                   </div>
-                  <span className="font-semibold text-theme-text text-sm">Tanmay Wagh</span>
+                  <span className="font-semibold text-black text-sm">Tanmay Wagh</span>
                 </div>
 
                 {/* Links */}
@@ -58,7 +58,7 @@ const Footer = () => {
                     <a
                       key={link}
                       href={`#${link.toLowerCase()}`}
-                      className="text-theme-text/60 hover:text-theme-text text-sm transition-colors"
+                      className="text-black/70 hover:text-black text-sm transition-colors"
                     >
                       {link}
                     </a>
@@ -77,7 +77,7 @@ const Footer = () => {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-theme-text/70 hover:text-theme-text hover:bg-white/20 transition-all"
+                      className="w-9 h-9 rounded-full bg-black/10 flex items-center justify-center text-black/70 hover:text-black hover:bg-black/20 transition-all"
                       whileHover={{ scale: 1.15, y: -2 }}
                     >
                       {social.icon}
@@ -87,8 +87,8 @@ const Footer = () => {
               </div>
 
               {/* Copyright */}
-              <div className="mt-6 pt-4 border-t border-white/10 text-theme-mutedenter">
-                <p className="text-xs text-theme-text/50">
+              <div className="mt-6 pt-4 border-t border-black/10 text-theme-mutedenter">
+                <p className="text-xs text-black/60">
                   © {new Date().getFullYear()} Tanmay Wagh. All rights reserved.
                 </p>
               </div>

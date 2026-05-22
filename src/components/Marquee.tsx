@@ -20,7 +20,7 @@ const Marquee = ({
 
   return (
     <div
-      className={`overflow-hidden py-6 border-y border-white/[0.04] bg-theme-bg ${className}`}
+      className={`overflow-hidden py-6 border-y border-white/[0.04] bg-transparent ${className}`}
     >
       <motion.div
         className={`flex items-center gap-8 whitespace-nowrap ${

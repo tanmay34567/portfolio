@@ -454,7 +454,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
     <section
       ref={containerRef}
       id="home"
-      className="relative bg-theme-bg"
+      className="relative bg-transparent"
       style={{ height: "350vh" }}
     >
       {/* Sticky viewport */}
