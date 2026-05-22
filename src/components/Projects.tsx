@@ -260,7 +260,7 @@ const Projects = () => {
         {/* Section Header */}
         <div className="flex flex-col text-center items-center gap-4 mb-24 relative z-10">
           <ScrollReveal direction="up">
-            <p className="text-sm font-medium text-[#5e67e6] tracking-[0.25em] uppercase mb-3">
+            <p className="text-sm font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
               Selected Work
             </p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black dark:text-white font-sans tracking-tight">
