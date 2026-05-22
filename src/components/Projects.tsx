@@ -176,7 +176,7 @@ const ProjectGridCard = ({
       variants={cardVariants}
       className={`group relative overflow-hidden bg-zinc-950/40 backdrop-blur-sm transition-all duration-500 ${
         isVideo
-          ? "rounded-full border border-theme-accent/25 hover:border-theme-accent/50 aspect-square w-full max-w-[320px] mx-auto shadow-[0_0_20px_rgba(var(--theme-accent-rgb),0.03)] hover:shadow-[0_0_30px_rgba(var(--theme-accent-rgb),0.12)]"
+          ? "rounded-full border border-blue-500/25 hover:border-blue-500/50 aspect-square w-full max-w-[320px] mx-auto shadow-[0_0_20px_rgba(59,130,246,0.03)] hover:shadow-[0_0_30px_rgba(59,130,246,0.12)]"
           : "rounded-[4px] border border-white/[0.04]"
       }`}
     >
@@ -253,17 +253,17 @@ const ProjectGridCard = ({
 const Projects = () => {
   return (
     <section id="projects" className="py-28 bg-transparent relative">
-      {/* Ambient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-theme-accent/[0.03] blur-[120px] pointer-events-none" />
+      {/* Ambient blue and black glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-blue-500/[0.08] blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="flex flex-col text-center items-center gap-4 mb-24 relative z-10">
           <ScrollReveal direction="up">
-            <p className="text-sm font-medium text-[#D1FF4D] tracking-[0.25em] uppercase mb-3">
+            <p className="text-sm font-medium text-blue-500 tracking-[0.25em] uppercase mb-3">
               Selected Work
             </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-sans tracking-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-sans tracking-tight bg-gradient-to-r from-blue-500 via-blue-200 to-white bg-clip-text text-transparent">
               Featured Projects
             </h2>
           </ScrollReveal>
@@ -455,13 +455,13 @@ const Projects = () => {
               href="https://github.com/tanmay34567"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-8 py-4 font-semibold text-sm rounded-full transition-all duration-300 border border-theme-border bg-theme-bg/60 backdrop-blur-md text-theme-text shadow-lg hover:border-theme-accent/50 hover:shadow-[0_0_25px_rgba(var(--theme-accent-rgb),0.12)] group"
+              className="inline-flex items-center gap-2.5 px-8 py-4 font-semibold text-sm rounded-full transition-all duration-300 border border-theme-border bg-theme-bg/60 backdrop-blur-md text-theme-text shadow-lg hover:border-blue-500/50 hover:shadow-[0_0_25px_rgba(59,130,246,0.12)] group"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Github className="w-4 h-4 text-theme-muted group-hover:text-theme-accent transition-colors" />
+              <Github className="w-4 h-4 text-theme-muted group-hover:text-blue-400 transition-colors" />
               <span>More Projects on GitHub</span>
-              <ArrowUpRight className="w-4 h-4 text-theme-muted group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-theme-accent transition-all" />
+              <ArrowUpRight className="w-4 h-4 text-theme-muted group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-blue-400 transition-all" />
             </motion.a>
           </ScrollReveal>
         </div>
