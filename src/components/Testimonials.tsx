@@ -34,15 +34,15 @@ const Testimonials = () => {
 
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-theme-mutedenter mb-16">
+        <div className="text-center mb-16">
           <ScrollReveal direction="up">
             <p className="text-sm font-medium text-theme-accent tracking-[0.2em] uppercase mb-3">
               Testimonials
             </p>
-            <h2 className="heading-section text-4xl md:text-theme-mutedxl lg:text-6xl text-theme-text mb-4">
+            <h2 className="heading-section text-4xl md:text-3xl lg:text-6xl text-theme-text mb-4">
               WHAT PEOPLE SAY
             </h2>
-            <p className="text-theme-muted max-w-md mx-auto text-theme-mutedase leading-relaxed">
+            <p className="text-theme-muted max-w-md mx-auto text-base leading-relaxed">
               Feedback from collaborators and teams I've worked with.
             </p>
           </ScrollReveal>

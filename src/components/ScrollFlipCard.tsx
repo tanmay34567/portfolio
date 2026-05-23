@@ -55,7 +55,7 @@ const services = [
 ];
 
 const stats = [
-  { value: 6, suffix: "+", label: "Projects Built" },
+  { value: 10, suffix: "+", label: "Projects Built" },
   { value: 20, suffix: "+", label: "Technologies" },
   { value: 1, suffix: "+", label: "Year Experience" },
   { value: 7.99, suffix: "", label: "CGPA", decimals: 2 },
@@ -66,6 +66,44 @@ const skillsList = [
   "Node.js", "Express.js", "MongoDB", "Python", "REST APIs", "Socket.IO",
   "Git", "GitHub", "Vercel", "Render", "Postman", "VS Code",
   "Cloudinary", "JWT", "Chrome Extensions",
+];
+
+const timelineItems = [
+  {
+    date: "June 2025 - Present",
+    role: "Full Stack Developer Intern",
+    company: "Rainbow Money (Fintech Startup)",
+    desc: "Built Mutual Fund Portfolio Analytics with React/Express.",
+    highlight: true,
+  },
+  {
+    date: "Nov 2024 - Present",
+    role: "Developer Intern",
+    company: "Banao Technologies",
+    desc: "Developing Chrome Extensions & Node.js integrations.",
+    highlight: true,
+  },
+  {
+    date: "May - July 2024",
+    role: "Software Development Intern",
+    company: "GEMA Technology Pvt. Ltd.",
+    desc: "Collaborated on MVP and core e-commerce features.",
+    highlight: false,
+  },
+  {
+    date: "2022 - 2026",
+    role: "B.Tech Computer Science",
+    company: "MIT School of Computing, MIT ADT",
+    desc: "Pursuing engineering with high-fidelity coding focus.",
+    highlight: false,
+  },
+  {
+    date: "2021 - 2025",
+    role: "B.Tech Materials Engineering",
+    company: "IIT Gandhinagar",
+    desc: "Core Materials engineering with self-taught stack.",
+    highlight: false,
+  },
 ];
 
 /* ── CountUp (inline) ──────────────────────────────────── */
@@ -123,13 +161,13 @@ const AccordionItem = ({
       <div className="flex items-center gap-3 flex-1">
         <div
           className={`p-2 rounded-lg transition-all duration-300 ${isOpen
-            ? "bg-theme-accent text-theme-text shadow-lg shadow-theme-accent/20"
+            ? "bg-theme-accent text-accent-foreground shadow-lg shadow-theme-accent/20"
             : "bg-theme-border text-theme-accent"
             }`}
         >
           {service.icon}
         </div>
-        <h3 className="font-semibold text-theme-text text-theme-mutedase">
+        <h3 className="font-semibold text-theme-text text-base">
           {service.title}
         </h3>
       </div>
@@ -394,11 +432,11 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
     [0, 0, 180, 180, 360, 360]
   );
 
-  // Card horizontal position: center → right → right-down
+  // Card horizontal position: center → right → center
   const cardX = useTransform(
     smoothProgress,
     [0, 0.15, 0.45, 0.55, 0.85, 1.0],
-    isMobile ? ["0%", "0%", "0%", "0%", "0%", "0%"] : ["0%", "0%", "55%", "55%", "35%", "35%"]
+    isMobile ? ["0%", "0%", "0%", "0%", "0%", "0%"] : ["0%", "0%", "55%", "55%", "0%", "0%"]
   );
 
   // Card vertical position: centered → down in about panel
@@ -551,7 +589,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 {!videoFinished && (
                   <button
                     onClick={unlockScroll}
-                    className="absolute bottom-5 left-5 z-40 px-4 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-theme-text text-xs font-medium tracking-wider uppercase transition-all duration-300 shadow-lg"
+                    className="absolute bottom-5 left-5 z-40 px-4 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-white text-xs font-medium tracking-wider uppercase transition-all duration-300 shadow-lg"
                     title="Skip Intro"
                   >
                     Skip
@@ -561,13 +599,13 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 {/* Elegant Volume Overlay Button */}
                 <button
                   onClick={toggleMute}
-                  className="absolute bottom-5 right-5 z-40 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-theme-text transition-all duration-300 shadow-lg"
+                  className="absolute bottom-5 right-5 z-40 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-white transition-all duration-300 shadow-lg"
                   title={isMuted ? "Unmute Intro" : "Mute Intro"}
                 >
                   {isMuted ? (
-                    <VolumeX className="w-4.5 h-4.5 text-theme-text/80" />
+                    <VolumeX className="w-4.5 h-4.5 text-white/80" />
                   ) : (
-                    <Volume2 className="w-4.5 h-4.5 text-theme-text animate-pulse" />
+                    <Volume2 className="w-4.5 h-4.5 text-white animate-pulse" />
                   )}
                 </button>
               </div>
@@ -637,7 +675,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   <StaggeredChars text="TANMAY" show={showHeroText} delay={0.2} from="left" />
                 </h1>
 
-                <h2 className="heading-display text-4xl md:text-theme-mutedxl lg:text-6xl xl:text-7xl text-theme-accent leading-[0.9] mt-2">
+                <h2 className="heading-display text-4xl md:text-3xl lg:text-6xl xl:text-7xl text-theme-accent leading-[0.9] mt-2">
                   <StaggeredChars text="FULLSTACK" show={showHeroText} delay={0.4} from="left" />
                 </h2>
               </div>
@@ -647,7 +685,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
               {/* Right — Role + CTA */}
               <div style={{ perspective: "1000px" }}>
-                <h2 className="heading-display text-4xl md:text-theme-mutedxl lg:text-6xl xl:text-7xl text-theme-text leading-[0.9] mb-6">
+                <h2 className="heading-display text-4xl md:text-3xl lg:text-6xl xl:text-7xl text-theme-text leading-[0.9] mb-6">
                   <StaggeredChars text="DEVELOPER" show={showHeroText} delay={0.6} from="right" />
                 </h2>
                 
@@ -656,7 +694,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   show={showHeroText}
                   delay={1.0}
                   from="right"
-                  className="text-theme-muted text-sm md:text-theme-mutedase leading-relaxed max-w-sm mb-8"
+                  className="text-theme-muted text-sm md:text-base leading-relaxed max-w-sm mb-8"
                 />
 
                 <motion.div
@@ -685,7 +723,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                     href="https://drive.google.com/file/d/13nycX1DY00a2PZ2AM_QyvPeRfRo7rgAM/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative group inline-flex items-center gap-2 px-7 py-3.5 text-theme-text text-sm font-semibold rounded-full border border-white/15 transition-all duration-300 hover:border-white/40 hover:bg-theme-border overflow-hidden"
+                    className="relative group inline-flex items-center gap-2 px-7 py-3.5 text-theme-text text-sm font-semibold rounded-full border border-theme-border transition-all duration-300 hover:border-theme-text/30 hover:bg-theme-border overflow-hidden"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -711,7 +749,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   <span className="text-[10px] tracking-[0.2em] uppercase text-theme-accent animate-pulse">Introduction Playing...</span>
                   <button
                     onClick={unlockScroll}
-                    className="mt-1 text-[9px] tracking-[0.15em] uppercase text-theme-text/40 hover:text-theme-text border border-white/10 hover:border-white/30 px-3 py-1.5 rounded-full transition-all duration-300 bg-theme-border cursor-pointer"
+                    className="mt-1 text-[9px] tracking-[0.15em] uppercase text-theme-text/40 hover:text-theme-text border border-theme-border hover:border-theme-text/20 px-3 py-1.5 rounded-full transition-all duration-300 bg-theme-border cursor-pointer"
                   >
                     Skip Intro
                   </button>
@@ -748,7 +786,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
               <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
                 What I Do
               </p>
-              <h2 className="heading-section text-4xl md:text-theme-mutedxl text-theme-text mb-2">
+              <h2 className="heading-section text-4xl md:text-3xl text-theme-text mb-2">
                 WHAT I CAN
                 <br />
                 DO FOR YOU
@@ -785,32 +823,32 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
           }}
         >
           <div className="container mx-auto px-6 lg:px-12 pt-[40vh] lg:pt-0">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-3 gap-8 items-center">
               {/* Left — About text */}
-              <div className="max-w-lg" id="about">
+              <div className="max-w-sm" id="about">
                 <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
                   Get To Know Me
                 </p>
-                <h2 className="heading-section text-4xl md:text-theme-mutedxl text-theme-text mb-6">
+                <h2 className="heading-section text-4xl md:text-3xl text-theme-text mb-6">
                   ABOUT ME
                 </h2>
-                <p className="text-theme-muted text-sm leading-relaxed mb-4">
+                <p className="text-theme-muted text-xs leading-relaxed mb-3">
                   Hi, I'm <span className="text-theme-text font-semibold">Tanmay Wagh</span> — a
                   B.Tech CSE student at MIT School of Computing, MIT ADT University.
                   I'm passionate about building beautiful, functional web applications
                   using modern technologies.
                 </p>
-                <p className="text-theme-muted text-sm leading-relaxed mb-6">
+                <p className="text-theme-muted text-xs leading-relaxed mb-4">
                   Currently interning as a <span className="text-theme-text font-semibold">Developer at Banao Technologies</span>, where I
                   develop Chrome Extensions and integrate backend functionalities with
                   Node.js.
                 </p>
 
                 {/* Stats row */}
-                <div className="flex items-center gap-6 mb-6">
+                <div className="flex items-center gap-6 mb-4">
                   {stats.map((stat, i) => (
-                    <div key={i} className="text-theme-mutedenter">
-                      <p className="heading-display text-2xl md:text-3xl text-theme-accent">
+                    <div key={i} className="text-center">
+                      <p className="heading-display text-2xl text-theme-accent">
                         <CountUp
                           target={stat.value}
                           suffix={stat.suffix}
@@ -819,7 +857,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                           start={activePanel === "about"}
                         />
                       </p>
-                      <p className="text-[10px] text-theme-muted uppercase tracking-wide mt-1">
+                      <p className="text-[9px] text-theme-muted uppercase tracking-wide mt-0.5">
                         {stat.label}
                       </p>
                     </div>
@@ -827,13 +865,13 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 </div>
 
                 {/* Location */}
-                <div className="flex items-center gap-2 text-theme-muted mb-6">
+                <div className="flex items-center gap-2 text-theme-muted mb-4">
                   <MapPin className="w-3.5 h-3.5 text-theme-accent" />
                   <span className="text-xs">Maharashtra, India</span>
                 </div>
 
                 {/* Social links */}
-                <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center gap-3 mb-4">
                   {[
                     { href: "https://github.com/tanmay34567", icon: <Github className="w-4 h-4" /> },
                     { href: "https://www.linkedin.com/in/tanmay-wagh-2a2a0b269/", icon: <Linkedin className="w-4 h-4" /> },
@@ -844,7 +882,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full border border-white/[0.08] flex items-center justify-center text-theme-muted hover:text-theme-accent hover:border-theme-accent/30 hover:bg-theme-accent/5 transition-all duration-300"
+                      className="w-8 h-8 rounded-full border border-theme-border flex items-center justify-center text-theme-muted hover:text-theme-accent hover:border-theme-accent/30 hover:bg-theme-accent/5 transition-all duration-300"
                     >
                       {social.icon}
                     </a>
@@ -852,11 +890,11 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 </div>
 
                 {/* Skills tags */}
-                <div className="flex flex-wrap gap-2">
-                  {skillsList.slice(0, 12).map((skill, i) => (
+                <div className="flex flex-wrap gap-1.5">
+                  {skillsList.slice(0, 10).map((skill, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1.5 bg-theme-border border border-white/[0.06] text-theme-muted text-xs font-medium rounded-full hover:border-theme-accent/30 hover:bg-theme-accent/5 hover:text-theme-text transition-all duration-300"
+                      className="px-2.5 py-1 bg-theme-border border border-theme-border text-theme-muted text-[10px] font-medium rounded-full hover:border-theme-accent/30 hover:bg-theme-accent/5 hover:text-theme-text transition-all duration-300"
                     >
                       {skill}
                     </span>
@@ -864,8 +902,52 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 </div>
               </div>
 
-              {/* Right — spacer for card */}
-              <div />
+              {/* Center — spacer for card */}
+              <div className="hidden lg:block h-[462px]" />
+
+              {/* Right — Journey Timeline */}
+              <div className="hidden lg:block w-full max-w-sm">
+                <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
+                  Professional Journey
+                </p>
+                <h3 className="heading-section text-2xl text-theme-text mb-6">
+                  MY TIMELINE
+                </h3>
+
+                {/* Timeline Tree */}
+                <div className="relative border-l border-theme-border/60 pl-5 ml-2.5 space-y-6">
+                  {timelineItems.map((item, i) => (
+                    <motion.div
+                      key={i}
+                      className="relative"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={activePanel === "about" ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                      transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                    >
+                      {/* Dot indicator */}
+                      <span 
+                        className={`absolute -left-[29px] top-1 w-3 h-3 rounded-full border-2 border-theme-bg transition-colors duration-300 ${
+                          item.highlight 
+                            ? "bg-theme-accent shadow-[0_0_10px_rgba(var(--theme-accent-rgb),0.5)]" 
+                            : "bg-theme-muted"
+                        }`}
+                      />
+                      <span className="text-[10px] text-theme-muted font-medium block uppercase tracking-wider mb-0.5">
+                        {item.date}
+                      </span>
+                      <h4 className="text-xs font-bold text-theme-text uppercase leading-tight">
+                        {item.role}
+                      </h4>
+                      <p className={`text-[11px] font-semibold mt-0.5 ${item.highlight ? "text-theme-accent" : "text-theme-text/80"}`}>
+                        {item.company}
+                      </p>
+                      <p className="text-[10px] text-theme-muted leading-relaxed mt-1">
+                        {item.desc}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>

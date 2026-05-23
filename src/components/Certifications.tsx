@@ -37,7 +37,7 @@ const Certifications = () => {
               <p className="text-sm font-medium text-theme-accent tracking-[0.2em] uppercase mb-3">
                 Achievements
               </p>
-              <h2 className="heading-section text-4xl md:text-theme-mutedxl lg:text-6xl text-theme-text">
+              <h2 className="heading-section text-4xl md:text-3xl lg:text-6xl text-theme-text">
                 CERTIFICATIONS
               </h2>
             </div>
@@ -58,7 +58,7 @@ const Certifications = () => {
         >
           {/* Stat card — Work Experience */}
           <motion.div
-            className="bg-theme-accent rounded-3xl p-8 flex flex-col justify-between min-h-[220px] text-black relative overflow-hidden"
+            className="bg-theme-accent rounded-3xl p-8 flex flex-col justify-between min-h-[220px] text-accent-foreground relative overflow-hidden"
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.95 },
               visible: { opacity: 1, y: 0, scale: 1 },
@@ -69,12 +69,12 @@ const Certifications = () => {
             {/* Decorative glow */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full blur-[60px] pointer-events-none" />
             <div className="flex items-center gap-2 relative z-10">
-              <Star className="w-5 h-5 text-black/80" />
-              <span className="text-sm text-black/80 font-medium">Current Role</span>
+              <Star className="w-5 h-5 text-accent-foreground/80" />
+              <span className="text-sm text-accent-foreground/80 font-medium">Current Role</span>
             </div>
             <div className="relative z-10">
-              <p className="heading-display text-4xl mb-2 text-black">DEVELOPER</p>
-              <p className="text-sm text-black/70">
+              <p className="heading-display text-4xl mb-2 text-accent-foreground">DEVELOPER</p>
+              <p className="text-sm text-accent-foreground/70">
                 Intern at Banao Technologies — Building Chrome Extensions & Backend integrations
               </p>
             </div>

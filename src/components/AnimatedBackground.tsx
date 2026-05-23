@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTheme } from "./ThemeProvider";
 
 // Shader sources
 const VERTEX_SHADER_SRC = `#version 300 es
@@ -187,6 +188,8 @@ function hslToRgba(h: number, s: number, l: number, a = 1.0): [number, number, n
 
 const AnimatedBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -358,16 +361,21 @@ const AnimatedBackground = () => {
     };
   }, []);
 
+  const gridStroke = isDark ? "white" : "black";
+  const gridOpacityClass = isDark ? "opacity-[0.08]" : "opacity-[0.04]";
+  const gridBlendMode = isDark ? "mix-blend-screen" : "mix-blend-multiply";
+  const fadeBgColor = isDark ? "5, 5, 5" : "229, 229, 229";
+
   return (
-    <div className="fixed inset-0 -z-10 bg-[#050505] dark:bg-[#050505] overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 -z-10 bg-theme-bg overflow-hidden pointer-events-none">
       {/* WebGL Shader Canvas */}
       <canvas ref={canvasRef} className="w-full h-full block opacity-70" />
 
       {/* High-fidelity Vector Grid Pattern Overlay */}
       <div 
-        className="absolute inset-0 opacity-15 pointer-events-none mix-blend-screen dark:opacity-[0.08]"
+        className={`absolute inset-0 pointer-events-none ${gridOpacityClass} ${gridBlendMode}`}
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M 40 0 L 0 0 0 40' fill='none' stroke='white' stroke-width='1'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M 40 0 L 0 0 0 40' fill='none' stroke='${gridStroke}' stroke-width='1'/%3E%3C/svg%3E")`,
           backgroundSize: '40px 40px',
           backgroundRepeat: 'repeat',
         }}
@@ -377,7 +385,7 @@ const AnimatedBackground = () => {
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, var(--theme-bg, #050505) 100%)',
+          background: `linear-gradient(180deg, rgba(${fadeBgColor}, 0) 55%, var(--theme-bg) 100%)`,
         }}
       />
     </div>

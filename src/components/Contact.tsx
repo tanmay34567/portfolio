@@ -59,13 +59,13 @@ const Contact = () => {
               <p className="text-sm font-medium text-theme-accent tracking-[0.2em] uppercase mb-3">
                 Let's Work Together
               </p>
-              <h2 className="heading-section text-4xl md:text-theme-mutedxl lg:text-6xl text-theme-text">
+              <h2 className="heading-section text-4xl md:text-3xl lg:text-6xl text-theme-text">
                 GET IN TOUCH
               </h2>
             </div>
           </ScrollReveal>
           <ScrollReveal direction="up" delay={0.15}>
-            <p className="text-theme-muted max-w-md text-theme-mutedase leading-relaxed">
+            <p className="text-theme-muted max-w-md text-base leading-relaxed">
               Have a project in mind or want to collaborate? I'd love to hear from you!
             </p>
           </ScrollReveal>
@@ -233,7 +233,7 @@ const Contact = () => {
                   disabled={status === "loading"}
                   className={`w-full flex items-center justify-center gap-2 px-8 py-4 font-semibold rounded-full transition-all duration-200 shadow-lg shadow-black/10 group ${
                     status === "success"
-                      ? "bg-theme-bgmerald-500 text-theme-text"
+                      ? "bg-emerald-500 text-theme-text"
                       : status === "loading"
                       ? "bg-white/70 text-[#0f0f0f] cursor-wait"
                       : "bg-white text-[#0f0f0f] hover:bg-gray-100"

@@ -208,7 +208,7 @@ const Navbar = () => {
                   <div className="mt-2 pt-2 border-t border-theme-border">
                     <a
                       href="#contact"
-                      className="block text-theme-mutedenter px-5 py-3 bg-theme-text text-theme-bg text-sm font-medium rounded-full hover:opacity-90 transition-all"
+                      className="block text-center px-5 py-3 bg-theme-text text-theme-bg text-sm font-medium rounded-full hover:opacity-90 transition-all"
                       onClick={() => setIsOpen(false)}
                     >
                       Contact Me

@@ -8,7 +8,7 @@ const ProjectDetail = () => {
     <div className="min-h-screen bg-theme-bg text-theme-text p-8 md:p-24 flex flex-col items-start justify-start">
       <Link 
         to="/" 
-        className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors mb-12"
+        className="inline-flex items-center gap-2 px-5 py-2.5 bg-theme-text/10 hover:bg-theme-text/20 text-theme-text rounded-full transition-colors mb-12"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Home
