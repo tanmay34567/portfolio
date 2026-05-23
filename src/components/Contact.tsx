@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2, Info } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
@@ -164,114 +164,144 @@ const Contact = () => {
 
           {/* Right — Contact Form */}
           <ScrollReveal direction="left" delay={0.2} duration={0.7}>
-            <div className="bg-theme-bg rounded-3xl border border-theme-border p-8 md:p-10 shadow-sm">
-              <h3 className="heading-section text-2xl text-theme-text mb-8">SEND A MESSAGE</h3>
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Your name"
-                      className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-theme-border text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="your@email.com"
-                      className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-theme-border text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all"
-                      required
-                    />
-                  </div>
-                </div>
+            <div className="rounded-[32px] p-8 md:p-10 border border-theme-border bg-theme-glass shadow-2xl overflow-hidden backdrop-blur-md relative flex flex-col justify-between">
+              {/* Decorative glowing gradient circle */}
+              <div className="absolute -right-12 -bottom-12 w-32 h-32 blur-[50px] rounded-full opacity-10 bg-theme-accent pointer-events-none" />
 
-                <div>
-                  <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
-                    Service
-                  </label>
-                  <select
-                    value={formData.service}
-                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-theme-border text-theme-text text-sm focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all appearance-none cursor-pointer"
-                  >
-                    <option value="">Select a service</option>
-                    <option value="frontend">Frontend Development</option>
-                    <option value="backend">Backend Development</option>
-                    <option value="fullstack">Full Stack Development</option>
-                    <option value="extension">Chrome Extension</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
+              <div>
+                {/* Top Row: Badge & Label */}
+                <div className="flex items-center justify-between mb-6">
+                  <span className="px-3 py-1 rounded-full border border-theme-accent/30 text-[10px] font-bold tracking-widest text-theme-accent uppercase">
                     Message
-                  </label>
-                  <textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell me about your project..."
-                    rows={4}
-                    className="w-full px-5 py-3.5 bg-theme-bg rounded-xl border border-theme-border text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all resize-none"
-                    required
-                  />
+                  </span>
+                  <span className="text-[10px] font-semibold text-theme-muted font-mono tracking-wider uppercase">
+                    Inbox
+                  </span>
                 </div>
 
-                <motion.button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className={`w-full flex items-center justify-center gap-2 px-8 py-4 font-semibold rounded-full transition-all duration-200 shadow-lg shadow-black/10 group ${
-                    status === "success"
-                      ? "bg-emerald-500 text-theme-text"
-                      : status === "loading"
-                      ? "bg-white/70 text-[#0f0f0f] cursor-wait"
-                      : "bg-white text-[#0f0f0f] hover:bg-gray-100"
-                  }`}
-                  whileHover={status === "idle" ? { scale: 1.02, y: -1 } : {}}
-                  whileTap={status === "idle" ? { scale: 0.98 } : {}}
-                >
-                  {status === "loading" ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Sending...
-                    </>
-                  ) : status === "success" ? (
-                    <>
-                      <CheckCircle2 className="w-4 h-4" />
-                      Sent!
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      Send Message
-                    </>
-                  )}
-                </motion.button>
+                {/* Title */}
+                <h3 className="text-2xl md:text-3xl font-extrabold tracking-tight text-theme-text mt-2 mb-8">
+                  Send a Message
+                </h3>
 
-                {/* Status message */}
-                {statusMessage && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`text-sm text-center mt-3 ${
-                      status === "success" ? "text-emerald-400" : "text-red-400"
+                <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Your name"
+                        className="w-full px-5 py-3.5 bg-black/5 dark:bg-white/5 rounded-xl border border-theme-border text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="your@email.com"
+                        className="w-full px-5 py-3.5 bg-black/5 dark:bg-white/5 rounded-xl border border-theme-border text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
+                      Service
+                    </label>
+                    <select
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      className="w-full px-5 py-3.5 bg-black/5 dark:bg-white/5 rounded-xl border border-theme-border text-theme-text text-sm focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all appearance-none cursor-pointer"
+                    >
+                      <option value="">Select a service</option>
+                      <option value="frontend">Frontend Development</option>
+                      <option value="backend">Backend Development</option>
+                      <option value="fullstack">Full Stack Development</option>
+                      <option value="extension">Chrome Extension</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
+                      Message
+                    </label>
+                    <textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Tell me about your project..."
+                      rows={4}
+                      className="w-full px-5 py-3.5 bg-black/5 dark:bg-white/5 rounded-xl border border-theme-border text-theme-text text-sm placeholder:text-theme-muted focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all resize-none"
+                      required
+                    />
+                  </div>
+
+                  <motion.button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className={`w-full flex items-center justify-center gap-2 px-8 py-4 font-semibold rounded-full transition-all duration-200 shadow-lg shadow-black/10 group ${
+                      status === "success"
+                        ? "bg-emerald-500 text-theme-text"
+                        : status === "loading"
+                        ? "bg-white/70 text-[#0f0f0f] cursor-wait"
+                        : "bg-white text-[#0f0f0f] hover:bg-gray-100"
                     }`}
+                    whileHover={status === "idle" ? { scale: 1.02, y: -1 } : {}}
+                    whileTap={status === "idle" ? { scale: 0.98 } : {}}
                   >
-                    {statusMessage}
-                  </motion.p>
-                )}
-              </form>
+                    {status === "loading" ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : status === "success" ? (
+                      <>
+                        <CheckCircle2 className="w-4 h-4" />
+                        Sent!
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        Send Message
+                      </>
+                    )}
+                  </motion.button>
+
+                  {/* Status message */}
+                  {statusMessage && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`text-sm text-center mt-3 ${
+                        status === "success" ? "text-emerald-400" : "text-red-400"
+                      }`}
+                    >
+                      {statusMessage}
+                    </motion.p>
+                  )}
+                </form>
+              </div>
+
+              <div>
+                {/* Divider line */}
+                <div className="border-t border-theme-border my-5 relative z-10" />
+
+                {/* Bottom Row */}
+                <div className="flex items-start gap-2.5 text-xs text-theme-muted relative z-10">
+                  <Info className="w-4 h-4 text-theme-accent flex-shrink-0 mt-0.5" />
+                  <span>Usually responds within 24 hours. Secure form submission.</span>
+                </div>
+              </div>
             </div>
           </ScrollReveal>
         </div>

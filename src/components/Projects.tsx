@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Globe, Github } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Globe, Github, Info } from "lucide-react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import ScrollReveal from "./ScrollReveal";
@@ -174,10 +174,10 @@ const ProjectGridCard = ({
   return (
     <motion.div
       variants={cardVariants}
-      className={`group relative overflow-hidden bg-zinc-950/40 backdrop-blur-sm transition-all duration-500 ${
+      className={`group relative overflow-hidden transition-all duration-500 ${
         isVideo
           ? "rounded-full border border-theme-accent/25 hover:border-theme-accent/50 aspect-square w-full max-w-[320px] mx-auto shadow-[0_0_20px_rgba(var(--theme-accent-rgb),0.03)] hover:shadow-[0_0_30px_rgba(var(--theme-accent-rgb),0.12)]"
-          : "rounded-[4px] border border-white/[0.04]"
+          : "rounded-[32px] border border-theme-border bg-theme-glass hover:border-theme-accent/40 shadow-2xl backdrop-blur-md"
       }`}
     >
       <Link
@@ -213,17 +213,40 @@ const ProjectGridCard = ({
               onError={() => setImageError(true)}
             />
           ) : (
-            /* Fallback dynamic gradient if image is missing */
-            <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-zinc-900 via-neutral-900 to-zinc-950 text-center select-none">
-              <span className="text-4xl md:text-5xl font-bold uppercase text-white/10 tracking-widest font-sans mb-2">
-                {displayTitle ? displayTitle.substring(0, 2) : "PR"}
-              </span>
-              <h4 className="text-white/60 font-semibold uppercase tracking-wider text-sm">
-                {displayTitle}
-              </h4>
-              <p className="text-white/30 text-xs mt-1">
-                {displaySubtitle}
-              </p>
+            /* Fallback premium card design if image is missing */
+            <div className="w-full h-full flex flex-col justify-between p-8 text-left bg-theme-glass select-none">
+              <div>
+                {/* Top Row: Badge & Label */}
+                <div className="flex items-center justify-between mb-6">
+                  <span className="px-3 py-1 rounded-full border border-theme-accent/30 text-[10px] font-bold tracking-widest text-theme-accent uppercase">
+                    {displaySubtitle || "Project"}
+                  </span>
+                  <span className="text-[10px] font-semibold text-theme-muted font-mono tracking-wider uppercase">
+                    {displayTitle}
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-2xl md:text-3xl font-extrabold tracking-tight text-theme-text mt-2 mb-3">
+                  {displayTitle}
+                </h3>
+                
+                {/* Description */}
+                <p className="text-theme-text/80 text-sm leading-relaxed mb-6 line-clamp-3">
+                  {project?.description}
+                </p>
+              </div>
+
+              <div>
+                {/* Divider line */}
+                <div className="border-t border-theme-border my-5" />
+
+                {/* Bottom Row: Tip */}
+                <div className="flex items-start gap-2.5 text-xs text-theme-muted">
+                  <Info className="w-4 h-4 text-theme-accent flex-shrink-0 mt-0.5" />
+                  <span className="truncate">Includes {project?.tech.slice(0, 4).join(", ")} and more.</span>
+                </div>
+              </div>
             </div>
           )}
         </div>

@@ -618,7 +618,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
         {/* ▸ PANEL 1: Hero */}
         <motion.div
-          className="absolute inset-0 flex items-center z-30"
+          className="absolute inset-0 lg:flex lg:items-center z-30"
           style={{
             opacity: heroOpacity,
             y: heroY,
@@ -626,7 +626,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
           }}
         >
           <motion.div
-            className="container mx-auto px-6 lg:px-12 pt-[45vh] lg:pt-0"
+            className="w-full absolute bottom-0 lg:relative lg:bottom-auto h-[60vh] lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-4 lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-thin"
             animate={{
               pointerEvents: showHeroText ? "auto" : "none"
             }}
@@ -650,11 +650,11 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   </p>
                 </motion.div>
 
-                <h1 className="heading-display text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-theme-text leading-[0.9]">
+                <h1 className="heading-display text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-theme-text leading-[0.9]">
                   <StaggeredChars text="TANMAY" show={showHeroText} delay={0.2} from="left" />
                 </h1>
 
-                <h2 className="heading-display text-4xl md:text-3xl lg:text-6xl xl:text-7xl text-theme-accent leading-[0.9] mt-2">
+                <h2 className="heading-display text-3xl sm:text-4xl lg:text-6xl xl:text-7xl text-theme-accent leading-[0.9] mt-2">
                   <StaggeredChars text="FULLSTACK" show={showHeroText} delay={0.4} from="left" />
                 </h2>
               </div>
@@ -664,7 +664,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
               {/* Right — Role + CTA */}
               <div style={{ perspective: "1000px" }}>
-                <h2 className="heading-display text-4xl md:text-3xl lg:text-6xl xl:text-7xl text-theme-text leading-[0.9] mb-6">
+                <h2 className="heading-display text-3xl sm:text-4xl lg:text-6xl xl:text-7xl text-theme-text leading-[0.9] mb-6">
                   <StaggeredChars text="DEVELOPER" show={showHeroText} delay={0.6} from="right" />
                 </h2>
 
@@ -753,14 +753,14 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
         {/* ▸ PANEL 2: Services / What I Do */}
         <motion.div
-          className="absolute inset-0 flex items-center z-30"
+          className="absolute inset-0 lg:flex lg:items-center z-30"
           style={{
             opacity: servicesOpacity,
             y: servicesY,
             pointerEvents: activePanel === "services" ? "auto" : "none",
           }}
         >
-          <div className="container mx-auto px-6 lg:px-12 pt-[45vh] lg:pt-0">
+          <div className="w-full absolute bottom-0 lg:relative lg:bottom-auto h-[60vh] lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-4 lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-thin">
             <div className="max-w-lg">
               <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
                 What I Do
@@ -794,15 +794,15 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
         {/* ▸ PANEL 3: About Me */}
         <motion.div
-          className="absolute inset-0 flex items-center z-30"
+          className="absolute inset-0 lg:flex lg:items-center z-30"
           style={{
             opacity: aboutOpacity,
             y: aboutY,
             pointerEvents: activePanel === "about" ? "auto" : "none",
           }}
         >
-          <div className="container mx-auto px-6 lg:px-12 pt-[40vh] lg:pt-0">
-            <div className="grid lg:grid-cols-3 gap-8 items-center">
+          <div className="w-full absolute bottom-0 lg:relative lg:bottom-auto h-[60vh] lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-4 lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-thin">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
               {/* Left — About text */}
               <div className="max-w-sm" id="about">
                 <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
@@ -885,7 +885,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
               <div className="hidden lg:block h-[462px]" />
 
               {/* Right — Journey Timeline */}
-              <div className="hidden lg:block w-full max-w-sm">
+              <div className="w-full max-w-sm mt-8 lg:mt-0">
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={activePanel === "about" ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}

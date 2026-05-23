@@ -197,7 +197,10 @@ const Navbar = () => {
                       key={link.name}
                       href={link.href}
                       className="px-4 py-3 text-sm text-theme-muted hover:text-theme-accent hover:bg-theme-border rounded-2xl transition-all"
-                      onClick={() => setIsOpen(false)}
+                      onClick={(e) => {
+                        handleNavClick(e, link.href);
+                        setIsOpen(false);
+                      }}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.05, duration: 0.2 }}

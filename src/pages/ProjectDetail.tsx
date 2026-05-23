@@ -1,8 +1,13 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import SlotSwapper from "../projects/SlotSwapper";
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
+
+  if (id === "slotswapper") {
+    return <SlotSwapper />;
+  }
 
   return (
     <div className="min-h-screen bg-theme-bg text-theme-text p-8 md:p-24 flex flex-col items-start justify-start">

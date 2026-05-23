@@ -186,7 +186,7 @@ function hslToRgba(h: number, s: number, l: number, a = 1.0): [number, number, n
   return [r, g, b, a];
 }
 
-const AnimatedBackground = () => {
+const AnimatedBackground = ({ opacity = 0.7 }: { opacity?: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
   const isDark = theme === "dark";
@@ -369,7 +369,7 @@ const AnimatedBackground = () => {
   return (
     <div className="fixed inset-0 -z-10 bg-theme-bg overflow-hidden pointer-events-none">
       {/* WebGL Shader Canvas */}
-      <canvas ref={canvasRef} className="w-full h-full block opacity-70" />
+      <canvas ref={canvasRef} className="w-full h-full block" style={{ opacity }} />
 
       {/* High-fidelity Vector Grid Pattern Overlay */}
       <div 

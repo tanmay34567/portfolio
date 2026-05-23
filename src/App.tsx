@@ -11,6 +11,8 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 import SmoothScroll from "@/components/SmoothScroll";
 
+import ScrollToTop from "@/components/ScrollToTop";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -22,6 +24,7 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/project/:id" element={<ProjectDetail />} />

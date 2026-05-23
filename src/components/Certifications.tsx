@@ -1,4 +1,4 @@
-import { Award, Cloud, Brain, BarChart3, Star, Quote } from "lucide-react";
+import { Award, Cloud, Brain, BarChart3, Star, Quote, Info } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
@@ -58,7 +58,7 @@ const Certifications = () => {
         >
           {/* Stat card — Work Experience */}
           <motion.div
-            className="bg-theme-accent rounded-3xl p-8 flex flex-col justify-between min-h-[220px] text-accent-foreground relative overflow-hidden"
+            className="rounded-[32px] p-8 bg-theme-accent text-white dark:text-black flex flex-col justify-between min-h-[300px] relative overflow-hidden group hover:-translate-y-1 transition-all duration-300 shadow-2xl"
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.95 },
               visible: { opacity: 1, y: 0, scale: 1 },
@@ -68,15 +68,37 @@ const Certifications = () => {
           >
             {/* Decorative glow */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-black/5 rounded-full blur-[60px] pointer-events-none" />
-            <div className="flex items-center gap-2 relative z-10">
-              <Star className="w-5 h-5 text-accent-foreground/80" />
-              <span className="text-sm text-accent-foreground/80 font-medium">Current Role</span>
-            </div>
-            <div className="relative z-10">
-              <p className="heading-display text-4xl mb-2 text-accent-foreground">DEVELOPER</p>
-              <p className="text-sm text-accent-foreground/70">
+            <div>
+              {/* Top Row: Badge & Label */}
+              <div className="flex items-center justify-between mb-6">
+                <span className="px-3 py-1 rounded-full border border-white/30 text-[10px] font-bold tracking-widest text-white dark:text-black uppercase">
+                  Current Role
+                </span>
+                <span className="text-[10px] font-semibold text-white/70 dark:text-black/70 font-mono tracking-wider uppercase">
+                  Banao Tech
+                </span>
+              </div>
+
+              {/* Title */}
+              <h3 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white dark:text-black mt-2 mb-3">
+                DEVELOPER
+              </h3>
+              
+              {/* Description */}
+              <p className="text-white/80 dark:text-black/80 text-sm leading-relaxed mb-6">
                 Intern at Banao Technologies — Building Chrome Extensions & Backend integrations
               </p>
+            </div>
+
+            <div>
+              {/* Divider line */}
+              <div className="border-t border-white/15 my-5" />
+
+              {/* Bottom Row */}
+              <div className="flex items-center gap-2.5 text-xs text-white/80 dark:text-black/80">
+                <Star className="w-4 h-4 text-white dark:text-black flex-shrink-0" />
+                <span>Active Internship & Industry Experience</span>
+              </div>
             </div>
           </motion.div>
 
@@ -84,7 +106,7 @@ const Certifications = () => {
           {certifications.map((cert, index) => (
             <motion.div
               key={index}
-              className="bg-theme-bg rounded-3xl border border-white/[0.06] p-7 hover:border-theme-accent/20 transition-all duration-300 group"
+              className="rounded-[32px] p-8 border border-theme-border bg-theme-glass hover:border-theme-accent/40 shadow-2xl overflow-hidden backdrop-blur-md relative group hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between min-h-[300px]"
               variants={{
                 hidden: { opacity: 0, y: 40, scale: 0.95 },
                 visible: { opacity: 1, y: 0, scale: 1 },
@@ -92,36 +114,53 @@ const Certifications = () => {
               transition={{ duration: 0.5 }}
               whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(var(--theme-accent-rgb), 0.06)" }}
             >
-              <div className="flex items-start gap-4 mb-5">
-                <div className="p-3 bg-theme-accent/10 rounded-2xl text-theme-accent group-hover:bg-theme-accent group-hover:text-theme-text transition-all duration-300">
-                  {cert.icon}
+              <div>
+                {/* Top Row: Badge & Label */}
+                <div className="flex items-center justify-between mb-6">
+                  <span className="px-3 py-1 rounded-full border border-theme-accent/30 text-[10px] font-bold tracking-widest text-theme-accent uppercase">
+                    Certification
+                  </span>
+                  <span className="text-[10px] font-semibold text-theme-muted font-mono tracking-wider uppercase">
+                    Verified
+                  </span>
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <Award className="w-3.5 h-3.5 text-theme-accent" />
-                    <span className="text-xs text-theme-accent font-medium">Certified</span>
-                  </div>
-                  <h3 className="font-semibold text-theme-text leading-snug">
-                    {cert.title}
-                  </h3>
+
+                {/* Title */}
+                <h3 className="text-2xl font-extrabold tracking-tight text-theme-text mt-2 mb-3">
+                  {cert.title}
+                </h3>
+                
+                {/* Skills tags block as Description */}
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {cert.skills.map((skill, i) => (
+                    <span
+                      key={i}
+                      className="px-2.5 py-1 bg-theme-border text-theme-muted text-xs rounded-full border border-white/[0.04]"
+                    >
+                      {skill}
+                    </span>
+                  ))}
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1.5">
-                {cert.skills.map((skill, i) => (
-                  <span
-                    key={i}
-                    className="px-2.5 py-1 bg-theme-border text-theme-muted text-xs rounded-full border border-white/[0.04]"
-                  >
-                    {skill}
-                  </span>
-                ))}
+
+              <div>
+                {/* Divider line */}
+                <div className="border-t border-theme-border my-5" />
+
+                {/* Bottom Row: Tip */}
+                <div className="flex items-start gap-2.5 text-xs text-theme-muted">
+                  <div className="text-theme-accent flex-shrink-0 mt-0.5">
+                    {cert.icon}
+                  </div>
+                  <span>AWS & Machine Learning Foundations</span>
+                </div>
               </div>
             </motion.div>
           ))}
 
           {/* Quote card */}
           <motion.div
-            className="bg-white dark:bg-theme-bg border border-transparent dark:border-white/[0.06] rounded-3xl p-8 flex flex-col justify-between min-h-[220px] text-[#0f0f0f] dark:text-theme-text"
+            className="rounded-[32px] p-8 border border-theme-border bg-theme-glass shadow-2xl overflow-hidden backdrop-blur-md relative group hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between min-h-[300px]"
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.95 },
               visible: { opacity: 1, y: 0, scale: 1 },
@@ -129,19 +168,39 @@ const Certifications = () => {
             transition={{ duration: 0.5 }}
             whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(var(--theme-accent-rgb), 0.08)" }}
           >
-            <Quote className="w-8 h-8 text-theme-accent/20" />
             <div>
-              <p className="text-sm leading-relaxed text-[#0f0f0f]/70 dark:text-theme-muted mb-3">
+              {/* Top Row: Badge & Label */}
+              <div className="flex items-center justify-between mb-6">
+                <span className="px-3 py-1 rounded-full border border-theme-accent/30 text-[10px] font-bold tracking-widest text-theme-accent uppercase">
+                  Philosophy
+                </span>
+                <span className="text-[10px] font-semibold text-theme-muted font-mono tracking-wider uppercase">
+                  Quote
+                </span>
+              </div>
+
+              {/* Description (Quote) */}
+              <p className="text-theme-text/80 text-sm italic leading-relaxed mb-6">
                 "Passionate about turning complex problems into clean, scalable
                 solutions. Always learning, always building."
               </p>
-              <p className="text-xs text-theme-accent font-medium">— Tanmay Wagh</p>
+            </div>
+
+            <div>
+              {/* Divider line */}
+              <div className="border-t border-theme-border my-5" />
+
+              {/* Bottom Row: Author */}
+              <div className="flex items-start gap-2.5 text-xs text-theme-muted">
+                <Quote className="w-4 h-4 text-theme-accent flex-shrink-0 mt-0.5" />
+                <span>— Tanmay Wagh</span>
+              </div>
             </div>
           </motion.div>
 
           {/* Focus areas card */}
           <motion.div
-            className="bg-theme-bg rounded-3xl border border-white/[0.06] p-8 flex flex-col justify-between min-h-[220px]"
+            className="rounded-[32px] p-8 border border-theme-border bg-theme-glass shadow-2xl overflow-hidden backdrop-blur-md relative group hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between min-h-[300px]"
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.95 },
               visible: { opacity: 1, y: 0, scale: 1 },
@@ -149,18 +208,43 @@ const Certifications = () => {
             transition={{ duration: 0.5 }}
             whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(var(--theme-accent-rgb), 0.06)" }}
           >
-            <p className="text-xs text-theme-accent font-medium tracking-[0.2em] uppercase">
-              Focus Areas
-            </p>
-            <div className="space-y-3">
-              {["Full Stack Development", "Data Structures & Algorithms", "Machine Learning", "Cloud Computing"].map(
-                (area, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-theme-accent" />
-                    <span className="text-sm text-theme-muted">{area}</span>
-                  </div>
-                )
-              )}
+            <div>
+              {/* Top Row: Badge & Label */}
+              <div className="flex items-center justify-between mb-6">
+                <span className="px-3 py-1 rounded-full border border-theme-accent/30 text-[10px] font-bold tracking-widest text-theme-accent uppercase">
+                  Expertise
+                </span>
+                <span className="text-[10px] font-semibold text-theme-muted font-mono tracking-wider uppercase">
+                  Domains
+                </span>
+              </div>
+
+              {/* Title */}
+              <h3 className="text-2xl font-extrabold tracking-tight text-theme-text mt-2 mb-4">
+                Focus Areas
+              </h3>
+
+              <div className="space-y-2 mb-6">
+                {["Full Stack Development", "Data Structures & Algorithms", "Machine Learning", "Cloud Computing"].map(
+                  (area, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-theme-accent" />
+                      <span className="text-xs text-theme-muted">{area}</span>
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+
+            <div>
+              {/* Divider line */}
+              <div className="border-t border-theme-border my-5" />
+
+              {/* Bottom Row: Tip */}
+              <div className="flex items-start gap-2.5 text-xs text-theme-muted">
+                <Award className="w-4 h-4 text-theme-accent flex-shrink-0 mt-0.5" />
+                <span>Standardized delivery models</span>
+              </div>
             </div>
           </motion.div>
         </motion.div>
