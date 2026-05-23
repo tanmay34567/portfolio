@@ -70,13 +70,6 @@ const skillsList = [
 
 const timelineItems = [
   {
-    date: "June 2025 - Present",
-    role: "Full Stack Developer Intern",
-    company: "Rainbow Money (Fintech Startup)",
-    desc: "Built Mutual Fund Portfolio Analytics with React/Express.",
-    highlight: true,
-  },
-  {
     date: "Nov 2024 - Present",
     role: "Developer Intern",
     company: "Banao Technologies",
@@ -84,24 +77,10 @@ const timelineItems = [
     highlight: true,
   },
   {
-    date: "May - July 2024",
-    role: "Software Development Intern",
-    company: "GEMA Technology Pvt. Ltd.",
-    desc: "Collaborated on MVP and core e-commerce features.",
-    highlight: false,
-  },
-  {
     date: "2022 - 2026",
     role: "B.Tech Computer Science",
     company: "MIT School of Computing, MIT ADT",
     desc: "Pursuing engineering with high-fidelity coding focus.",
-    highlight: false,
-  },
-  {
-    date: "2021 - 2025",
-    role: "B.Tech Materials Engineering",
-    company: "IIT Gandhinagar",
-    desc: "Core Materials engineering with self-taught stack.",
     highlight: false,
   },
 ];
@@ -209,12 +188,12 @@ const StaggeredChars = ({ text, show, delay = 0, className = "", from = "center"
   const getInitialState = (i: number) => {
     const centerX = from === "left" ? 200 : from === "right" ? -200 : 0;
     const centerY = 50;
-    return { 
-      x: centerX, 
-      y: centerY, 
-      rotateX: 45, 
-      rotateY: from === "left" ? -45 : from === "right" ? 45 : 0, 
-      scale: 0 
+    return {
+      x: centerX,
+      y: centerY,
+      rotateX: 45,
+      rotateY: from === "left" ? -45 : from === "right" ? 45 : 0,
+      scale: 0
     };
   };
 
@@ -405,7 +384,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
     target: containerRef,
     offset: ["start start", "end end"],
   });
-  
+
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
@@ -688,7 +667,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 <h2 className="heading-display text-4xl md:text-3xl lg:text-6xl xl:text-7xl text-theme-text leading-[0.9] mb-6">
                   <StaggeredChars text="DEVELOPER" show={showHeroText} delay={0.6} from="right" />
                 </h2>
-                
+
                 <StaggeredWords
                   text="I'm a full-stack developer building clean & scalable web applications with modern technologies."
                   show={showHeroText}
@@ -907,30 +886,50 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
               {/* Right — Journey Timeline */}
               <div className="hidden lg:block w-full max-w-sm">
-                <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
-                  Professional Journey
-                </p>
-                <h3 className="heading-section text-2xl text-theme-text mb-6">
-                  MY TIMELINE
-                </h3>
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={activePanel === "about" ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
+                    Professional Journey
+                  </p>
+                  <h3 className="heading-section text-2xl text-theme-text mb-6">
+                    MY TIMELINE
+                  </h3>
+                </motion.div>
 
                 {/* Timeline Tree */}
                 <div className="relative border-l border-theme-border/60 pl-5 ml-2.5 space-y-6">
+                  {/* Animated Line overlay */}
+                  <div className="absolute left-[-1px] top-0 bottom-0 w-[1px]">
+                    <motion.div 
+                      className="w-full bg-theme-accent origin-top"
+                      initial={{ scaleY: 0 }}
+                      animate={activePanel === "about" ? { scaleY: 1 } : { scaleY: 0 }}
+                      transition={{ duration: 0.8, ease: "easeInOut", delay: 0.2 }}
+                      style={{ height: "100%" }}
+                    />
+                  </div>
+
                   {timelineItems.map((item, i) => (
                     <motion.div
                       key={i}
                       className="relative"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={activePanel === "about" ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-                      transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                      initial={{ opacity: 0, x: 25 }}
+                      animate={activePanel === "about" ? { opacity: 1, x: 0 } : { opacity: 0, x: 25 }}
+                      transition={{ duration: 0.5, delay: 0.4 + i * 0.3 }}
                     >
                       {/* Dot indicator */}
-                      <span 
-                        className={`absolute -left-[29px] top-1 w-3 h-3 rounded-full border-2 border-theme-bg transition-colors duration-300 ${
-                          item.highlight 
-                            ? "bg-theme-accent shadow-[0_0_10px_rgba(var(--theme-accent-rgb),0.5)]" 
+                      <motion.span
+                        className={`absolute -left-[29px] top-1 w-3 h-3 rounded-full border-2 border-theme-bg ${
+                          item.highlight
+                            ? "bg-theme-accent shadow-[0_0_10px_rgba(var(--theme-accent-rgb),0.5)]"
                             : "bg-theme-muted"
                         }`}
+                        initial={{ scale: 0 }}
+                        animate={activePanel === "about" ? { scale: 1 } : { scale: 0 }}
+                        transition={{ type: "spring", stiffness: 150, damping: 10, delay: 0.3 + i * 0.3 }}
                       />
                       <span className="text-[10px] text-theme-muted font-medium block uppercase tracking-wider mb-0.5">
                         {item.date}

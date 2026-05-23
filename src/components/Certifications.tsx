@@ -121,21 +121,21 @@ const Certifications = () => {
 
           {/* Quote card */}
           <motion.div
-            className="bg-white rounded-3xl p-8 flex flex-col justify-between min-h-[220px] text-[#0f0f0f]"
+            className="bg-white dark:bg-theme-bg border border-transparent dark:border-white/[0.06] rounded-3xl p-8 flex flex-col justify-between min-h-[220px] text-[#0f0f0f] dark:text-theme-text"
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.95 },
               visible: { opacity: 1, y: 0, scale: 1 },
             }}
             transition={{ duration: 0.5 }}
-            whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(255,255,255,0.08)" }}
+            whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(var(--theme-accent-rgb), 0.08)" }}
           >
-            <Quote className="w-8 h-8 text-[#0f0f0f]/20" />
+            <Quote className="w-8 h-8 text-theme-accent/20" />
             <div>
-              <p className="text-sm leading-relaxed text-[#0f0f0f]/70 mb-3">
+              <p className="text-sm leading-relaxed text-[#0f0f0f]/70 dark:text-theme-muted mb-3">
                 "Passionate about turning complex problems into clean, scalable
                 solutions. Always learning, always building."
               </p>
-              <p className="text-xs text-[#0f0f0f]/40 font-medium">— Tanmay Wagh</p>
+              <p className="text-xs text-theme-accent font-medium">— Tanmay Wagh</p>
             </div>
           </motion.div>
 

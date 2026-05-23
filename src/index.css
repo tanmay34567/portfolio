@@ -20,7 +20,7 @@
     --secondary: 0 0% 90%;
     --secondary-foreground: 0 0% 11%;
     --muted: 0 0% 92%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 35%;
     --accent: 238 74% 63%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
@@ -53,7 +53,7 @@
     --secondary: 0 0% 4.3%;
     --secondary-foreground: 0 0% 96%;
     --muted: 0 0% 4.3%;
-    --muted-foreground: 0 0% 60%;
+    --muted-foreground: 0 0% 80%;
     --accent: 74 100% 65%;
     --accent-foreground: 0 0% 2%;
     --destructive: 0 63% 51%;
@@ -81,7 +81,7 @@
   --theme-text: #0f0f0f;
   --theme-accent: #5e67e6; /* Blue Accent */
   --theme-accent-rgb: 94, 103, 230;
-  --theme-muted: #666666;
+  --theme-muted: #4b5563;
   --theme-border: rgba(0, 0, 0, 0.1);
   --theme-glass: rgba(255, 255, 255, 0.85);
   --theme-glass-border: rgba(0, 0, 0, 0.08);
@@ -109,7 +109,7 @@
   --theme-text: #F5F5F5;
   --theme-accent: #D6FF4D; /* Neon Lime */
   --theme-accent-rgb: 214, 255, 77;
-  --theme-muted: #9A9A9A;
+  --theme-muted: #d4d4d8;
   --theme-border: rgba(255, 255, 255, 0.08);
   --theme-glass: rgba(10, 10, 10, 0.6);
   --theme-glass-border: rgba(255, 255, 255, 0.08);
