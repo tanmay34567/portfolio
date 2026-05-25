@@ -71,9 +71,9 @@ const Navbar = () => {
           <a href="#home" onClick={(e) => handleNavClick(e, "#home")} className="flex items-center gap-2.5 pl-1.5 pr-3 shrink-0">
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-theme-text text-sm font-bold overflow-hidden shrink-0 relative">
               <img
-                src="/img.png"
+                src="/img.jpg"
                 alt="Tanmay Wagh"
-                className="absolute w-[170%] h-[170%] max-w-none object-cover top-0 left-1/2 -translate-x-1/2"
+                className="w-full h-full object-cover object-[50%_35%]"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = "none";
                   (e.target as HTMLImageElement).parentElement!.textContent = "TW";
@@ -152,9 +152,9 @@ const Navbar = () => {
             <a href="#home" className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-theme-text text-xs font-bold overflow-hidden relative">
                 <img
-                  src="/portrait.png"
+                  src="/img.jpg"
                   alt="Tanmay Wagh"
-                  className="absolute w-[170%] h-[170%] max-w-none object-cover top-0 left-1/2 -translate-x-1/2"
+                  className="w-full h-full object-cover object-[50%_35%]"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = "none";
                     (e.target as HTMLImageElement).parentElement!.textContent = "TW";

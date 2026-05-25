@@ -1,5 +1,5 @@
 const fs = require('fs');
-const imgPath = 'public/img.png';
+const imgPath = 'public/img.jpg';
 if (fs.existsSync(imgPath)) {
   const imgData = fs.readFileSync(imgPath);
   const base64 = imgData.toString('base64');
@@ -17,13 +17,13 @@ if (fs.existsSync(imgPath)) {
     </filter>
   </defs>
   <g clip-path="url(#circleView)">
-    <image x="6" y="6" width="88" height="88" href="data:image/png;base64,${base64}" preserveAspectRatio="xMidYMid slice" />
+    <image x="-15" y="-1" width="130" height="145" href="data:image/jpeg;base64,${base64}" />
   </g>
   <circle cx="50" cy="50" r="44" fill="none" stroke="#D6FF4D" stroke-width="2.5" filter="url(#neonGlow)" />
 </svg>`;
   fs.writeFileSync('public/favicon.svg', svg);
   console.log('favicon.svg created successfully');
 } else {
-  console.log('img.png not found');
+  console.log('img.jpg not found');
 }
 
