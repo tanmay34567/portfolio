@@ -275,13 +275,22 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
   const videoRef = useRef<HTMLVideoElement>(null);
   const [openService, setOpenService] = useState(-1);
   const [activePanel, setActivePanel] = useState<"hero" | "services" | "about">("hero");
-  const [videoFinished, setVideoFinished] = useState(false);
-  const [showHeroText, setShowHeroText] = useState(false);
+  const [videoFinished, setVideoFinished] = useState((window as any).introVideoPlayed === true);
+  const [showHeroText, setShowHeroText] = useState((window as any).introVideoPlayed === true);
   const [isMuted, setIsMuted] = useState(false); // Start unmuted
   const isMobile = useIsMobile();
 
+  useEffect(() => {
+    if ((window as any).introVideoPlayed === true) {
+      onVideoEnd?.();
+    }
+  }, [onVideoEnd]);
+
   // Set up scroll locking on mount
   useEffect(() => {
+    if ((window as any).introVideoPlayed === true) {
+      return;
+    }
     // Prevent browser from restoring scroll position on refresh
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
@@ -317,6 +326,9 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
   // Play video only when startVideo becomes true
   useEffect(() => {
+    if ((window as any).introVideoPlayed === true) {
+      return;
+    }
     let timeout: NodeJS.Timeout;
     if (startVideo) {
       if (videoRef.current) {
@@ -354,6 +366,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
     (window as any).isScrollLocked = false;
     setVideoFinished(true);
     setShowHeroText(true);
+    (window as any).introVideoPlayed = true;
     onVideoEnd?.();
     document.body.style.overflow = "";
     document.documentElement.style.overflow = "";

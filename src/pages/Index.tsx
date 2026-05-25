@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import SplashScreen from "@/components/SplashScreen";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import ScrollFlipCard from "@/components/ScrollFlipCard";
 import Marquee from "@/components/Marquee";
@@ -37,8 +37,18 @@ const statusMarquee = [
 ];
 
 const Index = () => {
-  const [hasEntered, setHasEntered] = useState(false);
   const [isVideoFinished, setIsVideoFinished] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!(window as any).hasEnteredSite) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  if (!(window as any).hasEnteredSite) {
+    return null;
+  }
 
   return (
     <>
@@ -57,12 +67,11 @@ const Index = () => {
           property="og:description"
           content="Full Stack Developer specializing in building scalable web applications with React, Node.js, and MongoDB."
         />
-        <link rel="canonical" href="https://tanmaywagh.dev" />
+        <link rel="canonical" href="https://tanmayw.dev" />
       </Helmet>
 
       <div className="min-h-screen bg-transparent relative">
         <AnimatedBackground />
-        {!hasEntered && <SplashScreen onEnter={() => setHasEntered(true)} />}
         <motion.div 
           animate={{ opacity: isVideoFinished ? 1 : 0, y: isVideoFinished ? 0 : -20 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -72,14 +81,15 @@ const Index = () => {
             <Navbar />
           </div>
         </motion.div>
-        <div 
-          className="transition-opacity duration-700"
-          style={{ opacity: hasEntered ? 1 : 0, pointerEvents: hasEntered ? "auto" : "none" }}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
         >
           <main>
             {/* Portavia scroll: Hero → Services → About (dark, persistent card) */}
             <ScrollFlipCard 
-              startVideo={hasEntered} 
+              startVideo={true} 
               onVideoEnd={() => setIsVideoFinished(true)} 
             />
 
@@ -102,7 +112,7 @@ const Index = () => {
             <Contact />
           </main>
           <Footer />
-        </div>
+        </motion.div>
       </div>
     </>
   );

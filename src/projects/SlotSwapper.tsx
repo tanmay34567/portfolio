@@ -206,7 +206,7 @@ const SlotSwapper = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-theme-bg/40 backdrop-blur-md border-b border-theme-border py-4 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link 
-            to="/#projects" 
+            to="/home#projects" 
             className="inline-flex items-center gap-2 text-theme-muted hover:text-theme-text transition-all duration-300 group py-1.5 px-4 rounded-full bg-theme-bg/60 border border-theme-border hover:border-theme-accent/30"
             id="slotswapper-back-btn"
           >
@@ -726,7 +726,7 @@ const SlotSwapper = () => {
                 <span>Clone Repository</span>
               </a>
               <Link 
-                to="/#projects" 
+                to="/home#projects" 
                 className="inline-flex items-center gap-2 px-6 py-3.5 font-semibold text-xs rounded-full bg-theme-accent text-white dark:text-black shadow-lg shadow-theme-accent/15 hover:shadow-theme-accent/25 transition-all duration-300"
               >
                 <span>Explore More Work</span>

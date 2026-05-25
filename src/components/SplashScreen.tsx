@@ -32,6 +32,12 @@ export default function SplashScreen({ onEnter }: { onEnter: () => void }) {
         (window as any).lenis.stop();
       }
     }
+    return () => {
+      document.body.style.overflow = "";
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
+      }
+    };
   }, [isVisible]);
 
   const handleExecute = () => {

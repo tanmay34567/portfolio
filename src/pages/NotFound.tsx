@@ -80,7 +80,7 @@ const NotFound = () => {
           >
             <Link
               id="404-home-link"
-              to="/"
+              to="/home"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-sm font-semibold rounded-full bg-[#D1FF4D] text-black hover:bg-[#D1FF4D]/90 shadow-[0_0_30px_rgba(209,255,77,0.15)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] group"
             >
               <Home className="w-4 h-4" />
