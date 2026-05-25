@@ -53,14 +53,16 @@ const projects: Project[] = [
     iframeUrl: "https://quiz-app-demo.vercel.app",
   },
   {
-    id: "lms",
-    title: "Learning Management System",
-    subtitle: "Web Application",
+    id: "audioorbit",
+    title: "AudioOrbit",
+    subtitle: "Real-Time Synchronization",
     description:
-      "Modern role-based LMS with courses, modules, quizzes, and progress tracking for students and teachers.",
-    tech: ["React 18", "TypeScript", "Tailwind CSS", "Recharts", "Node.js", "Express.js", "MongoDB", "JWT"],
-    githubLink: "https://github.com/tanmay34567/Learning-Management-System",
-    image: "/projects/lms.png",
+      "A synchronized real-time audio playback platform allowing multiple users to listen to music in perfect harmony with sub-10ms latency.",
+    tech: ["React.js", "Socket.IO", "Web Audio API", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
+    liveLink: "https://audi-orbit.vercel.app/",
+    githubLink: "https://github.com/tanmay34567/AudioOrbit",
+    image: "/projects/audioorbit.png",
+    iframeUrl: "https://audi-orbit.vercel.app/",
   },
   {
     id: "tab-fetcher",
@@ -313,7 +315,7 @@ const Projects = () => {
             />
             <ProjectGridCard 
               project={projects[3]} 
-              aspectClass="aspect-[3/4]"
+              aspectClass="aspect-[1351/647]"
             />
             <ProjectGridCard 
               project={projects[4]} 
@@ -386,7 +388,7 @@ const Projects = () => {
             />
             <ProjectGridCard 
               project={projects[3]} 
-              aspectClass="aspect-[3/4]"
+              aspectClass="aspect-[1351/647]"
             />
             <ProjectGridCard 
               project={projects[4]} 
@@ -451,7 +453,7 @@ const Projects = () => {
           />
           <ProjectGridCard 
             project={projects[3]} 
-            aspectClass="aspect-[3/4]"
+            aspectClass="aspect-[1351/647]"
           />
           <ProjectGridCard 
             project={projects[4]} 

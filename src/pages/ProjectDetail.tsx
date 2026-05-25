@@ -1,12 +1,22 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import SlotSwapper from "../projects/SlotSwapper";
+import EveryDayMeal from "../projects/EveryDayMeal";
+import AudioOrbit from "../projects/AudioOrbit";
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
 
   if (id === "slotswapper") {
     return <SlotSwapper />;
+  }
+
+  if (id === "everydaymeal") {
+    return <EveryDayMeal />;
+  }
+
+  if (id === "audioorbit") {
+    return <AudioOrbit />;
   }
 
   return (
