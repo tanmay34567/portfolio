@@ -41,18 +41,6 @@ const projects: Project[] = [
     iframeUrl: "https://swappy-slots.vercel.app",
   },
   {
-    id: "quiz-app",
-    title: "Quiz App",
-    subtitle: "Frontend Application",
-    description:
-      "Clean, fast, fully-typed quiz application with intuitive Start → Loading → Quiz → Results flow. Built with TypeScript for type safety.",
-    tech: ["React 18", "TypeScript", "Vite", "Tailwind CSS"],
-    liveLink: "https://quiz-app-demo.vercel.app",
-    githubLink: "https://github.com/tanmay34567/QUIZ-APP",
-    image: "/projects/quiz.png",
-    iframeUrl: "https://quiz-app-demo.vercel.app",
-  },
-  {
     id: "audioorbit",
     title: "AudioOrbit",
     subtitle: "Real-Time Synchronization",
@@ -65,26 +53,6 @@ const projects: Project[] = [
     iframeUrl: "https://audi-orbit.vercel.app/",
   },
   {
-    id: "tab-fetcher",
-    title: "Tab Title Fetcher",
-    subtitle: "Chrome Extension",
-    description:
-      "Lightweight Chrome extension to fetch and display active browser tab titles instantly.",
-    tech: ["Chrome Extension API", "Manifest V3", "JavaScript", "HTML5", "CSS3"],
-    githubLink: "https://github.com/tanmay34567/tab-title-fetcher-extension",
-    image: "/projects/tabfetcher.png",
-  },
-  {
-    id: "linkedin-extension",
-    title: "LinkedIn Extension",
-    subtitle: "Automation & Web Scraping",
-    description:
-      "Chrome extension that scrapes LinkedIn profiles and automates feed interactions.",
-    tech: ["Chrome Extension", "JavaScript", "Node.js", "Express.js", "SQLite", "Sequelize"],
-    githubLink: "https://github.com/tanmay34567/Linkedin_extension",
-    image: "/projects/linkedin.png",
-  },
-  {
     id: "mf-analyzer",
     title: "Mutual Fund Analyzer",
     subtitle: "Wealth Management",
@@ -95,16 +63,6 @@ const projects: Project[] = [
     githubLink: "https://github.com/tanmay34567/mutual-fund-analyzer",
     image: "/projects/MFanalyzer.png",
     iframeUrl: "https://mutual-fund-analyzer.vercel.app/",
-  },
-  {
-    id: "shopsphere",
-    title: "ShopSphere",
-    subtitle: "E-Commerce App",
-    description:
-      "A fully-featured modern e-commerce storefront with cart, checkout, payments, and admin dashboard integrations.",
-    tech: ["React.js", "Node.js", "Redux Toolkit", "Stripe", "Express.js", "MongoDB"],
-    githubLink: "https://github.com/tanmay34567/ShopSphere",
-    image: "/projects/shopsphere.png",
   },
 ];
 
@@ -316,12 +274,8 @@ const Projects = () => {
               aspectClass="aspect-[1365/648]"
             />
             <ProjectGridCard 
-              project={projects[3]} 
+              project={projects[2]} 
               aspectClass="aspect-[1351/647]"
-            />
-            <ProjectGridCard 
-              project={projects[4]} 
-              aspectClass="aspect-[321/200]"
             />
           </motion.div>
 
@@ -337,14 +291,6 @@ const Projects = () => {
               isVideo={true}
               videoSrc="/make_the_face_body_proportion.mp4"
             />
-            <ProjectGridCard 
-              project={projects[2]} 
-              aspectClass="aspect-[3/4]"
-            />
-            <ProjectGridCard 
-              project={projects[5]} 
-              aspectClass="aspect-[3/4]"
-            />
           </motion.div>
 
           {/* Column 3 */}
@@ -354,12 +300,8 @@ const Projects = () => {
               aspectClass="aspect-[1365/646]"
             />
             <ProjectGridCard 
-              project={projects[6]} 
+              project={projects[3]} 
               aspectClass="aspect-[1365/646]"
-            />
-            <ProjectGridCard 
-              project={projects[7]} 
-              aspectClass="aspect-[3/4]"
             />
           </motion.div>
         </motion.div>
@@ -389,16 +331,8 @@ const Projects = () => {
               videoSrc="/make_the_face_body_proportion.mp4"
             />
             <ProjectGridCard 
-              project={projects[3]} 
+              project={projects[2]} 
               aspectClass="aspect-[1351/647]"
-            />
-            <ProjectGridCard 
-              project={projects[4]} 
-              aspectClass="aspect-[321/200]"
-            />
-            <ProjectGridCard 
-              project={projects[7]} 
-              aspectClass="aspect-[3/4]"
             />
           </motion.div>
 
@@ -409,15 +343,7 @@ const Projects = () => {
               aspectClass="aspect-[1365/646]"
             />
             <ProjectGridCard 
-              project={projects[2]} 
-              aspectClass="aspect-[3/4]"
-            />
-            <ProjectGridCard 
-              project={projects[5]} 
-              aspectClass="aspect-[3/4]"
-            />
-            <ProjectGridCard 
-              project={projects[6]} 
+              project={projects[3]} 
               aspectClass="aspect-[1365/646]"
             />
           </motion.div>
@@ -451,27 +377,11 @@ const Projects = () => {
           />
           <ProjectGridCard 
             project={projects[2]} 
-            aspectClass="aspect-[3/4]"
-          />
-          <ProjectGridCard 
-            project={projects[3]} 
             aspectClass="aspect-[1351/647]"
           />
           <ProjectGridCard 
-            project={projects[4]} 
-            aspectClass="aspect-[321/200]"
-          />
-          <ProjectGridCard 
-            project={projects[5]} 
-            aspectClass="aspect-[3/4]"
-          />
-          <ProjectGridCard 
-            project={projects[6]} 
+            project={projects[3]} 
             aspectClass="aspect-[1365/646]"
-          />
-          <ProjectGridCard 
-            project={projects[7]} 
-            aspectClass="aspect-[3/4]"
           />
         </motion.div>
 

@@ -46,8 +46,16 @@ const Footer = () => {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 {/* Brand */}
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-accent-foreground/10 flex items-center justify-center text-accent-foreground text-xs font-bold">
-                    TW
+                  <div className="w-8 h-8 rounded-full bg-accent-foreground/10 flex items-center justify-center text-accent-foreground text-xs font-bold overflow-hidden relative">
+                    <img
+                      src="/img.jpg"
+                      alt="Tanmay Wagh"
+                      className="w-full h-full object-cover object-[50%_35%]"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = "none";
+                        (e.target as HTMLImageElement).parentElement!.textContent = "TW";
+                      }}
+                    />
                   </div>
                   <span className="font-semibold text-accent-foreground text-sm">Tanmay Wagh</span>
                 </div>

@@ -223,12 +223,12 @@ const Contact = () => {
                       onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                       className="w-full px-5 py-3.5 bg-black/5 dark:bg-white/5 rounded-xl border border-theme-border text-theme-text text-sm focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all appearance-none cursor-pointer"
                     >
-                      <option value="">Select a service</option>
-                      <option value="frontend">Frontend Development</option>
-                      <option value="backend">Backend Development</option>
-                      <option value="fullstack">Full Stack Development</option>
-                      <option value="extension">Chrome Extension</option>
-                      <option value="other">Other</option>
+                      <option value="" className="bg-theme-bg text-theme-text">Select a service</option>
+                      <option value="frontend" className="bg-theme-bg text-theme-text">Frontend Development</option>
+                      <option value="backend" className="bg-theme-bg text-theme-text">Backend Development</option>
+                      <option value="fullstack" className="bg-theme-bg text-theme-text">Full Stack Development</option>
+                      <option value="extension" className="bg-theme-bg text-theme-text">Chrome Extension</option>
+                      <option value="other" className="bg-theme-bg text-theme-text">Other</option>
                     </select>
                   </div>
 
