@@ -323,7 +323,7 @@ const AudioOrbit = () => {
                   <iframe 
                     src="https://audi-orbit.vercel.app/" 
                     title="AudioOrbit Live App View"
-                    className="w-full h-full border-none bg-zinc-950"
+                    className="absolute top-0 left-0 w-[200%] h-[200%] origin-top-left scale-50 border-none bg-zinc-950"
                     sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
                     loading="lazy"
                   />
