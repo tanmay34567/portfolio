@@ -14,6 +14,11 @@ const PORT = process.env.PORT || 5000;
 app.use(cors()); // Allows your React frontend to talk to this backend
 app.use(express.json()); // Allows parsing of JSON request bodies
 
+// Health-check / Ping endpoint for keeping the server awake on Render
+app.get('/ping', (req, res) => {
+    res.status(200).json({ success: true, message: 'pong' });
+});
+
 // Connect to MongoDB
 const connectDB = async () => {
     try {

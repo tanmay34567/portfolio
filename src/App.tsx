@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,28 +17,37 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <HelmetProvider>
-    <SmoothScroll>
-      <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <ScrollToTop />
-              <Routes>
-                <Route path="/" element={<Intro />} />
-                <Route path="/home" element={<Index />} />
-                <Route path="/project/:id" element={<ProjectDetail />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
-    </SmoothScroll>
-  </HelmetProvider>
-);
+const App = () => {
+  useEffect(() => {
+    // Warm up the Render backend server (cold start prevention)
+    fetch("https://portfolio-9srf.onrender.com/ping").catch((err) => {
+      console.warn("Backend warmup ping failed:", err);
+    });
+  }, []);
+
+  return (
+    <HelmetProvider>
+      <SmoothScroll>
+        <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ScrollToTop />
+                <Routes>
+                  <Route path="/" element={<Intro />} />
+                  <Route path="/home" element={<Index />} />
+                  <Route path="/project/:id" element={<ProjectDetail />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </TooltipProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </SmoothScroll>
+    </HelmetProvider>
+  );
+};
 
 export default App;
