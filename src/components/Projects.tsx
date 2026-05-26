@@ -85,14 +85,16 @@ const projects: Project[] = [
     image: "/projects/linkedin.png",
   },
   {
-    id: "devflow",
-    title: "DevFlow",
-    subtitle: "Developer Forum",
+    id: "mf-analyzer",
+    title: "Mutual Fund Analyzer",
+    subtitle: "Wealth Management",
     description:
-      "A Q&A platform for programmers to search, answer, and ask coding questions. Built with Next.js, React, Clerk, and MongoDB.",
-    tech: ["Next.js", "React.js", "MongoDB", "Tailwind CSS", "Clerk"],
-    githubLink: "https://github.com/tanmay34567/DevFlow",
-    image: "/projects/devflow.png",
+      "A portfolio-ready wealth tracking dashboard allowing users to track performance, compare up to 3 mutual funds side-by-side, and visualize NAV metrics using public AMFI API.",
+    tech: ["React 19", "Vite", "Node.js", "Express.js", "PostgreSQL", "Sequelize ORM", "Chart.js", "Recharts", "AMFI API"],
+    liveLink: "https://mutual-fund-analyzer.vercel.app/",
+    githubLink: "https://github.com/tanmay34567/mutual-fund-analyzer",
+    image: "/projects/MFanalyzer.png",
+    iframeUrl: "https://mutual-fund-analyzer.vercel.app/",
   },
   {
     id: "shopsphere",
@@ -353,7 +355,7 @@ const Projects = () => {
             />
             <ProjectGridCard 
               project={projects[6]} 
-              aspectClass="aspect-[3/4]"
+              aspectClass="aspect-[1365/646]"
             />
             <ProjectGridCard 
               project={projects[7]} 
@@ -416,7 +418,7 @@ const Projects = () => {
             />
             <ProjectGridCard 
               project={projects[6]} 
-              aspectClass="aspect-[3/4]"
+              aspectClass="aspect-[1365/646]"
             />
           </motion.div>
         </motion.div>
@@ -465,7 +467,7 @@ const Projects = () => {
           />
           <ProjectGridCard 
             project={projects[6]} 
-            aspectClass="aspect-[3/4]"
+            aspectClass="aspect-[1365/646]"
           />
           <ProjectGridCard 
             project={projects[7]} 

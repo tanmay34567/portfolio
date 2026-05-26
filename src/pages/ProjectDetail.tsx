@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import SlotSwapper from "../projects/SlotSwapper";
 import EveryDayMeal from "../projects/EveryDayMeal";
 import AudioOrbit from "../projects/AudioOrbit";
+import MFAnalyzer from "../projects/MFAnalyzer";
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,6 +18,10 @@ const ProjectDetail = () => {
 
   if (id === "audioorbit") {
     return <AudioOrbit />;
+  }
+
+  if (id === "mf-analyzer") {
+    return <MFAnalyzer />;
   }
 
   return (
