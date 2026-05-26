@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "tsx server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,12 +16,12 @@
     "express": "^5.2.1",
     "mongoose": "^9.0.2",
     "nodemailer": "^7.0.12",
-    "resend": "^6.12.3"
+    "resend": "^6.12.3",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
-    "concurrently": "^9.2.1",
-    "tsx": "^4.21.0"
+    "concurrently": "^9.2.1"
   }
 }
