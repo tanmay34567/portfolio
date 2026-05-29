@@ -58,7 +58,7 @@ const stats = [
   { value: 10, suffix: "+", label: "Projects Built" },
   { value: 20, suffix: "+", label: "Technologies" },
   { value: 1, suffix: "+", label: "Year Experience" },
-  { value: 7.99, suffix: "", label: "CGPA", decimals: 2 },
+  { value: 8.14, suffix: "", label: "CGPA", decimals: 2 },
 ];
 
 const skillsList = [
@@ -70,7 +70,7 @@ const skillsList = [
 
 const timelineItems = [
   {
-    date: "Nov 2024 - Present",
+    date: "Dec 2025 - Present",
     role: "Developer Intern",
     company: "Banao Technologies",
     desc: "Developing Chrome Extensions & Node.js integrations.",
