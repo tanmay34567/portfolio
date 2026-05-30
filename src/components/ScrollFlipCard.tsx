@@ -664,7 +664,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   </motion.a>
 
                   <motion.a
-                    href="https://drive.google.com/file/d/1yxB-bOVXLwu8P4LRFljMiqKaxLccesMD/view?usp=sharing"
+                    href="https://drive.google.com/file/d/1EGEjKxRTl05xLkRKfadwuf1H-rfd4qUX/view?usp=drive_link"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative group inline-flex items-center gap-2 px-7 py-3.5 text-theme-text text-sm font-semibold rounded-full border border-theme-border transition-all duration-300 hover:border-theme-text/30 hover:bg-theme-border overflow-hidden"
