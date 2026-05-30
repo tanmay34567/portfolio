@@ -22,43 +22,43 @@ import {
 const services = [
   {
     number: "01",
-    title: "Frontend Development",
+    title: "Custom Web App Development",
     description:
-      "Building responsive, performant user interfaces with React.js, TypeScript, and modern CSS frameworks.",
-    skills: ["React.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS3", "JavaScript"],
+      "End-to-end development of responsive, performant SaaS products, admin dashboards, and custom client interfaces using React, TypeScript, and Tailwind CSS.",
+    skills: ["React.js", "TypeScript", "Tailwind CSS", "Next.js", "Vite", "HTML5/CSS3"],
     icon: <Code className="w-5 h-5" />,
   },
   {
     number: "02",
-    title: "Backend Development",
+    title: "API Design & Backend Systems",
     description:
-      "Designing scalable server-side architectures with Node.js and Express.js. Building RESTful APIs.",
-    skills: ["Node.js", "Express.js", "MongoDB", "REST APIs", "JWT", "Socket.IO"],
+      "Designing secure, high-concurrency server-side architectures and RESTful APIs with Node.js and Express.js, integrated with SQL/NoSQL databases.",
+    skills: ["Node.js", "Express.js", "MongoDB", "PostgreSQL", "REST APIs", "JWT Auth"],
     icon: <Server className="w-5 h-5" />,
   },
   {
     number: "03",
-    title: "Full Stack Solutions",
+    title: "Real-Time Sync Solutions",
     description:
-      "End-to-end web application development using the MERN stack. Complete, production-ready apps.",
-    skills: ["MERN Stack", "Python", "Git", "Vercel", "Render", "Cloudinary"],
+      "Building latency-critical, real-time sync engines, scheduling marketplaces, and multiplayer features using Socket.IO and WebSockets.",
+    skills: ["Socket.IO", "WebSockets", "MERN Stack", "Web Audio API", "Real-Time DBs"],
     icon: <Layers className="w-5 h-5" />,
   },
   {
     number: "04",
-    title: "Chrome Extensions",
+    title: "Chrome Extensions & Automation",
     description:
-      "Developing powerful browser extensions using Manifest V3, integrating with web APIs.",
-    skills: ["Chrome Extension API", "Manifest V3", "JavaScript", "Web APIs"],
+      "Developing custom Manifest V3 extensions to automate browser tasks, scrapers, third-party integrations, and product productivity add-ons.",
+    skills: ["Chrome Extension API", "Manifest V3", "Automation", "Web Scraping", "APIs"],
     icon: <Chrome className="w-5 h-5" />,
   },
 ];
 
-const stats = [
+const stats: { value: number; suffix: string; label: string; decimals?: number }[] = [
   { value: 10, suffix: "+", label: "Projects Built" },
   { value: 20, suffix: "+", label: "Technologies" },
   { value: 1, suffix: "+", label: "Year Experience" },
-  { value: 8.14, suffix: "", label: "CGPA", decimals: 2 },
+  { value: 100, suffix: "%", label: "On-Time Delivery" },
 ];
 
 const skillsList = [
@@ -275,114 +275,22 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
   const videoRef = useRef<HTMLVideoElement>(null);
   const [openService, setOpenService] = useState(-1);
   const [activePanel, setActivePanel] = useState<"hero" | "services" | "about">("hero");
-  const [videoFinished, setVideoFinished] = useState((window as any).introVideoPlayed === true);
-  const [showHeroText, setShowHeroText] = useState((window as any).introVideoPlayed === true);
+  const [videoFinished, setVideoFinished] = useState(true);
+  const [showHeroText, setShowHeroText] = useState(true);
   const [isMuted, setIsMuted] = useState(false); // Start unmuted
+  const [isPlayingAboutVideo, setIsPlayingAboutVideo] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    if ((window as any).introVideoPlayed === true) {
-      onVideoEnd?.();
-    }
+    onVideoEnd?.();
   }, [onVideoEnd]);
 
-  // Set up scroll locking on mount
+  // Pause and reset video if user scrolls away from the about section
   useEffect(() => {
-    if ((window as any).introVideoPlayed === true) {
-      return;
+    if (activePanel !== "about") {
+      setIsPlayingAboutVideo(false);
     }
-    // Prevent browser from restoring scroll position on refresh
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
-    }
-    window.scrollTo(0, 0);
-
-    // Backup scroll reset using requestAnimationFrame
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-      if ((window as any).lenis) {
-        (window as any).lenis.scrollTo(0, { immediate: true });
-      }
-    });
-
-    // Lock scroll
-    (window as any).isScrollLocked = true;
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
-    if ((window as any).lenis) {
-      (window as any).lenis.stop();
-    }
-
-    return () => {
-      // Clean up scroll lock on unmount
-      (window as any).isScrollLocked = false;
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-      if ((window as any).lenis) {
-        (window as any).lenis.start();
-      }
-    };
-  }, []);
-
-  // Play video only when startVideo becomes true
-  useEffect(() => {
-    if ((window as any).introVideoPlayed === true) {
-      return;
-    }
-    let timeout: NodeJS.Timeout;
-    if (startVideo) {
-      if (videoRef.current) {
-        videoRef.current.muted = false;
-        const playPromise = videoRef.current.play();
-        if (playPromise !== undefined) {
-          playPromise.catch((error) => {
-            // Autoplay unmuted was blocked by browser. Fall back to muted autoplay!
-            console.log("Autoplay unmuted blocked, falling back to muted autoplay:", error);
-            if (videoRef.current) {
-              videoRef.current.muted = true;
-              setIsMuted(true);
-              videoRef.current.play().catch((err) => {
-                console.error("Muted autoplay also blocked:", err);
-              });
-            }
-          });
-        }
-      }
-
-      // Auto-unlock backup after 18 seconds (in case video fails to play/load)
-      // This ensures the user is never permanently stuck.
-      timeout = setTimeout(() => {
-        unlockScroll();
-      }, 18000);
-    }
-
-    return () => {
-      if (timeout) clearTimeout(timeout);
-    };
-  }, [startVideo]);
-
-
-  const unlockScroll = () => {
-    (window as any).isScrollLocked = false;
-    setVideoFinished(true);
-    setShowHeroText(true);
-    (window as any).introVideoPlayed = true;
-    onVideoEnd?.();
-    document.body.style.overflow = "";
-    document.documentElement.style.overflow = "";
-    if ((window as any).lenis) {
-      (window as any).lenis.start();
-    }
-  };
-
-  const handleVideoEnded = () => {
-    unlockScroll();
-  };
-
-  const handleTimeUpdate = () => {
-    // Removed logic to show text at 3 seconds.
-    // Text now only appears after video finishes playing or is skipped.
-  };
+  }, [activePanel]);
 
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card action triggers
@@ -566,40 +474,75 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
               }}
             >
               <div className="w-full h-full bg-gradient-to-b from-[#1a1a2e] to-[#0f0f1a] relative flex items-center justify-center">
-                <video
-                  ref={videoRef}
-                  src="https://resource2.heygen.ai/video/transcode/71eae82a2cd9459c94302f243bf9f16d/vY7kragCxxQkV0bXYbs63UYlGwYNJGQ9j/720x1280.mp4"
-                  poster="/portrait.png"
-                  className="w-full h-full object-cover"
-                  muted={isMuted}
-                  playsInline
-                  onEnded={handleVideoEnded}
-                  onTimeUpdate={handleTimeUpdate}
-                />
+                {isPlayingAboutVideo ? (
+                  <>
+                    <video
+                      ref={videoRef}
+                      src="https://resource2.heygen.ai/video/transcode/71eae82a2cd9459c94302f243bf9f16d/vY7kragCxxQkV0bXYbs63UYlGwYNJGQ9j/720x1280.mp4"
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      muted={isMuted}
+                      playsInline
+                      onEnded={() => setIsPlayingAboutVideo(false)}
+                    />
 
-                {/* Elegant Skip Overlay Button */}
-                {!videoFinished && (
-                  <button
-                    onClick={unlockScroll}
-                    className="absolute bottom-5 left-5 z-40 px-4 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-white text-xs font-medium tracking-wider uppercase transition-all duration-300 shadow-lg"
-                    title="Skip Intro"
-                  >
-                    Skip
-                  </button>
+                    {/* Elegant Volume Overlay Button */}
+                    <button
+                      onClick={toggleMute}
+                      className="absolute bottom-5 right-5 z-40 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-white transition-all duration-300 shadow-lg"
+                      title={isMuted ? "Unmute Intro" : "Mute Intro"}
+                    >
+                      {isMuted ? (
+                        <VolumeX className="w-4.5 h-4.5 text-white/80" />
+                      ) : (
+                        <Volume2 className="w-4.5 h-4.5 text-white animate-pulse" />
+                      )}
+                    </button>
+
+                    {/* Elegant Close Overlay Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsPlayingAboutVideo(false);
+                      }}
+                      className="absolute top-5 right-5 z-40 px-3.5 h-9 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-white text-xs font-semibold tracking-wider uppercase transition-all duration-300 shadow-lg"
+                      title="Close Video"
+                    >
+                      Close
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src="/portrait.png"
+                      alt="Tanmay Wagh Portrait"
+                      className="w-full h-full object-cover"
+                    />
+                    {activePanel === "about" && (
+                      <div 
+                        onClick={() => {
+                          setIsPlayingAboutVideo(true);
+                          setIsMuted(false);
+                        }}
+                        className="absolute inset-0 bg-black/45 backdrop-blur-[1px] hover:bg-black/35 flex flex-col items-center justify-center gap-4 cursor-pointer group transition-all duration-300"
+                      >
+                        <div className="w-16 h-16 rounded-full bg-white text-black hover:bg-theme-accent hover:text-white flex items-center justify-center shadow-2xl shadow-black/40 group-hover:scale-110 transition-all duration-500 ease-out">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-7 h-7 translate-x-[2px]"
+                          >
+                            <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                        <span className="text-[11px] font-bold tracking-[0.25em] text-white uppercase opacity-80 group-hover:opacity-100 transition-opacity duration-300 select-none animate-pulse">
+                          Click to Start Video
+                        </span>
+                      </div>
+                    )}
+                  </>
                 )}
-
-                {/* Elegant Volume Overlay Button */}
-                <button
-                  onClick={toggleMute}
-                  className="absolute bottom-5 right-5 z-40 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center border border-white/10 hover:border-white/20 text-white transition-all duration-300 shadow-lg"
-                  title={isMuted ? "Unmute Intro" : "Mute Intro"}
-                >
-                  {isMuted ? (
-                    <VolumeX className="w-4.5 h-4.5 text-white/80" />
-                  ) : (
-                    <Volume2 className="w-4.5 h-4.5 text-white animate-pulse" />
-                  )}
-                </button>
               </div>
 
 
@@ -682,7 +625,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 </h2>
 
                 <StaggeredWords
-                  text="I'm a full-stack developer building clean & scalable web applications with modern technologies."
+                  text="I build high-performance web applications and custom Chrome extensions that help startups and businesses scale."
                   show={showHeroText}
                   delay={1.0}
                   from="right"
@@ -705,7 +648,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <span className="relative z-10">Let's Connect</span>
+                    <span className="relative z-10">Hire for Projects</span>
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-[#c8ff00]/20 to-[#5e67e6]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     />
@@ -736,30 +679,18 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2, duration: 0.8 }}
             >
-              {!videoFinished ? (
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-[10px] tracking-[0.2em] uppercase text-theme-accent animate-pulse">Introduction Playing...</span>
-                  <button
-                    onClick={unlockScroll}
-                    className="mt-1 text-[9px] tracking-[0.15em] uppercase text-theme-text/40 hover:text-theme-text border border-theme-border hover:border-theme-text/20 px-3 py-1.5 rounded-full transition-all duration-300 bg-theme-border cursor-pointer"
-                  >
-                    Skip Intro
-                  </button>
-                </div>
-              ) : (
-                <a
-                  href="#services"
-                  className="flex items-center gap-2 text-theme-muted hover:text-theme-text transition-colors group"
+              <a
+                href="#services"
+                className="flex items-center gap-2 text-theme-muted hover:text-theme-text transition-colors group"
+              >
+                <span className="text-[10px] tracking-[0.2em] uppercase">Scroll down</span>
+                <motion.div
+                  animate={{ y: [0, 6, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <span className="text-[10px] tracking-[0.2em] uppercase">Scroll down</span>
-                  <motion.div
-                    animate={{ y: [0, 6, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <ArrowDown className="w-4 h-4" />
-                  </motion.div>
-                </a>
-              )}
+                  <ArrowDown className="w-4 h-4" />
+                </motion.div>
+              </a>
             </motion.div>
           </motion.div>
         </motion.div>

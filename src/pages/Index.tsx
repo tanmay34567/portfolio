@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import ScrollFlipCard from "@/components/ScrollFlipCard";
 import Marquee from "@/components/Marquee";
@@ -11,6 +10,7 @@ import Certifications from "@/components/Certifications";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import WorkProcess from "@/components/WorkProcess";
 
 const techMarquee = [
   "React.js",
@@ -37,18 +37,7 @@ const statusMarquee = [
 ];
 
 const Index = () => {
-  const [isVideoFinished, setIsVideoFinished] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!(window as any).hasEnteredSite) {
-      navigate("/");
-    }
-  }, [navigate]);
-
-  if (!(window as any).hasEnteredSite) {
-    return null;
-  }
+  const [isVideoFinished, setIsVideoFinished] = useState(true);
 
   return (
     <>
@@ -101,6 +90,9 @@ const Index = () => {
 
             {/* Status ticker (reverse direction) */}
             <Marquee items={statusMarquee} speed={40} reverse separator="◆" />
+
+            {/* Freelance Work Process */}
+            <WorkProcess />
 
             {/* Testimonials */}
             <Testimonials />

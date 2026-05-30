@@ -8,7 +8,7 @@ const router = Router();
 // POST /api/contact
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { name, email, service, message } = req.body;
+    const { name, email, service, budget, timeline, message } = req.body;
 
     // Validation
     if (!name || !email || !message) {
@@ -22,7 +22,7 @@ router.post('/', async (req: Request, res: Response) => {
     // Try saving to MongoDB (if connected)
     if (mongoose.connection.readyState === 1) {
       try {
-        await new Contact({ name, email, service, message }).save();
+        await new Contact({ name, email, service, budget, timeline, message }).save();
         console.log('Contact saved to MongoDB');
       } catch (dbErr) {
         console.warn('Failed to save to MongoDB:', dbErr);
@@ -56,7 +56,7 @@ router.post('/', async (req: Request, res: Response) => {
             <div style="padding: 32px; color: #e0e0e0;">
               <table style="width: 100%; border-collapse: collapse;">
                 <tr>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #222; color: #888; width: 100px;">Name</td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #222; color: #888; width: 130px;">Name</td>
                   <td style="padding: 12px 0; border-bottom: 1px solid #222; color: #fff; font-weight: 600;">${name}</td>
                 </tr>
                 <tr>
@@ -64,8 +64,16 @@ router.post('/', async (req: Request, res: Response) => {
                   <td style="padding: 12px 0; border-bottom: 1px solid #222;"><a href="mailto:${email}" style="color: #5e67e6; text-decoration: none;">${email}</a></td>
                 </tr>
                 <tr>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #222; color: #888;">Service</td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #222; color: #888;">Service Required</td>
                   <td style="padding: 12px 0; border-bottom: 1px solid #222; color: #fff;">${service || 'Not specified'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #222; color: #888;">Project Budget</td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #222; color: #D6FF4D; font-weight: 600;">${budget || 'Not specified'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #222; color: #888;">Target Timeline</td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #222; color: #fff;">${timeline || 'Not specified'}</td>
                 </tr>
               </table>
               <div style="margin-top: 24px;">

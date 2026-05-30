@@ -3,6 +3,9 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IContact extends Document {
     name: string;
     email: string;
+    service?: string;
+    budget?: string;
+    timeline?: string;
     message: string;
     createdAt: Date;
 }
@@ -19,6 +22,18 @@ const ContactSchema: Schema = new Schema({
         trim: true,
         lowercase: true,
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email address'],
+    },
+    service: {
+        type: String,
+        trim: true,
+    },
+    budget: {
+        type: String,
+        trim: true,
+    },
+    timeline: {
+        type: String,
+        trim: true,
     },
     message: {
         type: String,

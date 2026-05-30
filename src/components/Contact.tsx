@@ -8,6 +8,8 @@ const Contact = () => {
     name: "",
     email: "",
     service: "",
+    budget: "",
+    timeline: "",
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -30,7 +32,7 @@ const Contact = () => {
       if (data.success) {
         setStatus("success");
         setStatusMessage("Message sent successfully!");
-        setFormData({ name: "", email: "", service: "", message: "" });
+        setFormData({ name: "", email: "", service: "", budget: "", timeline: "", message: "" });
         // Reset status after 4 seconds
         setTimeout(() => {
           setStatus("idle");
@@ -214,22 +216,42 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
-                      Service
-                    </label>
-                    <select
-                      value={formData.service}
-                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                      className="w-full px-5 py-3.5 bg-black/5 dark:bg-white/5 rounded-xl border border-theme-border text-theme-text text-sm focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all appearance-none cursor-pointer"
-                    >
-                      <option value="" className="bg-theme-bg text-theme-text">Select a service</option>
-                      <option value="frontend" className="bg-theme-bg text-theme-text">Frontend Development</option>
-                      <option value="backend" className="bg-theme-bg text-theme-text">Backend Development</option>
-                      <option value="fullstack" className="bg-theme-bg text-theme-text">Full Stack Development</option>
-                      <option value="extension" className="bg-theme-bg text-theme-text">Chrome Extension</option>
-                      <option value="other" className="bg-theme-bg text-theme-text">Other</option>
-                    </select>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
+                        Service Required
+                      </label>
+                      <select
+                        value={formData.service}
+                        onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                        className="w-full px-5 py-3.5 bg-black/5 dark:bg-white/5 rounded-xl border border-theme-border text-theme-text text-sm focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all appearance-none cursor-pointer"
+                        required
+                      >
+                        <option value="" className="bg-theme-bg text-theme-text">Select a service</option>
+                        <option value="webapp" className="bg-theme-bg text-theme-text">Custom Web App Development</option>
+                        <option value="backend" className="bg-theme-bg text-theme-text">API Design & Backend Systems</option>
+                        <option value="realtime" className="bg-theme-bg text-theme-text">Real-Time Sync Solutions</option>
+                        <option value="extension" className="bg-theme-bg text-theme-text">Chrome Extensions & Automation</option>
+                        <option value="other" className="bg-theme-bg text-theme-text">Other</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="text-xs text-theme-muted font-medium block mb-2 uppercase tracking-wider">
+                        Target Timeline
+                      </label>
+                      <select
+                        value={formData.timeline}
+                        onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+                        className="w-full px-5 py-3.5 bg-black/5 dark:bg-white/5 rounded-xl border border-theme-border text-theme-text text-sm focus:outline-none focus:border-theme-accent/50 focus:ring-2 focus:ring-theme-accent/10 transition-all appearance-none cursor-pointer"
+                        required
+                      >
+                        <option value="" className="bg-theme-bg text-theme-text">Select timeline</option>
+                        <option value="urgent" className="bg-theme-bg text-theme-text">Urgent (Within 2 weeks)</option>
+                        <option value="medium" className="bg-theme-bg text-theme-text">1 - 3 months</option>
+                        <option value="flexible" className="bg-theme-bg text-theme-text">Flexible / Long-term</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div>

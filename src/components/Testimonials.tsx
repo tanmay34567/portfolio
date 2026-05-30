@@ -5,24 +5,10 @@ import ScrollReveal from "./ScrollReveal";
 const testimonials = [
   {
     quote:
-      "Tanmay delivered an outstanding full-stack application with clean code and great attention to detail. His work on the real-time features was exceptional.",
-    name: "Project Collaborator",
-    role: "EveryDayMeal Platform",
-    initials: "PC",
-  },
-  {
-    quote:
-      "Impressive problem-solving skills and deep understanding of the MERN stack. The Chrome extension he built exceeded our expectations in both functionality and UX.",
-    name: "Tech Lead",
-    role: "Banao Technologies",
-    initials: "TL",
-  },
-  {
-    quote:
-      "A reliable developer who consistently writes clean, maintainable code. His contributions to our shift scheduling platform were invaluable for the team.",
-    name: "Senior Developer",
-    role: "SlotSwapper Project",
-    initials: "SD",
+      "Excellent technical execution on our Chrome Extension roadmap. Tanmay resolved complex browser background synchronization logic and integrated third-party APIs flawlessly.",
+    name: "Ninad Baruah",
+    role: "Team Lead, Banao Technologies",
+    initials: "NB",
   },
 ];
 
@@ -50,7 +36,7 @@ const Testimonials = () => {
 
         {/* Testimonial cards */}
         <motion.div
-          className="grid md:grid-cols-3 gap-6"
+          className="max-w-lg mx-auto"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
