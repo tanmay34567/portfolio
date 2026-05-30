@@ -232,6 +232,7 @@ const Contact = () => {
                         <option value="backend" className="bg-theme-bg text-theme-text">API Design & Backend Systems</option>
                         <option value="realtime" className="bg-theme-bg text-theme-text">Real-Time Sync Solutions</option>
                         <option value="extension" className="bg-theme-bg text-theme-text">Chrome Extensions & Automation</option>
+                        <option value="flutterapp" className="bg-theme-bg text-theme-text">Flutter App Development</option>
                         <option value="other" className="bg-theme-bg text-theme-text">Other</option>
                       </select>
                     </div>

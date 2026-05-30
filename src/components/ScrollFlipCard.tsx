@@ -8,6 +8,7 @@ import {
   Server,
   Layers,
   Chrome,
+  Smartphone,
   ChevronDown,
   Github,
   Linkedin,
@@ -51,6 +52,14 @@ const services = [
       "Developing custom Manifest V3 extensions to automate browser tasks, scrapers, third-party integrations, and product productivity add-ons.",
     skills: ["Chrome Extension API", "Manifest V3", "Automation", "Web Scraping", "APIs"],
     icon: <Chrome className="w-5 h-5" />,
+  },
+  {
+    number: "05",
+    title: "Flutter App Development",
+    description:
+      "Building high-performance, beautiful cross-platform native applications for iOS and Android using Flutter and Dart, with smooth offline sync, animations, and state management.",
+    skills: ["Flutter", "Dart", "Provider / BLoC", "Firebase", "REST APIs", "App Store Deploy"],
+    icon: <Smartphone className="w-5 h-5" />,
   },
 ];
 
