@@ -351,8 +351,10 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
   // Card vertical position: centered → down in about panel
   const cardY = useTransform(
     smoothProgress,
-    [0, 0.45, 0.55, 0.85, 1.0],
-    isMobile ? ["-25%", "-25%", "-25%", "-35%", "-35%"] : ["0%", "0%", "0%", "15%", "15%"]
+    [0, 0.15, 0.45, 0.55, 0.85, 1.0],
+    isMobile 
+      ? ["calc(-50vh + 330px)", "calc(-50vh + 330px)", "calc(-50vh + 170px)", "calc(-50vh + 170px)", "calc(-50vh + 170px)", "calc(-50vh + 170px)"] 
+      : ["0%", "0%", "0%", "0%", "15%", "15%"]
   );
 
   // Card scale with cinematic breathe
@@ -415,8 +417,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
             x: glowX,
             y: glowY,
             scale: glowScale,
-            background: "radial-gradient(circle, rgba(var(--theme-accent-rgb), 0.08) 0%, transparent 70%)",
-            filter: "blur(80px)",
+            background: "radial-gradient(circle, rgba(var(--theme-accent-rgb), 0.12) 0%, rgba(var(--theme-accent-rgb), 0) 70%)",
             willChange: "transform",
           }}
         />
@@ -463,7 +464,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
           }}
         >
           <motion.div
-            className="relative w-[260px] h-[360px] md:w-[300px] md:h-[420px] lg:w-[330px] lg:h-[462px]"
+            className="relative w-[200px] h-[280px] sm:w-[240px] sm:h-[330px] md:w-[300px] md:h-[420px] lg:w-[330px] lg:h-[462px]"
             style={{
               rotateY,
               rotateZ: cardRotateZ,
@@ -591,16 +592,16 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
           }}
         >
           <motion.div
-            className="w-full absolute bottom-0 lg:relative lg:bottom-auto h-[60vh] lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-4 lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-thin"
+            className="w-full absolute top-[70px] left-0 h-[calc(100vh-70px)] lg:relative lg:top-auto lg:left-auto lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-4 lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-none"
             animate={{
               pointerEvents: showHeroText ? "auto" : "none"
             }}
           >
-            <div className="grid lg:grid-cols-3 gap-8 items-center">
+            <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8 items-center justify-start lg:justify-normal min-h-full lg:min-h-0">
               {/* Left — Big Name */}
-              <div style={{ perspective: "1000px" }}>
+              <div style={{ perspective: "1000px" }} className="w-full flex flex-col items-center lg:items-start text-center lg:text-left mt-2 lg:mt-0">
                 <motion.div
-                  className="mb-5 overflow-hidden"
+                  className="mb-3 lg:mb-5 overflow-hidden"
                   variants={{
                     hidden: { opacity: 0, width: 0 },
                     visible: { opacity: 1, width: "100%" }
@@ -609,7 +610,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   animate={showHeroText ? "visible" : "hidden"}
                   transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 >
-                  <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase whitespace-nowrap flex items-center">
+                  <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase whitespace-nowrap flex items-center justify-center lg:justify-start">
                     <span className="inline-block w-8 h-[1px] bg-theme-accent mr-3"></span>
                     Portfolio — 2026
                   </p>
@@ -619,17 +620,17 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   <StaggeredChars text="TANMAY" show={showHeroText} delay={0.2} from="left" />
                 </h1>
 
-                <h2 className="heading-display text-3xl sm:text-4xl lg:text-6xl xl:text-7xl text-theme-accent leading-[0.9] mt-2">
+                <h2 className="heading-display text-3xl sm:text-4xl lg:text-6xl xl:text-7xl text-theme-accent leading-[0.9] mt-1 lg:mt-2">
                   <StaggeredChars text="FULLSTACK" show={showHeroText} delay={0.4} from="left" />
                 </h2>
               </div>
 
               {/* Center — spacer for card */}
-              <div />
+              <div className="h-[240px] sm:h-[280px] lg:h-auto shrink-0" />
 
               {/* Right — Role + CTA */}
-              <div style={{ perspective: "1000px" }}>
-                <h2 className="heading-display text-3xl sm:text-4xl lg:text-6xl xl:text-7xl text-theme-text leading-[0.9] mb-6">
+              <div style={{ perspective: "1000px" }} className="w-full flex flex-col items-center lg:items-start text-center lg:text-left mb-2 lg:mb-0">
+                <h2 className="heading-display text-3xl sm:text-4xl lg:text-6xl xl:text-7xl text-theme-text leading-[0.9] mb-3 lg:mb-6">
                   <StaggeredChars text="DEVELOPER" show={showHeroText} delay={0.6} from="right" />
                 </h2>
 
@@ -638,11 +639,11 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   show={showHeroText}
                   delay={1.0}
                   from="right"
-                  className="text-theme-muted text-sm md:text-base leading-relaxed max-w-sm mb-8"
+                  className="text-theme-muted text-xs sm:text-sm md:text-base leading-relaxed max-w-sm mb-4 lg:mb-8 text-center lg:text-left mx-auto lg:mx-0"
                 />
 
                 <motion.div
-                  className="flex flex-wrap gap-4"
+                  className="flex flex-wrap gap-3 lg:gap-4 justify-center lg:justify-start"
                   variants={{
                     hidden: { opacity: 0, x: -100, y: 30, scale: 0.5, filter: "blur(10px)" },
                     visible: { opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" }
@@ -683,7 +684,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
             {/* Scroll indicator */}
             <motion.div
-              className="flex justify-center mt-12"
+              className="flex justify-center mt-6 lg:mt-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2, duration: 0.8 }}
@@ -713,17 +714,17 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
             pointerEvents: activePanel === "services" ? "auto" : "none",
           }}
         >
-          <div className="w-full absolute bottom-0 lg:relative lg:bottom-auto h-[60vh] lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-4 lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-thin">
-            <div className="max-w-lg">
+          <div className="w-full absolute top-[70px] left-0 h-[calc(100vh-70px)] lg:relative lg:top-auto lg:left-auto lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-[220px] lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-thin">
+            <div className="max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
               <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
                 What I Do
               </p>
-              <h2 className="heading-section text-4xl md:text-3xl text-theme-text mb-2">
+              <h2 className="heading-section text-3xl sm:text-4xl text-theme-text mb-2">
                 WHAT I CAN
                 <br />
                 DO FOR YOU
               </h2>
-              <p className="text-theme-muted text-sm leading-relaxed mb-8 max-w-md">
+              <p className="text-theme-muted text-sm leading-relaxed mb-8 max-w-md mx-auto lg:mx-0">
                 Specialized in building modern web applications with clean code and
                 scalable architecture.
               </p>
@@ -754,14 +755,14 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
             pointerEvents: activePanel === "about" ? "auto" : "none",
           }}
         >
-          <div className="w-full absolute bottom-0 lg:relative lg:bottom-auto h-[60vh] lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-4 lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-thin">
+          <div className="w-full absolute top-[70px] left-0 h-[calc(100vh-70px)] lg:relative lg:top-auto lg:left-auto lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-[220px] lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-thin">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
               {/* Left — About text */}
-              <div className="max-w-sm" id="about">
+              <div className="max-w-sm mx-auto lg:mx-0 text-center lg:text-left flex flex-col items-center lg:items-start" id="about">
                 <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
                   Get To Know Me
                 </p>
-                <h2 className="heading-section text-4xl md:text-3xl text-theme-text mb-6">
+                <h2 className="heading-section text-3xl sm:text-4xl text-theme-text mb-6">
                   ABOUT ME
                 </h2>
                 <p className="text-theme-muted text-xs leading-relaxed mb-3">
@@ -797,13 +798,13 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 </div>
 
                 {/* Location */}
-                <div className="flex items-center gap-2 text-theme-muted mb-4">
+                <div className="flex items-center gap-2 text-theme-muted mb-4 justify-center lg:justify-start">
                   <MapPin className="w-3.5 h-3.5 text-theme-accent" />
                   <span className="text-xs">Maharashtra, India</span>
                 </div>
 
                 {/* Social links */}
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-4 justify-center lg:justify-start">
                   {[
                     { href: "https://github.com/tanmay34567", icon: <Github className="w-4 h-4" /> },
                     { href: "https://www.linkedin.com/in/tanmay-wagh-2a2a0b269/", icon: <Linkedin className="w-4 h-4" /> },
@@ -822,7 +823,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 </div>
 
                 {/* Skills tags */}
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5 justify-center lg:justify-start">
                   {skillsList.slice(0, 10).map((skill, i) => (
                     <span
                       key={i}
@@ -838,11 +839,12 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
               <div className="hidden lg:block h-[462px]" />
 
               {/* Right — Journey Timeline */}
-              <div className="w-full max-w-sm mt-8 lg:mt-0">
+              <div className="w-full max-w-sm mt-8 lg:mt-0 mx-auto lg:mx-0 text-center lg:text-left">
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={activePanel === "about" ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
                   transition={{ duration: 0.5 }}
+                  className="flex flex-col items-center lg:items-start"
                 >
                   <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
                     Professional Journey

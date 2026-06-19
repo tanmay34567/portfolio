@@ -27,7 +27,6 @@ uniform float u_shape;
 uniform float u_shapeScale;
 uniform float u_distortion;
 uniform float u_swirl;
-uniform float u_swirlIterations;
 
 out vec4 fragColor;
 
@@ -92,10 +91,10 @@ void main() {
     uv.x += 4. * u_distortion * n2 * cos(angle);
     uv.y += 4. * u_distortion * n2 * sin(angle);
 
-    float iterations_number = ceil(clamp(u_swirlIterations, 1., 30.));
-    for (float i = 1.; i <= iterations_number; i++) {
-        uv.x += clamp(u_swirl, 0., 2.) / i * cos(t + i * 1.5 * uv.y);
-        uv.y += clamp(u_swirl, 0., 2.) / i * cos(t + i * 1. * uv.x);
+    for (int i = 1; i <= 16; i++) {
+        float fi = float(i);
+        uv.x += clamp(u_swirl, 0., 2.) / fi * cos(t + fi * 1.5 * uv.y);
+        uv.y += clamp(u_swirl, 0., 2.) / fi * cos(t + fi * 1. * uv.x);
     }
 
     float proportion = clamp(u_proportion, 0., 1.);
@@ -190,6 +189,42 @@ const AnimatedBackground = ({ opacity = 0.7 }: { opacity?: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  
+  // Cache the theme colors so that getComputedStyle/contains("dark") aren't called on every frame
+  const colorsRef = useRef({
+    color1: [0.0, 0.0, 0.0, 1.0],
+    color2: [1.0, 1.0, 1.0, 1.0],
+    color3: [0.0, 0.0, 0.0, 1.0],
+  });
+
+  useEffect(() => {
+    const updateColors = () => {
+      const isDarkVal = document.documentElement.classList.contains("dark") || theme === "dark";
+      let accentColor = [1.0, 1.0, 1.0, 1.0];
+      try {
+        const computedAccent = window.getComputedStyle(document.documentElement).getPropertyValue("--theme-accent").trim();
+        if (computedAccent) {
+          accentColor = parseColor(computedAccent);
+        }
+      } catch (e) {
+        // Fallback
+      }
+
+      const color1 = isDarkVal ? [0.0, 0.0, 0.0, 1.0] : [1.0, 1.0, 1.0, 1.0];
+      const color2 = isDarkVal 
+        ? [accentColor[0] * 0.35 + 0.65, accentColor[1] * 0.35 + 0.65, accentColor[2] * 0.35 + 0.65, 1.0]
+        : [accentColor[0] * 0.15 + 0.85, accentColor[1] * 0.15 + 0.85, accentColor[2] * 0.15 + 0.85, 1.0];
+      const color3 = isDarkVal ? [0.0, 0.0, 0.0, 1.0] : [1.0, 1.0, 1.0, 1.0];
+
+      colorsRef.current = { color1, color2, color3 };
+    };
+
+    updateColors();
+    
+    // Safety timeout in case CSS classes have not finished applying
+    const timer = setTimeout(updateColors, 50);
+    return () => clearTimeout(timer);
+  }, [theme]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -269,15 +304,15 @@ const AnimatedBackground = ({ opacity = 0.7 }: { opacity?: number }) => {
       u_shapeScale: gl.getUniformLocation(program, "u_shapeScale"),
       u_distortion: gl.getUniformLocation(program, "u_distortion"),
       u_swirl: gl.getUniformLocation(program, "u_swirl"),
-      u_swirlIterations: gl.getUniformLocation(program, "u_swirlIterations"),
     };
 
     let animationFrameId: number;
 
-    const resizeCanvas = () => {
+    // Handle resizing on window resize rather than on every frame
+    const handleResize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2.0);
-      const displayWidth = Math.floor(canvas.clientWidth * dpr);
-      const displayHeight = Math.floor(canvas.clientHeight * dpr);
+      const displayWidth = Math.floor(window.innerWidth * dpr);
+      const displayHeight = Math.floor(window.innerHeight * dpr);
 
       if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
         canvas.width = displayWidth;
@@ -285,6 +320,9 @@ const AnimatedBackground = ({ opacity = 0.7 }: { opacity?: number }) => {
         gl.viewport(0, 0, canvas.width, canvas.height);
       }
     };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial sizing
 
     // Preset variables (from Portfolite "Mist" preset)
     const preset = {
@@ -296,35 +334,16 @@ const AnimatedBackground = ({ opacity = 0.7 }: { opacity?: number }) => {
       shapeScale: 0.45,
       distortion: 0.0,
       swirl: 0.5,
-      swirlIterations: 16.0,
       speed: 20.0,
     };
 
     const render = (timeMs: number) => {
       const time = timeMs * 0.001;
-      resizeCanvas();
 
       gl.useProgram(program);
 
-      // Bind dynamic colors based on theme mode and theme accent variable
-      const isDark = document.documentElement.classList.contains("dark");
-      
-      let accentColor = [1.0, 1.0, 1.0, 1.0];
-      try {
-        const computedAccent = window.getComputedStyle(document.documentElement).getPropertyValue("--theme-accent").trim();
-        if (computedAccent) {
-          accentColor = parseColor(computedAccent);
-        }
-      } catch (e) {
-        // Fallback
-      }
-
-      // Replicate the grayscale mist with custom theme accent blending
-      const color1 = isDark ? [0.0, 0.0, 0.0, 1.0] : [1.0, 1.0, 1.0, 1.0];
-      const color2 = isDark 
-        ? [accentColor[0] * 0.35 + 0.65, accentColor[1] * 0.35 + 0.65, accentColor[2] * 0.35 + 0.65, 1.0]
-        : [accentColor[0] * 0.15 + 0.85, accentColor[1] * 0.15 + 0.85, accentColor[2] * 0.15 + 0.85, 1.0];
-      const color3 = isDark ? [0.0, 0.0, 0.0, 1.0] : [1.0, 1.0, 1.0, 1.0];
+      // Bind cached dynamic colors
+      const colors = colorsRef.current;
 
       // Set uniform values
       gl.uniform1f(uniforms.u_time, time * (preset.speed * 0.1));
@@ -332,16 +351,15 @@ const AnimatedBackground = ({ opacity = 0.7 }: { opacity?: number }) => {
       gl.uniform2f(uniforms.u_resolution, canvas.width, canvas.height);
       gl.uniform1f(uniforms.u_scale, preset.scale);
       gl.uniform1f(uniforms.u_rotation, preset.rotation);
-      gl.uniform4fv(uniforms.u_color1, color1);
-      gl.uniform4fv(uniforms.u_color2, color2);
-      gl.uniform4fv(uniforms.u_color3, color3);
+      gl.uniform4fv(uniforms.u_color1, colors.color1);
+      gl.uniform4fv(uniforms.u_color2, colors.color2);
+      gl.uniform4fv(uniforms.u_color3, colors.color3);
       gl.uniform1f(uniforms.u_proportion, preset.proportion);
       gl.uniform1f(uniforms.u_softness, preset.softness);
       gl.uniform1f(uniforms.u_shape, preset.shape);
       gl.uniform1f(uniforms.u_shapeScale, preset.shapeScale);
       gl.uniform1f(uniforms.u_distortion, preset.distortion);
       gl.uniform1f(uniforms.u_swirl, preset.swirl);
-      gl.uniform1f(uniforms.u_swirlIterations, preset.swirlIterations);
 
       // Draw
       gl.drawArrays(gl.TRIANGLES, 0, 6);
@@ -354,6 +372,7 @@ const AnimatedBackground = ({ opacity = 0.7 }: { opacity?: number }) => {
     // Clean up
     return () => {
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
       gl.deleteBuffer(buffer);
       gl.deleteProgram(program);
       gl.deleteShader(vertexShader);
