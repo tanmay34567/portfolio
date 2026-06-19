@@ -77,7 +77,7 @@ const skillsList = [
   "Cloudinary", "JWT", "Chrome Extensions",
 ];
 
-const timelineItems = [
+export const timelineItems = [
   {
     date: "Dec 2025 - Present",
     role: "Developer Intern",
@@ -407,7 +407,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
       style={{ height: "350vh" }}
     >
       {/* Sticky viewport */}
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="sticky top-0 h-screen overflow-hidden pointer-events-none">
         {/* ── Animated background glows ── */}
         <motion.div
           className="absolute w-[500px] h-[500px] rounded-full pointer-events-none"
@@ -453,7 +453,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
         {/* ═════════ THE CARD ═════════ */}
         <motion.div
-          className="absolute top-1/2 left-1/2 z-40"
+          className="absolute top-1/2 left-1/2 z-40 pointer-events-auto"
           style={{
             x: cardX,
             y: cardY,
@@ -584,15 +584,14 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
         {/* ▸ PANEL 1: Hero */}
         <motion.div
-          className="absolute inset-0 lg:flex lg:items-center z-30"
+          className="absolute inset-0 lg:flex lg:items-center z-30 pointer-events-none"
           style={{
             opacity: heroOpacity,
             y: heroY,
-            pointerEvents: activePanel === "hero" ? "auto" : "none",
           }}
         >
           <motion.div
-            className="w-full absolute top-[70px] left-0 h-[calc(100vh-70px)] lg:relative lg:top-auto lg:left-auto lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-4 lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-none"
+            className="w-full absolute top-[70px] left-0 h-[calc(100vh-70px)] lg:relative lg:top-auto lg:left-auto lg:h-auto overflow-visible pb-12 lg:pb-0 pt-4 lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-none"
             animate={{
               pointerEvents: showHeroText ? "auto" : "none"
             }}
@@ -643,7 +642,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 />
 
                 <motion.div
-                  className="flex flex-wrap gap-3 lg:gap-4 justify-center lg:justify-start"
+                  className="flex flex-wrap gap-3 lg:gap-4 justify-center lg:justify-start pointer-events-auto"
                   variants={{
                     hidden: { opacity: 0, x: -100, y: 30, scale: 0.5, filter: "blur(10px)" },
                     visible: { opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" }
@@ -691,7 +690,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
             >
               <a
                 href="#services"
-                className="flex items-center gap-2 text-theme-muted hover:text-theme-text transition-colors group"
+                className="flex items-center gap-2 text-theme-muted hover:text-theme-text transition-colors group pointer-events-auto"
               >
                 <span className="text-[10px] tracking-[0.2em] uppercase">Scroll down</span>
                 <motion.div
@@ -707,14 +706,13 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
         {/* ▸ PANEL 2: Services / What I Do */}
         <motion.div
-          className="absolute inset-0 lg:flex lg:items-center z-30"
+          className="absolute inset-0 lg:flex lg:items-center z-30 pointer-events-none"
           style={{
             opacity: servicesOpacity,
             y: servicesY,
-            pointerEvents: activePanel === "services" ? "auto" : "none",
           }}
         >
-          <div className="w-full absolute top-[70px] left-0 h-[calc(100vh-70px)] lg:relative lg:top-auto lg:left-auto lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-[220px] lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-thin">
+          <div className="w-full absolute top-[70px] left-0 h-[calc(100vh-70px)] lg:relative lg:top-auto lg:left-auto lg:h-auto overflow-visible pb-12 lg:pb-0 pt-[220px] lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-none">
             <div className="max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
               <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
                 What I Do
@@ -730,7 +728,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
               </p>
 
               {/* Services Accordion */}
-              <div id="services">
+              <div id="services" className="pointer-events-auto text-left">
                 {services.map((service, index) => (
                   <AccordionItem
                     key={index}
@@ -748,14 +746,13 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
 
         {/* ▸ PANEL 3: About Me */}
         <motion.div
-          className="absolute inset-0 lg:flex lg:items-center z-30"
+          className="absolute inset-0 lg:flex lg:items-center z-30 pointer-events-none"
           style={{
             opacity: aboutOpacity,
             y: aboutY,
-            pointerEvents: activePanel === "about" ? "auto" : "none",
           }}
         >
-          <div className="w-full absolute top-[70px] left-0 h-[calc(100vh-70px)] lg:relative lg:top-auto lg:left-auto lg:h-auto overflow-y-auto lg:overflow-visible pb-12 lg:pb-0 pt-[220px] lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-thin">
+          <div className="w-full absolute top-[70px] left-0 h-[calc(100vh-70px)] lg:relative lg:top-auto lg:left-auto lg:h-auto overflow-visible pb-12 lg:pb-0 pt-[220px] lg:pt-0 container mx-auto px-6 lg:px-12 scrollbar-none">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
               {/* Left — About text */}
               <div className="max-w-sm mx-auto lg:mx-0 text-center lg:text-left flex flex-col items-center lg:items-start" id="about">
@@ -804,7 +801,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 </div>
 
                 {/* Social links */}
-                <div className="flex items-center gap-3 mb-4 justify-center lg:justify-start">
+                <div className="flex items-center gap-3 mb-4 justify-center lg:justify-start pointer-events-auto">
                   {[
                     { href: "https://github.com/tanmay34567", icon: <Github className="w-4 h-4" /> },
                     { href: "https://www.linkedin.com/in/tanmay-wagh-2a2a0b269/", icon: <Linkedin className="w-4 h-4" /> },
@@ -823,7 +820,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                 </div>
 
                 {/* Skills tags */}
-                <div className="flex flex-wrap gap-1.5 justify-center lg:justify-start">
+                <div className="flex flex-wrap gap-1.5 justify-center lg:justify-start pointer-events-auto">
                   {skillsList.slice(0, 10).map((skill, i) => (
                     <span
                       key={i}
@@ -839,7 +836,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
               <div className="hidden lg:block h-[462px]" />
 
               {/* Right — Journey Timeline */}
-              <div className="w-full max-w-sm mt-8 lg:mt-0 mx-auto lg:mx-0 text-center lg:text-left">
+              <div className="hidden lg:block w-full max-w-sm mt-8 lg:mt-0 mx-auto lg:mx-0 text-center lg:text-left">
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={activePanel === "about" ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}

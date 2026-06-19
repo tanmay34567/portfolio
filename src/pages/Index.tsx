@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
-import ScrollFlipCard from "@/components/ScrollFlipCard";
+import ScrollFlipCard, { timelineItems } from "@/components/ScrollFlipCard";
+import ScrollReveal from "@/components/ScrollReveal";
 import Marquee from "@/components/Marquee";
 import Projects from "@/components/Projects";
 import Testimonials from "@/components/Testimonials";
@@ -81,6 +82,53 @@ const Index = () => {
               startVideo={true} 
               onVideoEnd={() => setIsVideoFinished(true)} 
             />
+
+            {/* Mobile Timeline (visible only on mobile) */}
+            <div className="block lg:hidden px-6 py-16 border-t border-theme-border/10 bg-theme-bg relative z-30">
+              <ScrollReveal>
+                <div className="max-w-sm mx-auto text-center mb-10">
+                  <p className="text-xs font-medium text-theme-accent tracking-[0.25em] uppercase mb-3">
+                    Professional Journey
+                  </p>
+                  <h3 className="heading-section text-3xl text-theme-text">
+                    MY TIMELINE
+                  </h3>
+                </div>
+
+                {/* Timeline Tree */}
+                <div className="relative border-l border-theme-border/60 pl-5 ml-2.5 space-y-6 max-w-sm mx-auto text-left">
+                  {/* Line overlay */}
+                  <div className="absolute left-[-1px] top-0 bottom-0 w-[1px] bg-theme-accent" />
+
+                  {timelineItems.map((item, i) => (
+                    <ScrollReveal key={i} delay={0.2 + i * 0.15} direction="left">
+                      <div className="relative">
+                        {/* Dot indicator */}
+                        <span
+                          className={`absolute -left-[29px] top-1 w-3 h-3 rounded-full border-2 border-theme-bg ${
+                            item.highlight
+                              ? "bg-theme-accent shadow-[0_0_10px_rgba(var(--theme-accent-rgb),0.5)]"
+                              : "bg-theme-muted"
+                          }`}
+                        />
+                        <span className="text-[10px] text-theme-muted font-medium block uppercase tracking-wider mb-0.5">
+                          {item.date}
+                        </span>
+                        <h4 className="text-xs font-bold text-theme-text uppercase leading-tight">
+                          {item.role}
+                        </h4>
+                        <p className={`text-[11px] font-semibold mt-0.5 ${item.highlight ? "text-theme-accent" : "text-theme-text/80"}`}>
+                          {item.company}
+                        </p>
+                        <p className="text-[10px] text-theme-muted leading-relaxed mt-1">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </ScrollReveal>
+                  ))}
+                </div>
+              </ScrollReveal>
+            </div>
 
             {/* Tech ticker */}
             <Marquee items={techMarquee} speed={35} />
