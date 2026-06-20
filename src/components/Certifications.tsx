@@ -72,7 +72,7 @@ const Certifications = () => {
               {/* Top Row: Badge & Label */}
               <div className="flex items-center justify-between mb-6">
                 <span className="px-3 py-1 rounded-full border border-white/30 text-[10px] font-bold tracking-widest text-white dark:text-black uppercase">
-                  Current Role
+                  Internship Role
                 </span>
                 <span className="text-[10px] font-semibold text-white/70 dark:text-black/70 font-mono tracking-wider uppercase">
                   Banao Tech
@@ -86,7 +86,7 @@ const Certifications = () => {
               
               {/* Description */}
               <p className="text-white/80 dark:text-black/80 text-sm leading-relaxed mb-6">
-                Intern at Banao Technologies — Building Chrome Extensions & Backend integrations
+                Intern at Banao Technologies — Built Chrome Extensions & Backend integrations (Completed May 21, 2026)
               </p>
             </div>
 
@@ -97,7 +97,7 @@ const Certifications = () => {
               {/* Bottom Row */}
               <div className="flex items-center gap-2.5 text-xs text-white/80 dark:text-black/80">
                 <Star className="w-4 h-4 text-white dark:text-black flex-shrink-0" />
-                <span>Active Internship & Industry Experience</span>
+                <span>Completed Internship & Industry Experience</span>
               </div>
             </div>
           </motion.div>

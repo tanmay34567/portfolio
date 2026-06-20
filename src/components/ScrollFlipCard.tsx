@@ -79,10 +79,10 @@ const skillsList = [
 
 export const timelineItems = [
   {
-    date: "Dec 2025 - Present",
+    date: "Dec 2025 - May 21, 2026",
     role: "Developer Intern",
     company: "Banao Technologies",
-    desc: "Developing Chrome Extensions & Node.js integrations.",
+    desc: "Developed Chrome Extensions & Node.js integrations.",
     highlight: true,
   },
   {
@@ -664,7 +664,7 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   </motion.a>
 
                   <motion.a
-                    href="https://drive.google.com/file/d/1EGEjKxRTl05xLkRKfadwuf1H-rfd4qUX/view?usp=drive_link"
+                    href="https://drive.google.com/file/d/1quo7ymbhkT9_-ogKmJ6n9TiLNNuFiaoV/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative group inline-flex items-center gap-2 px-7 py-3.5 text-theme-text text-sm font-semibold rounded-full border border-theme-border transition-all duration-300 hover:border-theme-text/30 hover:bg-theme-border overflow-hidden"
@@ -763,15 +763,10 @@ const ScrollFlipCard = ({ startVideo = false, onVideoEnd }: { startVideo?: boole
                   ABOUT ME
                 </h2>
                 <p className="text-theme-muted text-xs leading-relaxed mb-3">
-                  Hi, I'm <span className="text-theme-text font-semibold">Tanmay Wagh</span> — a
-                  B.Tech CSE student at MIT School of Computing, MIT ADT University.
-                  I'm passionate about building beautiful, functional web applications
-                  using modern technologies.
+                  I am a Computer Science & Engineering student at the <span className="text-theme-text font-semibold">MIT School of Computing, MIT ADT University</span>, specializing in full-stack web development and scalable architectures. I focus on building high-performance, robust web applications using modern technologies and best practices.
                 </p>
                 <p className="text-theme-muted text-xs leading-relaxed mb-4">
-                  Currently interning as a <span className="text-theme-text font-semibold">Developer at Banao Technologies</span>, where I
-                  develop Chrome Extensions and integrate backend functionalities with
-                  Node.js.
+                  Recently, I completed my internship as a <span className="text-theme-text font-semibold">Software Developer Intern at Banao Technologies</span> (May 21, 2026), where I successfully engineered custom Chrome Extensions and integrated secure, efficient backend microservices using Node.js.
                 </p>
 
                 {/* Stats row */}

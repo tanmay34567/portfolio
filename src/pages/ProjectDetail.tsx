@@ -4,6 +4,7 @@ import SlotSwapper from "../projects/SlotSwapper";
 import EveryDayMeal from "../projects/EveryDayMeal";
 import AudioOrbit from "../projects/AudioOrbit";
 import MFAnalyzer from "../projects/MFAnalyzer";
+import Reveur from "../projects/Reveur";
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -22,6 +23,10 @@ const ProjectDetail = () => {
 
   if (id === "mf-analyzer") {
     return <MFAnalyzer />;
+  }
+
+  if (id === "reveur") {
+    return <Reveur />;
   }
 
   return (

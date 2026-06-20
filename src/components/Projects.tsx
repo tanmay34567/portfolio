@@ -64,6 +64,16 @@ const projects: Project[] = [
     image: "/projects/MFanalyzer.png",
     iframeUrl: "https://mutual-fund-analyzer.vercel.app/",
   },
+  {
+    id: "reveur",
+    title: "Reveur",
+    subtitle: "Full-Stack Freelance",
+    description:
+      "A premium creative agency platform and bespoke CMS. Built with Next.js 16, React 19, Tailwind CSS v4, and Node.js + MongoDB backend. Features a custom admin portal secured via JWT Middleware.",
+    tech: ["Next.js 16", "React 19", "Tailwind CSS v4", "Node.js", "Express.js", "MongoDB", "JWT Auth (Jose)", "Framer Motion"],
+    liveLink: "https://www.reveur.in/",
+    image: "/projects/reveur.png",
+  },
 ];
 
 const containerVariants: Variants = {
@@ -291,6 +301,10 @@ const Projects = () => {
               isVideo={true}
               videoSrc="/make_the_face_body_proportion.mp4"
             />
+            <ProjectGridCard 
+              project={projects[4]} 
+              aspectClass="aspect-[3/4]"
+            />
           </motion.div>
 
           {/* Column 3 */}
@@ -346,6 +360,10 @@ const Projects = () => {
               project={projects[3]} 
               aspectClass="aspect-[1365/646]"
             />
+            <ProjectGridCard 
+              project={projects[4]} 
+              aspectClass="aspect-[1365/648]"
+            />
           </motion.div>
         </motion.div>
 
@@ -382,6 +400,10 @@ const Projects = () => {
           <ProjectGridCard 
             project={projects[3]} 
             aspectClass="aspect-[1365/646]"
+          />
+          <ProjectGridCard 
+            project={projects[4]} 
+            aspectClass="aspect-[1365/648]"
           />
         </motion.div>
 
