@@ -72,6 +72,7 @@ const projects: Project[] = [
       "A premium creative agency platform and bespoke CMS. Built with Next.js 16, React 19, Tailwind CSS v4, and Node.js + MongoDB backend. Features a custom admin portal secured via JWT Middleware.",
     tech: ["Next.js 16", "React 19", "Tailwind CSS v4", "Node.js", "Express.js", "MongoDB", "JWT Auth (Jose)", "Framer Motion"],
     liveLink: "https://www.reveur.in/",
+    githubLink: "https://github.com/tanmay34567/reveur",
     image: "/projects/reveur.png",
   },
 ];
@@ -303,7 +304,7 @@ const Projects = () => {
             />
             <ProjectGridCard 
               project={projects[4]} 
-              aspectClass="aspect-[3/4]"
+              aspectClass="aspect-[1365/647]"
             />
           </motion.div>
 
@@ -362,7 +363,7 @@ const Projects = () => {
             />
             <ProjectGridCard 
               project={projects[4]} 
-              aspectClass="aspect-[1365/648]"
+              aspectClass="aspect-[1365/647]"
             />
           </motion.div>
         </motion.div>
@@ -403,7 +404,7 @@ const Projects = () => {
           />
           <ProjectGridCard 
             project={projects[4]} 
-            aspectClass="aspect-[1365/648]"
+            aspectClass="aspect-[1365/647]"
           />
         </motion.div>
 

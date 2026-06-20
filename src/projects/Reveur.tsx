@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence, Variants, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { 
   ArrowLeft, 
+  Github,
   ExternalLink, 
   Layers, 
   ArrowRight,
@@ -224,6 +225,15 @@ const Reveur = () => {
 
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
               <a 
+                href="https://github.com/tanmay34567/reveur" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-theme-bg border border-theme-border hover:bg-theme-border/80 hover:border-theme-accent/30 text-theme-text font-semibold text-sm py-3.5 px-6 rounded-xl transition-all duration-300 group shadow-lg"
+              >
+                <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span>Browse Code</span>
+              </a>
+              <a 
                 href="https://www.reveur.in/" 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -296,7 +306,7 @@ const Reveur = () => {
                   </div>
                 </div>
 
-                {/* Embedded live app preview (fallback design style) */}
+                {/* Embedded live app preview */}
                 <div className="relative w-full aspect-[9/16] md:aspect-video bg-zinc-950 overflow-hidden">
                   <iframe 
                     src="https://www.reveur.in/" 
@@ -308,7 +318,7 @@ const Reveur = () => {
                   {/* Interactive tooltip overlay */}
                   <div className="absolute bottom-4 right-4 bg-theme-bg/90 backdrop-blur-md border border-theme-border rounded-lg px-3 py-2 flex items-center gap-2 shadow-xl pointer-events-none select-none">
                     <span className="w-2 h-2 bg-theme-accent rounded-full animate-ping" />
-                    <span className="text-[10px] font-bold tracking-widest text-theme-text/75 uppercase">Live Preview</span>
+                    <span className="text-[10px] font-bold tracking-widest text-theme-text/75 uppercase">Live Site Preview</span>
                   </div>
                 </div>
               </div>
